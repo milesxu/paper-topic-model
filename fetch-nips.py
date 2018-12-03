@@ -39,7 +39,7 @@ for link in year_link_str[0:1]:
         os.mkdir('intro')
     if not os.path.exists(os.path.join(os.getcwd(), 'pdf')):
         os.mkdir('pdf')
-    for paper in paper_link_str[0:6]:
+    for paper in paper_link_str:
         pname = paper[7:]
         pname_fstr = pname + '.html'
         if not os.path.isfile(os.path.join(os.getcwd(), 'intro', pname_fstr)):
