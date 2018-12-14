@@ -25,6 +25,7 @@ for link in year_link_str[0:1]:
         year_page = requests.get(base_url + link)
         with open(paper_fstr, 'w') as html_file:
             html_file.write(year_page.text)
+            print(paper_fstr + ' downloaded.')
         year_parsed = BeautifulSoup(year_page.text, 'lxml')
     else:
         with open(paper_fstr, 'r') as html_file:
@@ -38,13 +39,14 @@ for link in year_link_str[0:1]:
         os.mkdir('intro')
     if not os.path.exists(os.path.join(os.getcwd(), 'pdf')):
         os.mkdir('pdf')
-    for paper in paper_link_str[0:6]:
+    for paper in paper_link_str:
         pname = paper[7:]
         pname_fstr = pname + '.html'
         if not os.path.isfile(os.path.join(os.getcwd(), 'intro', pname_fstr)):
             paper_intro = requests.get(base_url + paper)
             with open('intro/' + pname_fstr, 'w') as html_file:
                 html_file.write(paper_intro.text)
+                print('introduction of ' + pname + ' downloaded.')
             paper_parsed = BeautifulSoup(paper_intro.text, 'lxml')
         else:
             with open('intro/' + pname_fstr, 'r') as html_file:
@@ -56,4 +58,5 @@ for link in year_link_str[0:1]:
             pdf_content = requests.get(base_url + pdf_link)
             with open('pdf/' + pdf_str, 'wb') as pdf_file:
                 pdf_file.write(pdf_content.content)
+                print('PDF doc of ' + pname + ' downloaded')
         time.sleep(5 + random.randint(0, 5))
