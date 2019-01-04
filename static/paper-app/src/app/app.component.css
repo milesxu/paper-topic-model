@@ -1,0 +1,13 @@
+.shrink {
+  /*min-height: 48px;
+  max-height: 48px;*/
+}
+
+mat-drawer-container {
+  height: 100%;
+  overflow: hidden;
+}
+
+mat-drawer {
+  width: 20rem;
+}

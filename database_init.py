@@ -1,3 +1,4 @@
+import sys
 import os
 import re
 import regex
@@ -11,14 +12,24 @@ no_author_outlier = {
         'Aditya Krishna Menon', 'Robert C. Williamson']
 }
 
-# organizations = {
-#     'university': set(),
-#     'institute': set(),
-#     'corporation': set()
-# }
+client = MongoClient()
+paper_db = client['paper_db']
+
+iso_codes = {}
+with open('iso-country-code.txt') as code_file:
+    lines = code_file.readlines()
+    for line in lines[1:]:
+        name, code = line.strip().split(';')
+        iso_codes[code] = name
+
+country_code = paper_db['country_code']
+country_code.delete_many({})
+country_code.insert_many([{"code": key, "name": value}
+                          for key, value in iso_codes.items()])
+
 
 org_names = {
-    'us': [
+    'US': [
         'University of Southern California',
         'University of California', 'Johns Hopkins University',
         'IBM Research', 'Texas A& M University', 'Carnegie Mellon University',
@@ -64,18 +75,16 @@ org_names = {
         'Dartmouth College', 'Lehigh University', 'Google', 'M.I.T.',
         'University of Wisconsin-Madison', 'University of Florida', 'Facebook',
         'google', 'University of Virginia'],
-    'en': ['University College London', 'University of Oxford',
+    'GB': ['University College London', 'University of Oxford',
            'Imperial College London', 'DeepMind', 'University of Warwick',
            'University of Cambridge', 'PROWLER.io',
            'University of Edinburgh', 'University of Western Ontario',
            'University of Glasgow', 'Queen Mary University of London',
            'AimBrain Ltd.', 'University of Bath', 'University of Manchester'],
-    'cn': ['Tianjin University', 'National University of Defense Technology',
+    'CN': ['Tianjin University', 'National University of Defense Technology',
            'Xidian University', 'Shanghai Jiao Tong University',
-           'The Chinese University of Hong Kong', 'Tencent AI Lab',
-           'Peking University', 'The University of Hong Kong',
-           'Tsinghua University', 'Fudan University',
-           'Dalian University of Technology',
+           'Tencent AI Lab', 'Peking University', 'Tsinghua University',
+           'Fudan University', 'Dalian University of Technology',
            'University of Science and Technology of China',
            'Chinese Academy of Sciences', '4Paradigm Inc.',
            'SenseTime', 'Beijing University of Posts and Telecommunications',
@@ -84,87 +93,88 @@ org_names = {
            'Shenzhen Key Laboratory of Computational Intelligence',
            'Renmin University of China', 'Baidu Research', 'Huawei',
            'New York University Shanghai', 'Zhejiang University',
-           'Hulu LLC', 'HTC Research', 'Hangzhou Dianzi University',
-           'National Tsing Hua University'],
-    'austria': ['University of Innsbruck', 'University of Vienna'],
-    'south_korea': [
+           'Hulu LLC', 'Hangzhou Dianzi University'],
+    'TW': ['HTC Research', 'National Tsing Hua University'],
+    'HK': ['The Chinese University of Hong Kong', 'The University of Hong Kong'],
+    'AT': ['University of Innsbruck', 'University of Vienna'],
+    'KR': [
         'Korea Advanced Institute of Science and Technology', 'KAIST',
         'Seoul National University', 'Yonsei University', 'Lunit Inc.',
         'Ulsan National Institute of Science and Technology', 'UNIST'],
-    'south_africa': ['Stellenbosch University',
-                     'University of the Witwatersrand'],
-    'switzerland': ['École Polytechnique Fédérale de Lausanne', 'ETH Zürich',
-                    'EPFL', 'ETH Zurich', 'University of Geneva',
-                    'The Swiss AI Lab IDSIA'],
-    'japan': ['The University of Tokyo', 'RIKEN Center for Brain Science',
-              'Keio Univ.', 'Keio University',
-              'National Institute of Advanced Industrial Science and Technology',
-              'The University of Electro-Communications',
-              'Toyota Central R&D Labs.',
-              'Sony Imaging Products & Solutions Inc.',
-              'Okinawa Institute of Science and Technology Graduate University'],
-    'netherlands': ['University of Amsterdam', 'Radboud University',
-                    'Navinfo Europe Research'],
-    'canada': ['McGill University', 'University of Toronto',
-               'University of Waterloo', 'University of British Columbia',
-               'University of Alberta', 'University of Calgary',
-               'Element AI', 'D-Wave Systems Inc.',
-               'U. of Ontario Inst. of Tech.', 'Simon Fraser University',
-               'Vector Institute', 'ÉTS Montreal'],
-    'france': ['Université Paris-Saclay', 'University of Rennes', 'EURECOM',
-               'PSL Research University', 'Ecole Polytechnique',
-               'Sorbonne Université', 'École Normale Supérieure',
-               'fifty-five', 'Inria', 'Université Claude Bernard Lyon 1',
-               'Université de Bordeaux', 'Université Paris-Saclay'],
-    'italy': ['Università degli Studi di Pavia', 'Politecnico di Torino',
-              'Politecnico di Milano', 'Sapienza University',
-              'Istituto Italiano di Tecnologia'],
-    'german': ['TU Dortmund University',
-               'Bosch Center for Artificial Intelligence',
-               'Max-Planck Institute for Intelligent Systems',
-               'Max-Planck-Institute for Intelligent Systems',
-               'Max Planck Institute for Intelligent Systems',
-               'Max Planck Institute for Informatics',
-               'University of Tübingen', 'MPI-SWS',
-               'Technische Universität München',
-               'TU Darmstadt', 'École polytechnique fédérale de Lausanne',
-               'Ostwestfalen-Lippe University of Applied Sciences',
-               'Friedrich-Schiller-Universität Jena',
-               'Freie Universität Berlin',
-               'École Polytechnique Fédérale de Lausanne',
-               'TU Dortmund', 'Technical University of Munich',
-               'Amazon Berlin', 'Technische Universität Darmstadt'],
-    'australia': ['The University of Sydney', 'University of Technology Sydney',
-                  'Macquarie University', 'University of Melbourne',
-                  'Deakin University', 'UNSW Sydney',
-                  'Australian National University'],
-    'pakistan': ['Information Technology University Lahore'],
-    'thailand': ['Vidyasirimedhi Institute of Science and Technology'],
-    'russia': ['Skolkovo Institute of Science and Technology',
-               'Moscow Institute of Physics and Technology',
-               'Lomonosov Moscow State University'],
-    'spain': ['Universitat Autònoma de Barcelona',
-              'Universidad Carlos III de Madrid'],
-    'denmark': ['IT University of Copenhagen', 'University of Copenhagen',
-                'Aarhus University'],
-    'israel': ['Weizmann Institute of Science', 'Tel Aviv University',
-               'Bar Ilan University', 'Bar-Ilan University',
-               'Technion', 'Israel Institute of Technology',
-               'The Hebrew University of Jerusalem',
-               'Ariel University'],
-    'singapore': ['National University of Singapore',
-                  'Singapore University of Technology and Design',
-                  'Nanyang Technological University',
-                  'Singapore Management University'],
-    'brazil': ['Universidade Federal de Minas Gerais', 'UFMG'],
-    'poland': ['Jagiellonian University',
-               'Wroclaw University of Science and Technology',
-               'Poznan University of Technology'],
-    'belgium': ['KU Leuven'],
-    'india': ['Indian Institute of Science', 'Indian Institute of Technology'],
-    'finland': ['Aalto University'],
-    'sweden': ['Lund University', 'Uppsala University', 'KTH'],
-    'chile': ['Universidad de Chile']
+    'ZA': ['Stellenbosch University',
+           'University of the Witwatersrand'],
+    'CH': ['École Polytechnique Fédérale de Lausanne', 'ETH Zürich',
+           'EPFL', 'ETH Zurich', 'University of Geneva',
+           'The Swiss AI Lab IDSIA'],
+    'JP': ['The University of Tokyo', 'RIKEN Center for Brain Science',
+           'Keio Univ.', 'Keio University',
+           'National Institute of Advanced Industrial Science and Technology',
+           'The University of Electro-Communications',
+           'Toyota Central R&D Labs.',
+           'Sony Imaging Products & Solutions Inc.',
+           'Okinawa Institute of Science and Technology Graduate University'],
+    'NL': ['University of Amsterdam', 'Radboud University',
+           'Navinfo Europe Research'],
+    'CA': ['McGill University', 'University of Toronto',
+           'University of Waterloo', 'University of British Columbia',
+           'University of Alberta', 'University of Calgary',
+           'Element AI', 'D-Wave Systems Inc.',
+           'U. of Ontario Inst. of Tech.', 'Simon Fraser University',
+           'Vector Institute', 'ÉTS Montreal'],
+    'FR': ['Université Paris-Saclay', 'University of Rennes', 'EURECOM',
+           'PSL Research University', 'Ecole Polytechnique',
+           'Sorbonne Université', 'École Normale Supérieure',
+           'fifty-five', 'Inria', 'Université Claude Bernard Lyon 1',
+           'Université de Bordeaux', 'Université Paris-Saclay'],
+    'IT': ['Università degli Studi di Pavia', 'Politecnico di Torino',
+           'Politecnico di Milano', 'Sapienza University',
+           'Istituto Italiano di Tecnologia'],
+    'DE': ['TU Dortmund University',
+           'Bosch Center for Artificial Intelligence',
+           'Max-Planck Institute for Intelligent Systems',
+           'Max-Planck-Institute for Intelligent Systems',
+           'Max Planck Institute for Intelligent Systems',
+           'Max Planck Institute for Informatics',
+           'University of Tübingen', 'MPI-SWS',
+           'Technische Universität München',
+           'TU Darmstadt', 'École polytechnique fédérale de Lausanne',
+           'Ostwestfalen-Lippe University of Applied Sciences',
+           'Friedrich-Schiller-Universität Jena',
+           'Freie Universität Berlin',
+           'École Polytechnique Fédérale de Lausanne',
+           'TU Dortmund', 'Technical University of Munich',
+           'Amazon Berlin', 'Technische Universität Darmstadt'],
+    'AU': ['The University of Sydney', 'University of Technology Sydney',
+           'Macquarie University', 'University of Melbourne',
+           'Deakin University', 'UNSW Sydney',
+           'Australian National University'],
+    'PK': ['Information Technology University Lahore'],
+    'TH': ['Vidyasirimedhi Institute of Science and Technology'],
+    'RU': ['Skolkovo Institute of Science and Technology',
+           'Moscow Institute of Physics and Technology',
+           'Lomonosov Moscow State University'],
+    'ES': ['Universitat Autònoma de Barcelona',
+           'Universidad Carlos III de Madrid'],
+    'DK': ['IT University of Copenhagen', 'University of Copenhagen',
+           'Aarhus University'],
+    'IL': ['Weizmann Institute of Science', 'Tel Aviv University',
+           'Bar Ilan University', 'Bar-Ilan University',
+           'Technion', 'Israel Institute of Technology',
+           'The Hebrew University of Jerusalem',
+           'Ariel University'],
+    'SG': ['National University of Singapore',
+           'Singapore University of Technology and Design',
+           'Nanyang Technological University',
+           'Singapore Management University'],
+    'BR': ['Universidade Federal de Minas Gerais', 'UFMG'],
+    'PL': ['Jagiellonian University',
+           'Wroclaw University of Science and Technology',
+           'Poznan University of Technology'],
+    'BE': ['KU Leuven'],
+    'IN': ['Indian Institute of Science', 'Indian Institute of Technology'],
+    'FI': ['Aalto University'],
+    'SE': ['Lund University', 'Uppsala University', 'KTH'],
+    'CL': ['Universidad de Chile']
 }
 
 organizations = []
@@ -172,20 +182,18 @@ for key, values in org_names.items():
     for name in values:
         org = {
             'name': name,
-            'country': key,
+            'country_code': key,
             'other_names': []
         }
         organizations.append(org)
 
-client = MongoClient()
-paper_db = client['paper_db']
 org_coll = paper_db['organization_collection']
 org_coll.delete_many({})
 org_coll.insert_many(organizations)
 
 papers = []
 paper_coll = paper_db['paper_info']
-
+paper_coll.delete_many({})
 read_limit = 75
 
 
@@ -201,41 +209,41 @@ def test_abbreviation(src, title):
     return False
 
 
-def classify_by_org(org_str, paper):
-    university = re.compile(
-        'universit[yé]|Politecnico di|Technion.+Israel'
-        '|UC (Berkeley|Los Angeles)'
-        '|universi(tat|dade)|UIUC'
-        '|Télécom ParisTech'
-        '|ETH Zürich'
-        '|TU Dortmund'
-        '|ÉTS Montreal'
-        '|U\\. of Ontario Inst\\. of Tech\\.'
-        '|Universität'
-        '|Seattle, WA 98195|UCLA'
-        '|Università',
-        flags=re.I)
-    if re.search(university, org_str):
-        organizations['university'].add(paper)
-        return True
-    institute = re.compile(
-        'institute|MIT|Inria|KAIST|ETH Zurich|college'
-        '|EPFL', flags=re.I)
-    if re.search(institute, org_str):
-        organizations['institute'].add(paper)
-        return True
-    corporation = re.compile(
-        'Google|IBM|Microsoft|Adobe|Tencent|Intel|Deepmind|Alibaba|Uber|AimBrain'
-        '|Research Center|Huawei|Element AI|ntt software innovation center'
-        '|Inc\\.|Amazon|Baidu',
-        flags=re.I)
-    if re.search(corporation, org_str):
-        organizations['corporation'].add(paper)
-        return True
-    if re.search("École Polytechnique Fédérale de Lausanne", org_str):
-        organizations['university'].add(paper)
-        return True
-    return False
+# def classify_by_org(org_str, paper):
+#     university = re.compile(
+#         'universit[yé]|Politecnico di|Technion.+Israel'
+#         '|UC (Berkeley|Los Angeles)'
+#         '|universi(tat|dade)|UIUC'
+#         '|Télécom ParisTech'
+#         '|ETH Zürich'
+#         '|TU Dortmund'
+#         '|ÉTS Montreal'
+#         '|U\\. of Ontario Inst\\. of Tech\\.'
+#         '|Universität'
+#         '|Seattle, WA 98195|UCLA'
+#         '|Università',
+#         flags=re.I)
+#     if re.search(university, org_str):
+#         organizations['university'].add(paper)
+#         return True
+#     institute = re.compile(
+#         'institute|MIT|Inria|KAIST|ETH Zurich|college'
+#         '|EPFL', flags=re.I)
+#     if re.search(institute, org_str):
+#         organizations['institute'].add(paper)
+#         return True
+#     corporation = re.compile(
+#         'Google|IBM|Microsoft|Adobe|Tencent|Intel|Deepmind|Alibaba|Uber|AimBrain'
+#         '|Research Center|Huawei|Element AI|ntt software innovation center'
+#         '|Inc\\.|Amazon|Baidu',
+#         flags=re.I)
+#     if re.search(corporation, org_str):
+#         organizations['corporation'].add(paper)
+#         return True
+#     if re.search("École Polytechnique Fédérale de Lausanne", org_str):
+#         organizations['university'].add(paper)
+#         return True
+#     return False
 
 
 year_dir = [year for year in os.listdir(data_base_path) if os.path.isdir(

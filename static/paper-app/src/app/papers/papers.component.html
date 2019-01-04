@@ -1,0 +1,8 @@
+<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
+  (page)="pageEvent($event)">
+</mat-paginator>
+<ul>
+  <li *ngFor="let paper of papersInPage">
+    <app-paper-detail [paper]="paper"></app-paper-detail>
+  </li>
+</ul>
