@@ -31,6 +31,7 @@ export class PapersComponent implements OnInit {
 
   pageEvent(event: PageEvent): void {
     const startIndex = event.pageIndex * event.pageSize;
+    // const endIndex = Math.min(startIndex + event.pageSize, Paper.length);
     const endIndex = startIndex + event.pageSize;
     this.papersInPage = this.papers.slice(startIndex, endIndex);
   }

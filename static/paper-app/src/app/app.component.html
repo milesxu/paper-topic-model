@@ -1,19 +1,21 @@
-<mat-toolbar color="primary" class="shrink">
+<mat-toolbar color="primary" class="toolbar">
   <mat-toolbar-row>
-    <span>Paper Statistic</span>
+    <span class="title">Paper Statistic</span>
     <span>
-      <a routerLink="/">Home</a>
+      <button mat-button (click)="gotoUrl('/')">Home</button>
       <button mat-button [matMenuTriggerFor]="menu">Statistic Results</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item><a routerLink="/maps">Region Visualization</a></button>
-        <button mat-menu-item><a routerLink="/word-cloud">Topic Clusters</a></button>
+        <button mat-menu-item (click)="gotoUrl('/maps')">Region Visualization</button>
+        <button mat-menu-item (click)="gotoUrl('/word-cloud')">Topic Clusters</button>
       </mat-menu>
-      <a routerLink="/performance">Performance Comparison</a>
+      <button mat-button (click)="gotoUrl('/performance')">Performance Comparison</button>
     </span>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened>Drawer content</mat-drawer>
+  <mat-drawer mode="side" opened>
+    <app-category-tree></app-category-tree>
+  </mat-drawer>
   <mat-drawer-content>
     <router-outlet></router-outlet>
   </mat-drawer-content>
