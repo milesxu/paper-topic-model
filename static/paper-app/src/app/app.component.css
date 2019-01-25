@@ -1,10 +1,21 @@
-.shrink {
-  /*min-height: 48px;
-  max-height: 48px;*/
+.toolbar {
+  position: sticky;
+  position: -webkit-sticky;
+  /* For macOS/iOS Safari */
+  top: 0;
+  /* Sets the sticky toolbar to be on top */
+  z-index: 1000;
+  /* Ensure that your app's content doesn't overlap the toolbar */
 }
 
 mat-drawer-container {
-  height: 100%;
+  height: calc(100% - 64px);
+  height: -o-calc(100% - 65px);
+  /* opera */
+  height: -webkit-calc(100% - 65px);
+  /* google, safari */
+  height: -moz-calc(100% - 65px);
+  /* firefox */
   overflow: hidden;
 }
 
@@ -12,7 +23,12 @@ mat-drawer {
   width: 20rem;
 }
 
+<<<<<<< HEAD
 #search-box {
   width: 200px;
   height: 20px;
+=======
+.title {
+  margin-right: 5rem;
+>>>>>>> 277202e2e6228fd8309b9bf9b931a47737d5ed92
 }

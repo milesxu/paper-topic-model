@@ -18,6 +18,10 @@ import { PaperDetailComponent } from './paper-detail/paper-detail.component';
 import { PerformanceComponent } from './performance/performance.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { WordCloudComponent } from './word-cloud/word-cloud.component';
+import { CategoryTreeComponent } from './category-tree/category-tree.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,8 @@ import { WordCloudComponent } from './word-cloud/word-cloud.component';
     MapsComponent,
     PaperDetailComponent,
     PerformanceComponent,
-    WordCloudComponent
+    WordCloudComponent,
+    CategoryTreeComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,10 @@ import { WordCloudComponent } from './word-cloud/word-cloud.component';
     MatTreeModule,
     MatPaginatorModule,
     MatListModule,
-    MatGridListModule
+    MatGridListModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

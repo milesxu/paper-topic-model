@@ -1,21 +1,28 @@
-<mat-toolbar color="primary" class="shrink">
+<mat-toolbar color="primary" class="toolbar">
   <mat-toolbar-row>
-    <span>Paper Statistic</span>
+    <span class="title">Paper Statistic</span>
     <span>
-      <a routerLink="/">Home</a>
+      <button mat-button (click)="gotoUrl('/')">Home</button>
       <button mat-button [matMenuTriggerFor]="menu">Statistic Results</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item><a routerLink="/maps">Region Visualization</a></button>
-        <button mat-menu-item><a routerLink="/word-cloud">Topic Clusters</a></button>
+        <button mat-menu-item (click)="gotoUrl('/maps')">Region Visualization</button>
+        <button mat-menu-item (click)="gotoUrl('/word-cloud')">Topic Clusters</button>
       </mat-menu>
+<<<<<<< HEAD
       <a routerLink="/performance" style="margin-right:600px">Performance Comparison</a>
 	  <input matInput #searchBox id="search-box" (input)="search(searchBox.value)" placeholder="search">
+=======
+      <button mat-button (click)="gotoUrl('/performance')">Performance Comparison</button>
+	  <input type="text" name="search" placeholder="search">
+>>>>>>> 277202e2e6228fd8309b9bf9b931a47737d5ed92
       <button mat-icon-button style="margin-left:30px"><mat-icon>search</mat-icon></button>
     </span>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened>Drawer content</mat-drawer>
+  <mat-drawer mode="side" opened>
+    <app-category-tree></app-category-tree>
+  </mat-drawer>
   <mat-drawer-content>
     <router-outlet></router-outlet>
   </mat-drawer-content>
