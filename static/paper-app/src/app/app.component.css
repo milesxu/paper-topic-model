@@ -11,3 +11,8 @@ mat-drawer-container {
 mat-drawer {
   width: 20rem;
 }
+
+#search-box {
+  width: 200px;
+  height: 20px;
+}

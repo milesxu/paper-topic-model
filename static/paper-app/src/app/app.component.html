@@ -9,7 +9,7 @@
         <button mat-menu-item><a routerLink="/word-cloud">Topic Clusters</a></button>
       </mat-menu>
       <a routerLink="/performance" style="margin-right:600px">Performance Comparison</a>
-	  <input type="text" name="search" placeholder="search">
+	  <input matInput #searchBox id="search-box" (input)="search(searchBox.value)" placeholder="search">
       <button mat-icon-button style="margin-left:30px"><mat-icon>search</mat-icon></button>
     </span>
   </mat-toolbar-row>
