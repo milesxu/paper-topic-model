@@ -22,6 +22,7 @@ import { CategoryTreeComponent } from './category-tree/category-tree.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatGridListModule,
     MatCheckboxModule,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
+    HighchartsChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]
