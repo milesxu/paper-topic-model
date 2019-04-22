@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, Response, stream_with_context, request, flash
+from flask_cors import CORS
 import time
 import json
 from datetime import datetime
 import database_operations as ops
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/')
@@ -49,12 +51,13 @@ data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 
 
 def generate():
-    yield '['
+    # yield '['
     for item in data:
         # yield str(item)
-        yield json.dumps({'count': item}) + ','
+        yield json.dumps(
+            {'count': item, 'timing': item * 2})
         time.sleep(2)
-    yield ']'
+    # yield ']'
 
 
 @app.route('/stream')
