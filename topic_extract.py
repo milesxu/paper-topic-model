@@ -41,5 +41,7 @@ def topic_extract(src, dest):
 
 if __name__ == '__main__':
     # print(len(sys.argv))
-    # topic_extract(sys.argv[1], sys.argv[2])
-    topic_extract(sys.argv[1], '')
+    if len(sys.argv) < 3:
+        topic_extract(sys.argv[1], '')
+    else:
+        topic_extract(sys.argv[1], sys.argv[2])

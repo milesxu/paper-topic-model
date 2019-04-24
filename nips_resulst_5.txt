@@ -1,0 +1,160 @@
+Epoch 1 (1.4s): Perplexity = 2761.22, acc = 0.495, eta mean = 0.00, logstd = 0.04
+Epoch 2 (0.8s): Perplexity = 1765.87, acc = 0.614, eta mean = 0.05, logstd = 0.29
+Epoch 3 (0.8s): Perplexity = 1546.58, acc = 0.601, eta mean = -0.07, logstd = 0.43
+Epoch 4 (0.9s): Perplexity = 1430.51, acc = 0.600, eta mean = -0.10, logstd = 0.54
+Epoch 5 (0.9s): Perplexity = 1363.23, acc = 0.603, eta mean = -0.10, logstd = 0.63
+Epoch 6 (0.9s): Perplexity = 1345.98, acc = 0.597, eta mean = -0.10, logstd = 0.70
+Epoch 7 (0.9s): Perplexity = 1317.20, acc = 0.598, eta mean = -0.09, logstd = 0.76
+Epoch 8 (0.9s): Perplexity = 1292.55, acc = 0.597, eta mean = -0.08, logstd = 0.81
+Epoch 9 (0.9s): Perplexity = 1276.64, acc = 0.599, eta mean = -0.08, logstd = 0.85
+Epoch 10 (0.9s): Perplexity = 1273.63, acc = 0.597, eta mean = -0.08, logstd = 0.88
+Epoch 11 (0.9s): Perplexity = 1265.47, acc = 0.597, eta mean = -0.08, logstd = 0.91
+Epoch 12 (0.9s): Perplexity = 1268.95, acc = 0.599, eta mean = -0.08, logstd = 0.93
+Epoch 13 (0.9s): Perplexity = 1241.25, acc = 0.598, eta mean = -0.07, logstd = 0.95
+Epoch 14 (0.9s): Perplexity = 1243.41, acc = 0.598, eta mean = -0.07, logstd = 0.97
+Epoch 15 (0.9s): Perplexity = 1243.13, acc = 0.599, eta mean = -0.08, logstd = 0.99
+Epoch 16 (0.9s): Perplexity = 1240.36, acc = 0.597, eta mean = -0.08, logstd = 1.01
+Epoch 17 (0.9s): Perplexity = 1237.70, acc = 0.597, eta mean = -0.08, logstd = 1.03
+Epoch 18 (0.9s): Perplexity = 1236.11, acc = 0.598, eta mean = -0.06, logstd = 1.04
+Epoch 19 (0.9s): Perplexity = 1229.48, acc = 0.599, eta mean = -0.05, logstd = 1.06
+Epoch 20 (0.9s): Perplexity = 1226.45, acc = 0.597, eta mean = -0.04, logstd = 1.06
+Epoch 21 (0.9s): Perplexity = 1233.80, acc = 0.597, eta mean = -0.04, logstd = 1.07
+Epoch 22 (0.9s): Perplexity = 1221.03, acc = 0.599, eta mean = -0.04, logstd = 1.08
+Epoch 23 (0.9s): Perplexity = 1215.38, acc = 0.600, eta mean = -0.04, logstd = 1.10
+Epoch 24 (0.9s): Perplexity = 1214.53, acc = 0.595, eta mean = -0.04, logstd = 1.11
+Epoch 25 (0.9s): Perplexity = 1212.77, acc = 0.599, eta mean = -0.04, logstd = 1.12
+Epoch 26 (0.9s): Perplexity = 1218.34, acc = 0.597, eta mean = -0.03, logstd = 1.13
+Epoch 27 (0.9s): Perplexity = 1217.69, acc = 0.598, eta mean = -0.02, logstd = 1.14
+Epoch 28 (0.9s): Perplexity = 1215.68, acc = 0.599, eta mean = -0.02, logstd = 1.15
+Epoch 29 (0.9s): Perplexity = 1204.06, acc = 0.598, eta mean = -0.02, logstd = 1.16
+Epoch 30 (1.0s): Perplexity = 1202.72, acc = 0.599, eta mean = -0.03, logstd = 1.16
+Epoch 31 (0.8s): Perplexity = 1201.00, acc = 0.597, eta mean = -0.04, logstd = 1.17
+Epoch 32 (0.8s): Perplexity = 1214.84, acc = 0.599, eta mean = -0.04, logstd = 1.17
+Epoch 33 (0.8s): Perplexity = 1202.97, acc = 0.599, eta mean = -0.05, logstd = 1.18
+Epoch 34 (0.8s): Perplexity = 1193.04, acc = 0.594, eta mean = -0.04, logstd = 1.18
+Epoch 35 (0.8s): Perplexity = 1196.14, acc = 0.602, eta mean = -0.04, logstd = 1.19
+Epoch 36 (0.8s): Perplexity = 1194.20, acc = 0.595, eta mean = -0.02, logstd = 1.20
+Epoch 37 (0.8s): Perplexity = 1202.14, acc = 0.599, eta mean = -0.01, logstd = 1.21
+Epoch 38 (0.8s): Perplexity = 1194.65, acc = 0.600, eta mean = -0.00, logstd = 1.21
+Epoch 39 (0.8s): Perplexity = 1200.29, acc = 0.599, eta mean = 0.00, logstd = 1.21
+Epoch 40 (0.8s): Perplexity = 1195.86, acc = 0.599, eta mean = -0.01, logstd = 1.22
+Epoch 41 (0.8s): Perplexity = 1196.85, acc = 0.596, eta mean = -0.01, logstd = 1.22
+Epoch 42 (0.8s): Perplexity = 1191.93, acc = 0.600, eta mean = 0.01, logstd = 1.22
+Epoch 43 (0.8s): Perplexity = 1195.10, acc = 0.599, eta mean = 0.01, logstd = 1.23
+Epoch 44 (0.8s): Perplexity = 1197.93, acc = 0.599, eta mean = -0.01, logstd = 1.23
+Epoch 45 (0.8s): Perplexity = 1196.24, acc = 0.597, eta mean = -0.01, logstd = 1.23
+Epoch 46 (0.8s): Perplexity = 1193.84, acc = 0.600, eta mean = -0.01, logstd = 1.23
+Epoch 47 (0.8s): Perplexity = 1203.71, acc = 0.597, eta mean = -0.02, logstd = 1.24
+Epoch 48 (0.8s): Perplexity = 1194.74, acc = 0.597, eta mean = -0.03, logstd = 1.24
+Epoch 49 (0.8s): Perplexity = 1189.62, acc = 0.600, eta mean = -0.02, logstd = 1.24
+Epoch 50 (0.8s): Perplexity = 1190.95, acc = 0.600, eta mean = -0.02, logstd = 1.25
+Epoch 51 (0.8s): Perplexity = 1191.30, acc = 0.597, eta mean = -0.02, logstd = 1.25
+Epoch 52 (0.8s): Perplexity = 1191.80, acc = 0.597, eta mean = -0.03, logstd = 1.26
+Epoch 53 (0.8s): Perplexity = 1187.64, acc = 0.602, eta mean = -0.03, logstd = 1.26
+Epoch 54 (0.8s): Perplexity = 1185.85, acc = 0.599, eta mean = -0.04, logstd = 1.26
+Epoch 55 (0.8s): Perplexity = 1188.50, acc = 0.596, eta mean = -0.04, logstd = 1.26
+Epoch 56 (0.8s): Perplexity = 1176.84, acc = 0.601, eta mean = -0.06, logstd = 1.27
+Epoch 57 (0.8s): Perplexity = 1177.78, acc = 0.594, eta mean = -0.06, logstd = 1.27
+Epoch 58 (0.8s): Perplexity = 1193.34, acc = 0.600, eta mean = -0.05, logstd = 1.27
+Epoch 59 (0.8s): Perplexity = 1191.02, acc = 0.602, eta mean = -0.04, logstd = 1.28
+Epoch 60 (0.8s): Perplexity = 1190.22, acc = 0.597, eta mean = -0.03, logstd = 1.28
+Topic 0, eta mean = 0.12 stdev = 4.25: filter filters convolutional convolution learned structure cnn representations conference fields 
+Topic 1, eta mean = -0.20 stdev = 3.17: classifier classification density classifiers score confidence bayes examples scores decision 
+Topic 2, eta mean = -1.29 stdev = 4.09: player game players games regret strategy equilibrium nash play zero 
+Topic 3, eta mean = -0.17 stdev = 3.15: explanations explanation approach sensitivity classification inputs segments interpretability values conference 
+Topic 4, eta mean = -0.11 stdev = 2.88: feedback user question users questions real target human goal candidate 
+Topic 5, eta mean = 0.10 stdev = 3.33: meta learn physics dynamics approach trained task differentiable physical able 
+Topic 6, eta mean = -0.36 stdev = 2.66: cell cells post samples cross generated single grid autoencoder quality 
+Topic 7, eta mean = -0.28 stdev = 2.85: learner hypothesis relational teacher memory adaptive version preference discrete fourier 
+Topic 8, eta mean = 0.65 stdev = 2.99: matching proc match matches activation net relu output simple conditional 
+Topic 9, eta mean = -0.39 stdev = 2.67: generation retrieval module modules sentence diversity captioning generated evaluation phrases 
+Topic 10, eta mean = 0.92 stdev = 4.41: convergence convex dual descent solution coordinate iterations iteration accelerated objective 
+Topic 11, eta mean = -0.34 stdev = 3.74: causal variables conditional structure inference score observed assumption graph bayesian 
+Topic 12, eta mean = -0.63 stdev = 4.11: attention lstm language decoder sequence encoder translation machine table word 
+Topic 13, eta mean = -0.33 stdev = 3.00: embeddings knowledge link relation vectors entity simple relations learn entities 
+Topic 14, eta mean = -0.08 stdev = 3.10: latent vae representations generative mnist factors disentangled learn images disentangling 
+Topic 15, eta mean = -0.38 stdev = 2.39: audio signal video separation source spatial visual sound ieee sources 
+Topic 16, eta mean = 0.12 stdev = 3.32: pca exp natural basis exponential fisher analysis power vector family 
+Topic 17, eta mean = 0.55 stdev = 3.97: batch normalization cifar test trained generalization layers standard resnet experiments 
+Topic 18, eta mean = 0.72 stdev = 3.32: inference variables graphical probabilistic structured map approximate factor propagation message 
+Topic 19, eta mean = -0.45 stdev = 3.46: block teacher student blocks diffusion distillation knowledge transfer proposed factors 
+Topic 20, eta mean = -0.52 stdev = 2.71: word text words language sentence sentences adversarial natural discriminator generator 
+Topic 21, eta mean = -1.26 stdev = 5.15: regret arm bandit optimal arms setting online bandits exploration round 
+Topic 22, eta mean = -0.98 stdev = 5.50: generative gan images adversarial generator samples discriminator gans generated latent 
+Topic 23, eta mean = -1.54 stdev = 4.14: privacy private queries differential query setting noise user price acm 
+Topic 24, eta mean = -0.25 stdev = 3.67: control dynamics system trajectories trajectory dynamical systems robust policy policies 
+Topic 25, eta mean = 0.64 stdev = 3.60: label classification labels entropy multi classifier cross conference datasets train 
+Topic 26, eta mean = -0.28 stdev = 3.57: vol stability frequency approach stable estimate represents cost proposed contour 
+Topic 27, eta mean = -0.63 stdev = 5.05: markov chain distributions sampling langevin monte samples carlo gibbs mcmc 
+Topic 28, eta mean = 0.15 stdev = 2.92: code phase codes complex coding bits images valued real single 
+Topic 29, eta mean = -0.97 stdev = 4.78: agent agents policy action actions game games reinforcement critic conference 
+Topic 30, eta mean = 0.15 stdev = 3.02: shot classes attribute attributes zero unseen semantic visual seen examples 
+Topic 31, eta mean = -1.31 stdev = 4.08: policy agent reinforcement expert entropy imitation policies demonstrations optimal goal 
+Topic 32, eta mean = 0.15 stdev = 3.27: softmax instance instances base attention predictions classification uncertainty ensemble classifier 
+Topic 33, eta mean = -0.64 stdev = 4.47: convolution layers convolutional pruning compression weights channel bit quantization channels 
+Topic 34, eta mean = 0.17 stdev = 3.81: regularization norm regularized lipschitz regularizer constant weight term spectral conference 
+Topic 35, eta mean = 0.91 stdev = 3.36: task tasks transfer test multi architecture multitask learn shared single 
+Topic 36, eta mean = -0.26 stdev = 2.22: graph generation graphs design molecular generated edge generate property nodes 
+Topic 37, eta mean = -0.44 stdev = 3.62: treatment covariates patient event patients outcomes medical observational approach captioning 
+Topic 38, eta mean = 0.56 stdev = 3.59: gaussian latent covariance processes dimensional mean sparse inducing structure kernel 
+Topic 39, eta mean = -0.53 stdev = 1.89: style bounding boxes vision scene transfer content language object box 
+Topic 40, eta mean = 0.59 stdev = 3.30: supervised semi unlabeled labeled invariant classification invariance labels representations results 
+Topic 41, eta mean = -0.16 stdev = 3.76: recurrent rnn sequence lstm rnns decoding beam hidden output recognition 
+Topic 42, eta mean = -0.76 stdev = 4.01: adversarial attack examples attacks robustness robust images perturbations classifier test 
+Topic 43, eta mean = 0.13 stdev = 2.86: energy system quantum systems potential particle evolution density atomic physics 
+Topic 44, eta mean = 1.26 stdev = 3.56: step update steps memory online updates streaming proposed updated dynamic 
+Topic 45, eta mean = -0.25 stdev = 4.76: stochastic rate sgd convergence svrg variance convex complexity descent iteration 
+Topic 46, eta mean = -1.34 stdev = 5.25: policy agent reinforcement environment exploration goal environments learn tasks task 
+Topic 47, eta mean = -0.88 stdev = 3.45: semantic object images objects visual manipulation results scene adversarial red 
+Topic 48, eta mean = -0.43 stdev = 4.11: optimal action mdp transition policy mdps reinforcement decision markov iteration 
+Topic 49, eta mean = 0.39 stdev = 4.38: kernel kernels gaussian machine structured hilbert systems processing rkhs approach 
+Topic 50, eta mean = 0.06 stdev = 3.53: human brain trial neuroscience responses task activity prior cell response 
+Topic 51, eta mean = -0.99 stdev = 4.64: object objects detection box visual scene vision computer module cvpr 
+Topic 52, eta mean = 0.07 stdev = 4.14: communication distributed gradients parallel machine server sgd compression decentralized worker 
+Topic 53, eta mean = -0.76 stdev = 3.25: question attention reasoning visual graph answering answer knowledge questions approach 
+Topic 54, eta mean = 0.96 stdev = 3.34: test testing positive power regions false tests samples proposed rate 
+Topic 55, eta mean = -0.05 stdev = 4.19: submodular greedy elements maximization concave monotone lemma oracle constraints solution 
+Topic 56, eta mean = 0.09 stdev = 4.26: bounds lower upper complexity generalization uniform robust interval properties tight 
+Topic 57, eta mean = 0.29 stdev = 3.83: user topic items latent item topics recommendation gamma users processes 
+Topic 58, eta mean = -0.32 stdev = 3.20: video action temporal motion videos frames frame actions planning representations 
+Topic 59, eta mean = 0.03 stdev = 3.34: sequence conference memory sequences sequential proceedings international processing generated length 
+Topic 60, eta mean = -0.40 stdev = 2.53: speech audio encoder synthesis generative trained autoregressive quality text parallel 
+Topic 61, eta mean = -0.24 stdev = 3.41: tree trees nodes boosting forests decision leaf forest partition consistent 
+Topic 62, eta mean = 0.39 stdev = 3.58: noise noisy labels structure label experiments corrupted robust transition truth 
+Topic 63, eta mean = -0.56 stdev = 5.26: stochastic hessian convex nonconvex stationary convergence descent approximate saddle complexity 
+Topic 64, eta mean = 2.28 stdev = 5.14: convex risk optimal assumption following consider bounds analysis constant section 
+Topic 65, eta mean = 0.32 stdev = 3.36: url org http doi abs https issn dimension corr proceedings 
+Topic 66, eta mean = 0.46 stdev = 2.98: metric hypothesis distance output hypotheses definition pairs metrics test learned 
+Topic 67, eta mean = -0.34 stdev = 3.66: fairness decision discrimination fair individuals individual impact social optimal decisions 
+Topic 68, eta mean = -0.16 stdev = 4.44: lemma complexity samples mixture pac distributions section proof following poly 
+Topic 69, eta mean = 0.41 stdev = 3.60: tensor sparse sparsity rank decomposition regression tensors norm low statistical 
+Topic 70, eta mean = -0.00 stdev = 4.11: sparse recovery signal measurements ieee phase gaussian processing blind analysis 
+Topic 71, eta mean = 0.61 stdev = 3.46: distance manifold metric distortion euclidean measure distances measures outliers geometry 
+Topic 72, eta mean = 0.64 stdev = 3.79: leverage tensorflow compute computation scores code computing mode differentiation derivatives 
+Topic 73, eta mean = -1.13 stdev = 4.36: policy policies variance evaluation estimate action sampling oracle average estimates 
+Topic 74, eta mean = 0.89 stdev = 3.30: domain target source domains transfer translation adaptation specific shared alignment 
+Topic 75, eta mean = -0.25 stdev = 3.08: context embeddings representations word contextual corpus conference dimensionality proceedings level 
+Topic 76, eta mean = 0.02 stdev = 4.11: graph nodes graphs edges edge vertex structure vertices spectral social 
+Topic 77, eta mean = 0.26 stdev = 3.65: bayesian acquisition search batch evaluations machine active conference gaussian budget 
+Topic 78, eta mean = -0.15 stdev = 3.33: program programs tree programming synthesis output code language task level 
+Topic 79, eta mean = 1.20 stdev = 4.09: regression estimation estimator mean parameter statistics variance estimate risk empirical 
+Topic 80, eta mean = 0.07 stdev = 3.82: sampling importance active nodes sampled variance structure parent product uniform 
+Topic 81, eta mean = 0.51 stdev = 4.75: recognition convolutional resnet images cvpr results vision layers table ieee 
+Topic 82, eta mean = 0.64 stdev = 3.28: clustering cost means clusters cluster center optimal centers instance partition 
+Topic 83, eta mean = -0.01 stdev = 3.75: discrete continuous entropy density variables estimator estimation mutual estimators rate 
+Topic 84, eta mean = 0.56 stdev = 3.31: rule rules datasets interpretability interpretable sets machine predictive complexity competitive 
+Topic 85, eta mean = -0.29 stdev = 3.94: wasserstein distance distributions optimal transport divergence domain modes adversarial mode 
+Topic 86, eta mean = 1.03 stdev = 3.22: projection subspace component components projections vector vectors onto seed dimensional 
+Topic 87, eta mean = 0.01 stdev = 3.05: samples uncertainty classes mnist precision recall detection score conference softmax 
+Topic 88, eta mean = -0.46 stdev = 2.85: heavy kxk tail distributions profiles generalization fixed test means values 
+Topic 89, eta mean = -1.07 stdev = 4.87: images object shape pose depth view cvpr map reconstruction resolution 
+Topic 90, eta mean = 0.87 stdev = 3.70: rank matrices low entries principal column row singular robust svd 
+Topic 91, eta mean = -0.31 stdev = 2.74: temporal alignment demonstrations task inverse prior specification domain candidate frame 
+Topic 92, eta mean = -0.14 stdev = 2.57: protein structure regular string convolutional double cnns sequence free length 
+Topic 93, eta mean = -0.21 stdev = 3.96: global descent minima minimum population convergence preprint initialization converges spurious 
+Topic 94, eta mean = -0.24 stdev = 2.61: adaptation hypothesis domain target source distributions objective weighted adapt domains 
+Topic 95, eta mean = 0.88 stdev = 4.18: layers hidden neurons output relu weights activation neuron weight connected 
+Topic 96, eta mean = 0.82 stdev = 3.63: search constraints constraint solver solution approach relaxation strategy nodes solve 
+Topic 97, eta mean = 0.20 stdev = 3.44: query similarity nearest database queries distance neighbors neighbor search graph 
+Topic 98, eta mean = -0.05 stdev = 5.59: variational inference posterior bayesian likelihood prior gaussian latent approximate distributions 
+Topic 99, eta mean = 0.64 stdev = 3.10: series missing detection change values precision robust real range recall 
