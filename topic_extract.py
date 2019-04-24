@@ -29,6 +29,10 @@ def topic_extract(src, dest):
             word_dict[s] += word_dict.pop(l, None)
     # print(word_dict)
     # print(sum(word_dict.values()))
+    wordList = word_dict.items()
+    wordList = sorted(wordList, key=lambda x: x[1], reverse=True)
+    for w in wordList:
+        print(w[1], w[0])
     if dest:
         result = [{"name": k, "weight": word_dict[k]} for k in word_dict]
         with open(dest, 'w') as dfile:
@@ -37,4 +41,5 @@ def topic_extract(src, dest):
 
 if __name__ == '__main__':
     # print(len(sys.argv))
-    topic_extract(sys.argv[1], sys.argv[2])
+    # topic_extract(sys.argv[1], sys.argv[2])
+    topic_extract(sys.argv[1], '')
