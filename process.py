@@ -7,12 +7,13 @@ from sklearn.feature_extraction.text import CountVectorizer
 from scipy.sparse import save_npz
 from stopwords import stop_words
 
-filenames = os.listdir('./data/2018/txt')
+path = './data/2018/txt'
+filenames = os.listdir(path)
 
 corpus = []
 
 for filename in filenames:
-    with open("txt/" + filename, encoding='utf-8', mode='r') as f:
+    with open(path + '/' + filename, encoding='utf-8', mode='r') as f:
         content = f.read()
         if len(content) > 0:
             corpus.append(content)
