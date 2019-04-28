@@ -26,3 +26,8 @@ mat-drawer {
 .title {
   margin-right: 5rem;
 }
+
+#main_search {
+  margin-left: 2rem;
+  /* font-size: 1rem; */
+}

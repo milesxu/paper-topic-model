@@ -1,6 +1,73 @@
+<mat-toolbar>
+  <mat-label>Subject</mat-label>
+  <mat-form-field>
+    <mat-select [(value)]="selectedSubject">
+      <mat-option value="lntm_train">Topic Model Training</mat-option>
+      <mat-option value="other">Other Models</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-label>Dataset</mat-label>
+  <mat-form-field>
+    <mat-select [(value)]="selectedDataset">
+      <mat-option value="nips2018">NeurIPS 2018</mat-option>
+      <mat-option value="other">Other Datasets</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-label>Epoch Number</mat-label>
+  <mat-form-field>
+    <input matInput type="number" min="5" max="20" [(ngModel)]="epochNum">
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="runSim()">
+    Run
+  </button>
+</mat-toolbar>
 <mat-grid-list cols="2" rowHeight="2:1">
-  <mat-grid-tile>{{test_str}}</mat-grid-tile>
-  <mat-grid-tile>2</mat-grid-tile>
-  <mat-grid-tile>3</mat-grid-tile>
-  <mat-grid-tile>4</mat-grid-tile>
+  <mat-grid-tile>
+    <ul>
+      <li *ngFor="let r of cpu_result">
+        Epoch {{r.count}}: time elapsed: {{r.timing}}, perplexity: {{r.perplexity}}
+      </li>
+    </ul>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <ul>
+      <li *ngFor="let r of gpu_result">
+        Epoch {{r.count}}: time elapsed: {{r.timing}}, perplexity: {{r.perplexity}}
+      </li>
+    </ul>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="epoch">
+        <th mat-header-cell *matHeaderCellDef> Epochs </th>
+        <td mat-cell *matCellDef="let element"> {{element.epoch}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="cpu">
+        <th mat-header-cell *matHeaderCellDef> CPU Time</th>
+        <td mat-cell *matCellDef="let element"> {{element.cpu}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="gpu">
+        <th mat-header-cell *matHeaderCellDef> GPU Time </th>
+        <td mat-cell *matCellDef="let element"> {{element.gpu}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="rate">
+        <th mat-header-cell *matHeaderCellDef> Accelerate Ratio </th>
+        <td mat-cell *matCellDef="let element"> {{element.rate}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="column_string"></tr>
+      <tr mat-row *matRowDef="let row; columns: column_string;"></tr>
+    </table>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" [(update)]="updateFlag"
+      style="width: 100%; height: 400px; display: block;">
+    </highcharts-chart>
+  </mat-grid-tile>
 </mat-grid-list>

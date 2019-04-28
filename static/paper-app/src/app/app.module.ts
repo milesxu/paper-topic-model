@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +24,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -38,6 +42,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -50,7 +55,10 @@ import { HighchartsChartModule } from 'highcharts-angular';
     MatCheckboxModule,
     MatFormFieldModule,
     MatIconModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    MatSelectModule,
+    MatInputModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

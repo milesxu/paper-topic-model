@@ -1,0 +1,35 @@
+mat-select {
+  font-size: 1rem;
+}
+
+mat-label {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+button {
+  margin-left: 1rem;
+}
+
+mat-grid-tile {
+  background: #f0f0f0;
+  justify-content: left;
+  align-items: unset;
+}
+
+.mat-grid-tile .mat-figure {
+  justify-content: left;
+  align-items: unset;
+}
+
+ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+Table {
+  width: 80%;
+  position: absolute;
+  top: 0;
+}

@@ -70,6 +70,7 @@ export class MapsComponent implements OnInit, AfterViewInit, OnDestroy {
           legend.series = wordSeries;
           legend.width = am4core.percent(80);
           legend.align = 'center';
+          legend.valign = 'bottom';
 
           this.chart = chart;
         });

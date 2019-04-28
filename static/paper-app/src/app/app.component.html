@@ -9,8 +9,12 @@
         <button mat-menu-item (click)="gotoUrl('/word-cloud')">Topic Clusters</button>
       </mat-menu>
       <button mat-button (click)="gotoUrl('/performance')">Performance Comparison</button>
-	  <input type="text" name="search" placeholder="search">
-      <button mat-icon-button style="margin-left:30px"><mat-icon>search</mat-icon></button>
+      <mat-form-field>
+        <input matInput type="text" name="search" placeholder="Keywords..." id="main_search">
+      </mat-form-field>
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
     </span>
   </mat-toolbar-row>
 </mat-toolbar>
