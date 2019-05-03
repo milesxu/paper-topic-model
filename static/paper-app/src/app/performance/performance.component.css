@@ -11,25 +11,36 @@ button {
   margin-left: 1rem;
 }
 
-mat-grid-tile {
+.mat-grid-tile {
   background: #f0f0f0;
   justify-content: left;
   align-items: unset;
+  padding: 0;
 }
 
 .mat-grid-tile .mat-figure {
-  justify-content: left;
+  /* justify-content: left; */
   align-items: unset;
 }
 
 ul {
   position: absolute;
-  top: 0;
+  top: 2rem;
   left: 0;
+}
+
+h4 {
+  position: absolute;
+  top: 0;
 }
 
 Table {
   width: 80%;
   position: absolute;
   top: 0;
+}
+
+.highcharts-container {
+  display: inline-block;
+  margin: 0 auto;
 }

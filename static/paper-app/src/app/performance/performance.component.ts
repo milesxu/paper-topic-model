@@ -34,15 +34,17 @@ export class PerformanceComponent implements OnInit {
   updateFlag = false;
   chartOptions = {
     chart: {
-      type: 'bar'
+      type: 'bar',
+      spacingLeft: 10,
+      marginLeft: 10
     },
     series: [
       {
-        name: 'CPU',
+        name: 'Normal',
         data: []
       },
       {
-        name: 'GPU',
+        name: 'CUDA Accelerated',
         data: []
       }
     ],
