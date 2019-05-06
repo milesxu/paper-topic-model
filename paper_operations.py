@@ -429,12 +429,13 @@ def paper_info_build(basic_path, org_build=False, crawl=False,
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('org', default=False, nargs='?', type=bool,
+    parser.add_argument('path', type=str, help='path for papers')
+    parser.add_argument('-org', default=False, action='store_true',
                         help='whether extract org name from txt file')
-    parser.add_argument('crawl', default=False, nargs='?', type=bool,
+    parser.add_argument('-crawl', default=False, action='store_true',
                         help='whether extract org name from txt file')
-    parser.add_argument('write', default=False, nargs='?', type=bool,
+    parser.add_argument('-write', default=False, action='store_true',
                         help='whether extract org name from txt file')
     args = parser.parse_args()
-    print(args.org, args.crawl, args.write)
-    paper_info_build(sys.argv[1], args.org, args.crawl, args.write)
+    print(args.path, args.org, args.crawl, args.write)
+    # paper_info_build(sys.argv[1], args.org, args.crawl, args.write)
