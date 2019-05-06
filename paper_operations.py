@@ -1,6 +1,11 @@
 import os
 import sys
 import regex
+import time
+import random
+import json
+import requests
+from bs4 import BeautifulSoup
 
 org_names = {
     'US': [
@@ -322,6 +327,9 @@ def paper_list(basic_path):
 
 
 def org_extract(txt_path):
+    '''
+    TODO: add outliers' info directly
+    '''
     if not os.path.isfile(txt_path):
         _, tail = os.path.split(txt_path)
         print(tail + ' not found!')
@@ -344,14 +352,43 @@ def org_extract(txt_path):
             # print(org_str)
 
 
-def paper_info_build(basic_path):
+def cvpr_crawler(url):
+    page = requests.get(url)
+    page_parsed = BeautifulSoup(page.text, 'lxml')
+    authors = page_parsed.find('div', {'id': 'authors'}).i.string.strip()
+    abstract = page_parsed.find('div', {'id': 'abstract'}).string.strip()
+    time.sleep(5 + random.randint(0, 5))
+    return authors, abstract
+
+
+def paper_info_build(basic_path, org_build=False):
+    papers = []
     for link, page, title in paper_list(basic_path):
         pdf_name = link.split('/')[-1]
         if not pdf_name.endswith('.pdf'):
             pdf_name = pdf_name.split('=')[-1] + '.pdf'
         txt_name = pdf_name[0:-3] + 'txt'
         txt_path = os.path.join(basic_path, 'txt', txt_name)
-        org_extract(txt_path)
+        if org_build:
+            org_extract(txt_path)
+        base_name = os.path.basename(basic_path)
+        if base_name.startswith('cvpr'):
+            authors, abstract = cvpr_crawler(page)
+        elif base_name.startswith('iclr'):
+            pass
+        elif base_name.startswith('icml'):
+            pass
+        papers.append({
+            'conference': base_name,
+            'pdf': link,
+            'intro': page,
+            'title': title,
+            'authors': authors,
+            'abstract': abstract
+        })
+    json_file = os.path.join(basic_path, 'papers.json')
+    with open(json_file, 'w+') as jfile:
+        json.dump(papers, jfile)
 
 
 if __name__ == "__main__":

@@ -27,7 +27,7 @@ country_code.delete_many({})
 country_code.insert_many([{"code": key, "name": value}
                           for key, value in iso_codes.items()])
 
-
+# old organizations. A new one is in paper_operations.py
 org_names = {
     'US': [
         'University of Southern California',
