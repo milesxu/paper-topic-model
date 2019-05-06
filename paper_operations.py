@@ -418,7 +418,7 @@ def paper_info_build(basic_path, org_build=False, crawl=False,
                 authors, abstract = iclr_crawler(intro_parsed)
             elif base_name.startswith('icml'):
                 authors, abstract = icml_crawler(intro_parsed)
-            # print(authors, abstract)
+            print(authors, abstract)
             paper['authors'] = authors
             paper['abstract'] = abstract
             # papers.append(paper)
