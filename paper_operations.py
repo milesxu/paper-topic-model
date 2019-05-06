@@ -343,53 +343,77 @@ def org_extract(txt_path):
             lines += 1
             results = names.search(org_str)
             if results:
-                found = True
-        if not found:
-            # results = regex.compile(r"ETH Zürich").search(org_str)
-            # results = 'ETH Zürich' in org_str
-            # if not results:
-            print(f'{txt_path} org not found!')
-            # print(org_str)
+                return results[0]
+        # results = regex.compile(r"ETH Zürich").search(org_str)
+        if 'ETH Zürich' in org_str:
+            return 'ETH Zürich'
+        # print(f'{txt_path} org not found!')
+        return ''
 
 
-def cvpr_crawler(url):
-    page = requests.get(url)
-    page_parsed = BeautifulSoup(page.text, 'lxml')
+def cvpr_crawler(page_parsed):
     authors = page_parsed.find('div', {'id': 'authors'}).i.string.strip()
     abstract = page_parsed.find('div', {'id': 'abstract'}).string.strip()
     time.sleep(5 + random.randint(0, 5))
     return authors, abstract
 
 
-def paper_info_build(basic_path, org_build=False):
+def iclr_crawler(page_parsed):
+    authors = page_parsed.find(
+        'h3', {'class': 'signatures author'}).string.strip()
+    abstract = page_parsed.find(
+        'span', {'class': 'note-content-value'}).string.strip()
+    return authors, abstract
+
+
+def icml_crawler(page_parsed):
+    authors = page_parsed.find(
+        'div', {'id': 'authors', 'class': 'authors'}).string.split(',')
+    authors = [s.strip('; \n') for s in authors]
+    abstract = page_parsed.find(
+        'div', {'id': 'abstract', 'class': 'abstract'}).string.strip()
+    return ','.join(authors), abstract
+
+
+def paper_info_build(basic_path, org_build=False, crawl=False, write=False):
     papers = []
+    json_file = os.path.join(basic_path, 'papers.json')
+    if os.path.isfile(json_file):
+        with open(json_file, 'r') as jfile:
+            papers = json.load(jfile)
+            print(len(papers), type(papers))
+    base_name = os.path.basename(basic_path)
     for link, page, title in paper_list(basic_path):
+        paper = {
+            'conference': base_name,
+            'pdf': link,
+            'intro': page,
+            'title': title,
+        }
         pdf_name = link.split('/')[-1]
         if not pdf_name.endswith('.pdf'):
             pdf_name = pdf_name.split('=')[-1] + '.pdf'
         txt_name = pdf_name[0:-3] + 'txt'
         txt_path = os.path.join(basic_path, 'txt', txt_name)
         if org_build:
-            org_extract(txt_path)
-        base_name = os.path.basename(basic_path)
-        if base_name.startswith('cvpr'):
-            authors, abstract = cvpr_crawler(page)
-        elif base_name.startswith('iclr'):
-            pass
-        elif base_name.startswith('icml'):
-            pass
-        papers.append({
-            'conference': base_name,
-            'pdf': link,
-            'intro': page,
-            'title': title,
-            'authors': authors,
-            'abstract': abstract
-        })
-    json_file = os.path.join(basic_path, 'papers.json')
-    with open(json_file, 'w+') as jfile:
-        json.dump(papers, jfile)
+            paper['org'] = org_extract(txt_path)
+        if crawl:
+            intro = requests.get(page)
+            intro_parsed = BeautifulSoup(intro.text, 'lxml')
+            if base_name.startswith('cvpr'):
+                authors, abstract = cvpr_crawler(intro_parsed)
+            elif base_name.startswith('iclr'):
+                authors, abstract = iclr_crawler(intro_parsed)
+            elif base_name.startswith('icml'):
+                authors, abstract = icml_crawler(intro_parsed)
+            print(authors, abstract)
+            paper['authors'] = authors
+            paper['abstract'] = abstract
+            papers.append(paper)
+    if write:
+        with open(json_file, 'w+') as jfile:
+            json.dump(papers, jfile)
 
 
 if __name__ == "__main__":
-    paper_info_build(sys.argv[1])
+    paper_info_build(sys.argv[1], org_build=False)
