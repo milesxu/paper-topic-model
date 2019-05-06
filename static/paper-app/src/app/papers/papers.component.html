@@ -1,8 +1,46 @@
-<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
+<!--<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
   (page)="pageEvent($event)">
 </mat-paginator>
 <ul>
   <li *ngFor="let paper of papersInPage">
     <app-paper-detail [paper]="paper"></app-paper-detail>
   </li>
-</ul>
+</ul>-->
+<nz-list [nzDataSource]="papers" [nzItemLayout]="'vertical'"
+         [nzRenderItem]="item" [nzPagination]="pagination">
+  <!--[nzFooter]="footer">-->
+  <ng-template #item let-item>
+    <nz-list-item [nzContent]="item.abstract">
+      <!--[nzActions]="[starAction, likeAction, msgAction]"
+                  [nzExtra]="extra">-->
+      <ng-template #starAction><i nz-icon type="star-o"
+           style="margin-right: 8px;"></i> 156
+      </ng-template>
+      <ng-template #likeAction><i nz-icon type="like-o"
+           style="margin-right: 8px;"></i> 156
+      </ng-template>
+      <ng-template #msgAction><i nz-icon type="message"
+           style="margin-right: 8px;"></i> 2
+      </ng-template>
+      <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="item.description">
+        <ng-template #nzTitle><a href="{{ item.url }}">{{ item.title }}</a>
+        </ng-template>
+      </nz-list-item-meta>
+      <ng-template #extra>
+        <img width="272" alt="logo"
+             src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+      </ng-template>
+    </nz-list-item>
+  </ng-template>
+  <!--<ng-template #footer>
+    <div><b>ant design</b> footer part</div>
+  </ng-template>-->
+  <ng-template #pagination>
+    <nz-pagination [(nzPageIndex)]="current" [nzTotal]="length"
+                   [nzSize]="'small'" nzShowSizeChanger nzShowQuickJumper
+                   [nzShowTotal]="totalTemplate">
+    </nz-pagination>
+    <ng-template #totalTemplate let-total>Total {{ length }} papers
+    </ng-template>
+  </ng-template>
+</nz-list>

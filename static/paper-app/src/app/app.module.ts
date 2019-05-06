@@ -12,7 +12,7 @@ import { PapersComponent } from './papers/papers.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MapsComponent } from './maps/maps.component';
-import { MatTreeModule } from '@angular/material/tree';
+// import { MatTreeModule } from '@angular/material/tree';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 import { PaperDetailComponent } from './paper-detail/paper-detail.component';
@@ -27,7 +27,13 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
-import { NzTreeModule, NZ_I18N, en_US } from 'ng-zorro-antd';
+import {
+  NzTreeModule,
+  NzListModule,
+  NzPaginationModule,
+  NZ_I18N,
+  en_US
+} from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 
@@ -53,7 +59,7 @@ registerLocaleData(en);
     MatSidenavModule,
     MatButtonModule,
     MatMenuModule,
-    MatTreeModule,
+    // MatTreeModule,
     MatPaginatorModule,
     MatListModule,
     MatGridListModule,
@@ -64,7 +70,9 @@ registerLocaleData(en);
     MatSelectModule,
     MatInputModule,
     MatTableModule,
-    NzTreeModule
+    NzTreeModule,
+    NzListModule,
+    NzPaginationModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   // providers: [],

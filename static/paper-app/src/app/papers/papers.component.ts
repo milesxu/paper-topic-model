@@ -9,19 +9,19 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./papers.component.css']
 })
 export class PapersComponent implements OnInit {
+
+  constructor(private paperService: PaperService) {}
   length = 0;
-  pageSize = 10;
-  pageSizeOptions: number[] = [10, 25, 50];
   papers: Paper[];
   papersInPage: Paper[];
 
-  constructor(private paperService: PaperService) {}
+  current = 1;
 
   getPapers(): void {
     this.paperService.getPapers().subscribe((paperList: Paper[]) => {
       this.papers = paperList;
       this.length = this.papers.length;
-      this.papersInPage = this.papers.slice(0, this.pageSize);
+      // this.papersInPage = this.papers.slice(0, this.pageSize);
     });
   }
 
@@ -29,7 +29,7 @@ export class PapersComponent implements OnInit {
     this.getPapers();
   }
 
-  pageEvent(event: PageEvent): void {
+  /*pageEvent(event: PageEvent): void {
     // console.log(event.pageIndex, event.length, event.pageSize);
     let startIndex: number, endIndex: number;
     startIndex = event.pageIndex * event.pageSize;
@@ -38,5 +38,5 @@ export class PapersComponent implements OnInit {
       startIndex = endIndex - event.pageSize;
     }
     this.papersInPage = this.papers.slice(startIndex, endIndex);
-  }
+  }*/
 }

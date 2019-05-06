@@ -355,7 +355,6 @@ def org_extract(txt_path):
 def cvpr_crawler(page_parsed):
     authors = page_parsed.find('div', {'id': 'authors'}).i.string.strip()
     abstract = page_parsed.find('div', {'id': 'abstract'}).string.strip()
-    time.sleep(5 + random.randint(0, 5))
     return authors, abstract
 
 
@@ -372,7 +371,11 @@ def icml_crawler(page_parsed):
         'div', {'id': 'authors', 'class': 'authors'}).string.split(',')
     authors = [s.strip('; \n') for s in authors]
     abstract = page_parsed.find(
-        'div', {'id': 'abstract', 'class': 'abstract'}).string.strip()
+        'div', {'id': 'abstract', 'class': 'abstract'}).string
+    if abstract:
+        abstract = abstract.strip()
+    else:
+        abstract = ''
     return ','.join(authors), abstract
 
 
@@ -421,6 +424,7 @@ def paper_info_build(basic_path, org_build=False, crawl=False,
             print(authors, abstract)
             paper['authors'] = authors
             paper['abstract'] = abstract
+            time.sleep(5 + random.randint(0, 5))
             # papers.append(paper)
     if write:
         with open(json_file, 'w+') as jfile:
