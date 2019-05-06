@@ -437,5 +437,5 @@ if __name__ == "__main__":
     parser.add_argument('-write', default=False, action='store_true',
                         help='whether extract org name from txt file')
     args = parser.parse_args()
-    print(args.path, args.org, args.crawl, args.write)
+    # print(args.path, args.org, args.crawl, args.write)
     paper_info_build(args.path, args.org, args.crawl, args.write)
