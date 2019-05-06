@@ -5,6 +5,7 @@ import time
 import random
 import json
 import requests
+import argparse
 from bs4 import BeautifulSoup
 
 org_names = {
@@ -375,14 +376,10 @@ def icml_crawler(page_parsed):
     return ','.join(authors), abstract
 
 
-def paper_info_build(basic_path, org_build=False, crawl=False, write=False):
-    papers = []
-    json_file = os.path.join(basic_path, 'papers.json')
-    if os.path.isfile(json_file):
-        with open(json_file, 'r') as jfile:
-            papers = json.load(jfile)
-            print(len(papers), type(papers))
+def basic_json_construct(dst_file):
+    basic_path = os.path.dirname(dst_file)
     base_name = os.path.basename(basic_path)
+    papers = []
     for link, page, title in paper_list(basic_path):
         paper = {
             'conference': base_name,
@@ -390,7 +387,21 @@ def paper_info_build(basic_path, org_build=False, crawl=False, write=False):
             'intro': page,
             'title': title,
         }
-        pdf_name = link.split('/')[-1]
+        papers.append(paper)
+    with open(dst_file, 'w+') as dfile:
+        json.dump(papers, dfile)
+
+
+def paper_info_build(basic_path, org_build=False, crawl=False,
+                     write=False):
+    papers = []
+    json_file = os.path.join(basic_path, 'papers.json')
+    if not os.path.isfile(json_file):
+        basic_json_construct(json_file)
+    with open(json_file, 'r') as jfile:
+        papers = json.load(jfile)
+    for paper in papers:
+        pdf_name = paper['pdf'].split('/')[-1]
         if not pdf_name.endswith('.pdf'):
             pdf_name = pdf_name.split('=')[-1] + '.pdf'
         txt_name = pdf_name[0:-3] + 'txt'
@@ -398,7 +409,8 @@ def paper_info_build(basic_path, org_build=False, crawl=False, write=False):
         if org_build:
             paper['org'] = org_extract(txt_path)
         if crawl:
-            intro = requests.get(page)
+            base_name = os.path.basename(basic_path)
+            intro = requests.get(paper['intro'])
             intro_parsed = BeautifulSoup(intro.text, 'lxml')
             if base_name.startswith('cvpr'):
                 authors, abstract = cvpr_crawler(intro_parsed)
@@ -406,14 +418,23 @@ def paper_info_build(basic_path, org_build=False, crawl=False, write=False):
                 authors, abstract = iclr_crawler(intro_parsed)
             elif base_name.startswith('icml'):
                 authors, abstract = icml_crawler(intro_parsed)
-            print(authors, abstract)
+            # print(authors, abstract)
             paper['authors'] = authors
             paper['abstract'] = abstract
-            papers.append(paper)
+            # papers.append(paper)
     if write:
         with open(json_file, 'w+') as jfile:
             json.dump(papers, jfile)
 
 
 if __name__ == "__main__":
-    paper_info_build(sys.argv[1], org_build=False)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('org', default=False, nargs='?', type=bool,
+                        help='whether extract org name from txt file')
+    parser.add_argument('crawl', default=False, nargs='?', type=bool,
+                        help='whether extract org name from txt file')
+    parser.add_argument('write', default=False, nargs='?', type=bool,
+                        help='whether extract org name from txt file')
+    args = parser.parse_args()
+    print(args.org, args.crawl, args.write)
+    paper_info_build(sys.argv[1], args.org, args.crawl, args.write)
