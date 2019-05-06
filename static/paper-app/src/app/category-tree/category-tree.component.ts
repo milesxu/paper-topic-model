@@ -1,32 +1,44 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Injectable, OnInit } from '@angular/core';
+/*import { SelectionModel } from '@angular/cdk/collections';
+import { FlatTreeControl } from '@angular/cdk/tree';*/
 import {
+  Component,
+  Injectable,
+  OnInit,
+  AfterViewInit,
+  ViewChild
+} from '@angular/core';
+/*import {
   MatTreeFlatDataSource,
   MatTreeFlattener
 } from '@angular/material/tree';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';*/
+import {
+  NzFormatEmitEvent,
+  NzTreeComponent,
+  NzTreeNodeOptions,
+  isTemplateRef
+} from 'ng-zorro-antd';
 
 /**
  * Node for to-do item
  */
-export class TodoItemNode {
+/*export class TodoItemNode {
   children: TodoItemNode[];
   item: string;
-}
+}*/
 
 /** Flat to-do item node with expandable and level information */
-export class TodoItemFlatNode {
+/*export class TodoItemFlatNode {
   item: string;
   level: number;
   expandable: boolean;
-}
+}*/
 
 /**
  * The Json object for to-do list data.
  */
-const TREE_DATA = {
-  /* Groceries: {
+// const TREE_DATA = {
+/* Groceries: {
     'Almond Meal flour': null,
     'Organic eggs': null,
     'Protein Powder': null,
@@ -41,15 +53,15 @@ const TREE_DATA = {
     'Read the Material Design spec',
     'Upgrade Application to Angular'
   ], */
-  'Neural Information Processing Systems': ['NIPS 2018']
-};
+// 'Neural Information Processing Systems': ['NIPS 2018']
+// };
 
 /**
  * Checklist database, it can build a tree structured Json object.
  * Each node in Json object represents a to-do item or a category.
  * If a node is a category, it has children items and new items can be added under the category.
  */
-@Injectable()
+/*@Injectable()
 export class ChecklistDatabase {
   dataChange = new BehaviorSubject<TodoItemNode[]>([]);
 
@@ -68,13 +80,13 @@ export class ChecklistDatabase {
 
     // Notify the change.
     this.dataChange.next(data);
-  }
+  }*/
 
-  /**
-   * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
-   * The return value is the list of `TodoItemNode`.
-   */
-  buildFileTree(obj: { [key: string]: any }, level: number): TodoItemNode[] {
+/**
+ * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
+ * The return value is the list of `TodoItemNode`.
+ */
+/*buildFileTree(obj: { [key: string]: any }, level: number);: TodoItemNode[]; {
     return Object.keys(obj).reduce<TodoItemNode[]>((accumulator, key) => {
       const value = obj[key];
       const node = new TodoItemNode();
@@ -90,52 +102,30 @@ export class ChecklistDatabase {
 
       return accumulator.concat(node);
     }, []);
-  }
+  }*/
 
-  /** Add an item to to-do list */
-  insertItem(parent: TodoItemNode, name: string) {
+/** Add an item to to-do list */
+/*insertItem(parent: TodoItemNode, name: string); {
     if (parent.children) {
       parent.children.push({ item: name } as TodoItemNode);
       this.dataChange.next(this.data);
     }
   }
 
-  updateItem(node: TodoItemNode, name: string) {
+  updateItem(node: TodoItemNode, name: string); {
     node.item = name;
     this.dataChange.next(this.data);
   }
-}
+}*/
 
 @Component({
   selector: 'app-category-tree',
   templateUrl: './category-tree.component.html',
-  styleUrls: ['./category-tree.component.css'],
-  providers: [ChecklistDatabase]
+  styleUrls: ['./category-tree.component.css']
+  // providers: [ChecklistDatabase]
 })
-export class CategoryTreeComponent implements OnInit {
-  /** Map from flat node to nested node. This helps us finding the nested node to be modified */
-  flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
-
-  /** Map from nested node to flattened node. This helps us to keep the same object for selection */
-  nestedNodeMap = new Map<TodoItemNode, TodoItemFlatNode>();
-
-  /** A selected parent node to be inserted */
-  selectedParent: TodoItemFlatNode | null = null;
-
-  /** The new item's name */
-  newItemName = '';
-
-  treeControl: FlatTreeControl<TodoItemFlatNode>;
-
-  treeFlattener: MatTreeFlattener<TodoItemNode, TodoItemFlatNode>;
-
-  dataSource: MatTreeFlatDataSource<TodoItemNode, TodoItemFlatNode>;
-
-  /** The selection for checklist */
-  checklistSelection = new SelectionModel<TodoItemFlatNode>(
-    true /* multiple */
-  );
-  constructor(private database: ChecklistDatabase) {
+export class CategoryTreeComponent implements OnInit, AfterViewInit {
+  /*constructor(private database: ChecklistDatabase) {
     this.treeFlattener = new MatTreeFlattener(
       this.transformer,
       this.getLevel,
@@ -154,7 +144,76 @@ export class CategoryTreeComponent implements OnInit {
     database.dataChange.subscribe(data => {
       this.dataSource.data = data;
     });
-  }
+  }*/
+  /** Map from flat node to nested node. This helps us finding the nested node to be modified */
+  // flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
+
+  /** Map from nested node to flattened node. This helps us to keep the same object for selection */
+  // nestedNodeMap = new Map<TodoItemNode, TodoItemFlatNode>();
+
+  /** A selected parent node to be inserted */
+  // selectedParent: TodoItemFlatNode | null = null;
+
+  /** The new item's name */
+  // newItemName = '';
+
+  // treeControl: FlatTreeControl<TodoItemFlatNode>;
+
+  // treeFlattener: MatTreeFlattener<TodoItemNode, TodoItemFlatNode>;
+
+  // dataSource: MatTreeFlatDataSource<TodoItemNode, TodoItemFlatNode>;
+
+  /** The selection for checklist */
+  // checklistSelection = new SelectionModel<TodoItemFlatNode>(
+  // true /* multiple */
+  // );
+  @ViewChild('nzTreeComponent') nzTreeComponent: NzTreeComponent;
+  defaultCheckedKeys = ['10020'];
+  defaultSelectedKeys = ['10010'];
+  defaultExpandedKeys = ['100', '1001'];
+
+  nodes: NzTreeNodeOptions[] = [
+    {
+      title: 'Year 2019',
+      key: '100',
+      children: [
+        {
+          title: 'ICLR 2019',
+          key: '1001',
+          disabled: false,
+          isLeaf: true
+          /*children: [
+            {
+              title: 'leaf 1-0-0',
+              key: '10010',
+              disableCheckbox: true,
+            },
+          ]*/
+        }
+      ]
+    },
+    {
+      title: 'Year 2018',
+      key: '200',
+      children: [
+        {
+          title: 'NeurIPS 2018',
+          key: '2001',
+          isLeaf: true
+        },
+        {
+          title: 'CVPR 2018',
+          key: '2002',
+          isLeaf: true
+        },
+        {
+          title: 'ICML 2018',
+          key: '2003',
+          isLeaf: true
+        }
+      ]
+    }
+  ];
 
   getLevel = (node: TodoItemFlatNode) => node.level;
 
@@ -170,7 +229,7 @@ export class CategoryTreeComponent implements OnInit {
   /**
    * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
    */
-  transformer = (node: TodoItemNode, level: number) => {
+  /*transformer = (node: TodoItemNode, level: number) => {
     const existingNode = this.nestedNodeMap.get(node);
     const flatNode =
       existingNode && existingNode.item === node.item
@@ -182,28 +241,28 @@ export class CategoryTreeComponent implements OnInit {
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);
     return flatNode;
-  }
+  }*/
 
   /** Whether all the descendants of the node are selected. */
-  descendantsAllSelected(node: TodoItemFlatNode): boolean {
+  /* descendantsAllSelected(node: TodoItemFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
     const descAllSelected = descendants.every(child =>
       this.checklistSelection.isSelected(child)
     );
     return descAllSelected;
-  }
+  }*/
 
   /** Whether part of the descendants are selected */
-  descendantsPartiallySelected(node: TodoItemFlatNode): boolean {
+  /*descendantsPartiallySelected(node: TodoItemFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
     const result = descendants.some(child =>
       this.checklistSelection.isSelected(child)
     );
     return result && !this.descendantsAllSelected(node);
-  }
+  }*/
 
   /** Toggle the to-do item selection. Select/deselect all the descendants node */
-  todoItemSelectionToggle(node: TodoItemFlatNode): void {
+  /*  todoItemSelectionToggle(node: TodoItemFlatNode): void {
     this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
     this.checklistSelection.isSelected(node)
@@ -214,24 +273,24 @@ export class CategoryTreeComponent implements OnInit {
     descendants.every(child => this.checklistSelection.isSelected(child));
     this.checkAllParentsSelection(node);
   }
-
+*/
   /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
-  todoLeafItemSelectionToggle(node: TodoItemFlatNode): void {
+  /* todoLeafItemSelectionToggle(node: TodoItemFlatNode): void {
     this.checklistSelection.toggle(node);
     this.checkAllParentsSelection(node);
-  }
+  }*/
 
   /* Checks all the parents when a leaf node is selected/unselected */
-  checkAllParentsSelection(node: TodoItemFlatNode): void {
+  /*  checkAllParentsSelection(node: TodoItemFlatNode): void {
     let parent: TodoItemFlatNode | null = this.getParentNode(node);
     while (parent) {
       this.checkRootNodeSelection(parent);
       parent = this.getParentNode(parent);
     }
-  }
+  }*/
 
   /** Check root node checked state and change it accordingly */
-  checkRootNodeSelection(node: TodoItemFlatNode): void {
+  /*  checkRootNodeSelection(node: TodoItemFlatNode): void {
     const nodeSelected = this.checklistSelection.isSelected(node);
     const descendants = this.treeControl.getDescendants(node);
     const descAllSelected = descendants.every(child =>
@@ -243,9 +302,9 @@ export class CategoryTreeComponent implements OnInit {
       this.checklistSelection.select(node);
     }
   }
-
+*/
   /* Get the parent node of a node */
-  getParentNode(node: TodoItemFlatNode): TodoItemFlatNode | null {
+  /*getParentNode(node: TodoItemFlatNode): TodoItemFlatNode | null {
     const currentLevel = this.getLevel(node);
 
     if (currentLevel < 1) {
@@ -262,6 +321,19 @@ export class CategoryTreeComponent implements OnInit {
       }
     }
     return null;
+  }*/
+
+  nzClick(event: NzFormatEmitEvent): void {
+    console.log(event);
+  }
+
+  nzCheck(event: NzFormatEmitEvent): void {
+    console.log(event);
+  }
+
+  // nzSelectedKeys change
+  nzSelect(keys: string[]): void {
+    console.log(keys, this.nzTreeComponent.getSelectedNodeList());
   }
 
   /** Select the category so we can insert the new item. */
@@ -277,4 +349,16 @@ export class CategoryTreeComponent implements OnInit {
     this.database.updateItem(nestedNode!, itemValue);
   } */
   ngOnInit() {}
+
+  ngAfterViewInit(): void {
+    // get node by key: '10011'
+    console.log(this.nzTreeComponent.getTreeNodeByKey('10011'));
+    // use tree methods
+    console.log(
+      this.nzTreeComponent.getTreeNodes(),
+      this.nzTreeComponent.getCheckedNodeList(),
+      this.nzTreeComponent.getSelectedNodeList(),
+      this.nzTreeComponent.getExpandedNodeList()
+    );
+  }
 }
