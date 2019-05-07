@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Paper } from '../paper';
 import { PaperService } from '../paper.service';
 import { PageEvent } from '@angular/material/paginator';
+import { ConferencesService } from '../conferences.service';
 
 @Component({
   selector: 'app-papers',
@@ -9,13 +10,21 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./papers.component.css']
 })
 export class PapersComponent implements OnInit {
-  constructor(private paperService: PaperService) {}
   length = 0;
   papers: Paper[];
   papersInPage: Paper[];
   pageSize = 10;
   current = 1;
+  selectedConferences = [];
 
+  constructor(
+    private paperService: PaperService,
+    private conferencesService: ConferencesService
+  ) {
+    this.conferencesService.selectedConferences.subscribe(
+      conferences => (this.selectedConferences = conferences)
+    );
+  }
   getPapers(): void {
     this.paperService.getPapers().subscribe((paperList: Paper[]) => {
       this.papers = paperList;

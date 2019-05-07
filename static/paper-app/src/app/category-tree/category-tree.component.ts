@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   ViewChild
 } from '@angular/core';
+import { ConferencesService } from '../conferences.service';
 import {
   NzFormatEmitEvent,
   NzTreeComponent,
