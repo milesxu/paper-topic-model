@@ -368,15 +368,20 @@ def iclr_crawler(page_parsed):
 
 def icml_crawler(page_parsed):
     authors = page_parsed.find(
-        'div', {'id': 'authors', 'class': 'authors'}).string.split(',')
-    authors = [s.strip('; \n') for s in authors]
+        'div', {'id': 'authors', 'class': 'authors'}).string
+    if authors is None:
+        authors = ''
+    else:
+        authors = authors.split(',')
+        authors = [s.strip('; \n') for s in authors]
+        authors = ','.join(authors)
     abstract = page_parsed.find(
         'div', {'id': 'abstract', 'class': 'abstract'}).string
     if abstract:
         abstract = abstract.strip()
     else:
         abstract = ''
-    return ','.join(authors), abstract
+    return authors, abstract
 
 
 def basic_json_construct(dst_file):
@@ -412,19 +417,23 @@ def paper_info_build(basic_path, org_build=False, crawl=False,
         if org_build:
             paper['org'] = org_extract(txt_path)
         if crawl:
+            retry = 0
+            authors, abstract = '', ''
             base_name = os.path.basename(basic_path)
-            intro = requests.get(paper['intro'])
-            intro_parsed = BeautifulSoup(intro.text, 'lxml')
-            if base_name.startswith('cvpr'):
-                authors, abstract = cvpr_crawler(intro_parsed)
-            elif base_name.startswith('iclr'):
-                authors, abstract = iclr_crawler(intro_parsed)
-            elif base_name.startswith('icml'):
-                authors, abstract = icml_crawler(intro_parsed)
+            while (not authors or not abstract) and retry < 3:
+                intro = requests.get(paper['intro'])
+                intro_parsed = BeautifulSoup(intro.text, 'lxml')
+                if base_name.startswith('cvpr'):
+                    authors, abstract = cvpr_crawler(intro_parsed)
+                elif base_name.startswith('iclr'):
+                    authors, abstract = iclr_crawler(intro_parsed)
+                elif base_name.startswith('icml'):
+                    authors, abstract = icml_crawler(intro_parsed)
+                time.sleep(5 + random.randint(0, 5))
+                retry += 1
             print(authors, abstract)
             paper['authors'] = authors
             paper['abstract'] = abstract
-            time.sleep(5 + random.randint(0, 5))
             # papers.append(paper)
     if write:
         with open(json_file, 'w+') as jfile:
