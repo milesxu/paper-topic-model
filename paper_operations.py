@@ -377,7 +377,7 @@ def icml_crawler(page_parsed):
         authors = ','.join(authors)
     abstract = page_parsed.find(
         'div', {'id': 'abstract', 'class': 'abstract'})
-    if abstract is None:
+    if abstract is None or abstract.string is None:
         abstract = ''
     else:
         abstract = abstract.string.strip()
