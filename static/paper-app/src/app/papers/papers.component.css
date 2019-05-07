@@ -1,3 +1,40 @@
+.papers {
+  max-width: 75rem;
+}
+
 ul {
   list-style-type: none;
+  text-align: justify;
+}
+
+li {
+  margin: 2rem 0;
+}
+
+.pagination {
+  text-align: right;
+  /* padding-top: 1rem; */
+  margin: 1rem;
+  margin-right: 0;
+  /* padding: 1rem; */
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+mat-paginator {
+  background: #fafafa;
+}
+
+.label {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  margin-right: 0.5rem;
+}
+
+.input-form {
+  width: 5rem;
 }

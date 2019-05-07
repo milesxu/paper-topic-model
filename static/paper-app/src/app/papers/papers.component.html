@@ -1,22 +1,46 @@
-<!--<mat-paginator [length]="length" [pageSize]="pageSize"
-               [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
-               (page)="pageEvent($event)">
-</mat-paginator>-->
-<nz-pagination [(nzPageIndex)]="current" [nzTotal]="length" [nzSize]="'small'"
-               nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate"
-               (nzPageIndexChange)="pageEvent($event)" [(nzPageSize)]="pageSize"
-               (nzPageSizeChange)="pageEvent($event)">
-</nz-pagination>
-<ul>
-  <li *ngFor="let paper of papersInPage">
-    <app-paper-detail [paper]="paper"></app-paper-detail>
-  </li>
-</ul>
-<nz-pagination [(nzPageIndex)]="current" [nzTotal]="length" [nzSize]="'small'"
-               nzShowSizeChanger nzShowQuickJumper [nzShowTotal]="totalTemplate"
-               (nzPageIndexChange)="pageEvent($event)" [(nzPageSize)]="pageSize"
-               (nzPageSizeChange)="pageEvent($event)">
-</nz-pagination>
+<div class="papers">
+  <div class="container">
+    <div class="label">Go to page:</div>
+    <mat-form-field class="input-form"><input matInput maxlength="5">
+    </mat-form-field>
+    <mat-paginator [length]="length" [pageSize]="pageSize"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [showFirstLastButtons]="true" (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+  <!--<nz-pagination [(nzPageIndex)]="current" [nzTotal]="length" [nzSize]="'small'"
+                 nzShowSizeChanger nzShowQuickJumper
+                 [nzShowTotal]="totalTemplate"
+                 (nzPageIndexChange)="pageEvent($event)"
+                 [(nzPageSize)]="pageSize"
+                 (nzPageSizeChange)="pageEvent($event)" class="pagination">
+  </nz-pagination>
+  <ng-template #totalTemplate let-total>Total {{ length }} papers
+  </ng-template>-->
+  <ul>
+    <li *ngFor="let paper of papersInPage">
+      <app-paper-detail [paper]="paper"></app-paper-detail>
+    </li>
+  </ul>
+  <!--<nz-pagination [(nzPageIndex)]="current" [nzTotal]="length" [nzSize]="'small'"
+                 nzShowSizeChanger nzShowQuickJumper
+                 [nzShowTotal]="totalTemplate"
+                 (nzPageIndexChange)="pageEvent($event)"
+                 [(nzPageSize)]="pageSize"
+                 (nzPageSizeChange)="pageEvent($event)" class="pagination">
+  </nz-pagination>
+  <ng-template #totalTemplate let-total>Total {{ length }} papers
+  </ng-template>-->
+  <div class="container">
+    <div class="label">Go to page:</div>
+    <mat-form-field class="input-form"><input matInput maxlength="5">
+    </mat-form-field>
+    <mat-paginator [length]="length" [pageSize]="pageSize"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [showFirstLastButtons]="true" (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+</div>
 <!--<nz-list [nzDataSource]="papersInPage" [nzItemLayout]="'vertical'"
          [nzRenderItem]="item" [nzPagination]="pagination">-->
 <!--[nzFooter]="footer">-->

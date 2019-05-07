@@ -1,3 +1,24 @@
 h3 {
   font-weight: normal;
 }
+
+.org {
+  margin-left: 1rem;
+}
+
+.author {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.abstract {
+  /* autoprefixer: ignore next */
+  display: -webkit-box;
+  color: rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+  height: 3.6rem;
+  line-height: 1.2rem;
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+}
