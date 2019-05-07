@@ -2,13 +2,18 @@ h3 {
   font-weight: normal;
 }
 
-.org {
-  margin-left: 1rem;
+
+.infos {
+  color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
-.author {
-  color: rgba(0, 0, 0, 0.45);
+.infos span {
+  margin: 0.5rem;
 }
+
 
 .abstract {
   /* autoprefixer: ignore next */
