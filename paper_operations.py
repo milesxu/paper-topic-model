@@ -368,17 +368,17 @@ def iclr_crawler(page_parsed):
 
 def icml_crawler(page_parsed):
     authors = page_parsed.find(
-        'div', {'id': 'authors', 'class': 'authors'}).string
+        'div', {'id': 'authors', 'class': 'authors'})
     if authors is None:
         authors = ''
     else:
-        authors = authors.split(',')
+        authors = authors.string.split(',')
         authors = [s.strip('; \n') for s in authors]
         authors = ','.join(authors)
     abstract = page_parsed.find(
-        'div', {'id': 'abstract', 'class': 'abstract'}).string
+        'div', {'id': 'abstract', 'class': 'abstract'})
     if abstract:
-        abstract = abstract.strip()
+        abstract = abstract.string.strip()
     else:
         abstract = ''
     return authors, abstract
@@ -415,7 +415,7 @@ def paper_info_build(basic_path, org_build=False, crawl=False,
         txt_name = pdf_name[0:-3] + 'txt'
         txt_path = os.path.join(basic_path, 'txt', txt_name)
         if org_build:
-            paper['org'] = org_extract(txt_path)
+            paper['organization'] = org_extract(txt_path)
         if crawl:
             retry = 0
             authors, abstract = '', ''
