@@ -44,3 +44,8 @@ Table {
   display: inline-block;
   margin: 0 auto;
 }
+
+.toolbar {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.75);
+}

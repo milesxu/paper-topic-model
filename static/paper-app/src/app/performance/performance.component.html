@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar class='toolbar'>
   <mat-label>Subject</mat-label>
   <mat-form-field>
     <mat-select [(value)]="selectedSubject">
@@ -10,7 +10,9 @@
   <mat-form-field>
     <mat-select [(value)]="selectedDataset">
       <mat-option value="nips2018">NeurIPS 2018</mat-option>
-      <mat-option value="other">Other Datasets</mat-option>
+      <mat-option value="other">ICLR 2019</mat-option>
+      <mat-option value="other">CVPR 2018</mat-option>
+      <mat-option value="other">ICML 2018</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-label>Epoch Number</mat-label>
@@ -23,18 +25,20 @@
 </mat-toolbar>
 <mat-grid-list cols="2" rowHeight="2:1">
   <mat-grid-tile>
-    <h4>Normal training process</h4>
+    <h4>Normal training process with TensorFlow</h4>
     <ul>
       <li *ngFor="let r of cpu_result">
-        Epoch {{r.count}}: time elapsed: {{r.timing}}, perplexity: {{r.perplexity}}
+        Epoch {{r.count}}: time elapsed: {{r.timing}}, perplexity:
+        {{r.perplexity}}
       </li>
     </ul>
   </mat-grid-tile>
   <mat-grid-tile>
-    <h4>Training process with CUDA kernels</h4>
+    <h4>Training process with TensorFlow + CUDA kernels</h4>
     <ul>
       <li *ngFor="let r of gpu_result">
-        Epoch {{r.count}}: time elapsed: {{r.timing}}, perplexity: {{r.perplexity}}
+        Epoch {{r.count}}: time elapsed: {{r.timing}}, perplexity:
+        {{r.perplexity}}
       </li>
     </ul>
   </mat-grid-tile>
@@ -68,8 +72,9 @@
     </table>
   </mat-grid-tile>
   <mat-grid-tile>
-    <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" [(update)]="updateFlag"
-      style="width: 100%; height: 400px; text-align: center">
+    <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
+                      [(update)]="updateFlag"
+                      style="width: 100%; height: 400px; text-align: center">
     </highcharts-chart>
   </mat-grid-tile>
 </mat-grid-list>

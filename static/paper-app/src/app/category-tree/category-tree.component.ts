@@ -19,7 +19,7 @@ import {
   styleUrls: ['./category-tree.component.css']
 })
 export class CategoryTreeComponent implements OnInit, AfterViewInit {
-  constructor() {}
+  constructor(private conferencesService: ConferencesService) {}
 
   @ViewChild('nzTreeComponent') nzTreeComponent: NzTreeComponent;
   defaultCheckedKeys = ['2001'];
@@ -74,7 +74,18 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit {
   }
 
   nzCheck(event: NzFormatEmitEvent): void {
-    console.log(event);
+    // console.log(event);
+    const temp = [];
+    event.checkedKeys.forEach(key => {
+      if (key.isLeaf) {
+        temp.push(key.title.replace(/ +/g, ''));
+      } else {
+        for (let i = 0; i < key.children.length; ++i) {
+          temp.push(key.children[i].title.replace(/ +/g, ''));
+        }
+      }
+    });
+    this.conferencesService.changeSelectedConferences(temp);
   }
 
   // nzSelectedKeys change
@@ -82,7 +93,9 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit {
     console.log(keys, this.nzTreeComponent.getSelectedNodeList());
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // this.conferencesService.changeSelectedConferences(['NeurIPS2018']);
+  }
 
   ngAfterViewInit(): void {
     // get node by key: '10011'

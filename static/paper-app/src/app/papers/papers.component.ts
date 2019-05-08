@@ -11,9 +11,11 @@ import { ConferencesService } from '../conferences.service';
 })
 export class PapersComponent implements OnInit {
   length = 0;
+  allPapers: Paper[] = [];
   papers: Paper[];
   papersInPage: Paper[];
   pageSize = 10;
+  pageSizeOptions = [10, 25, 50, 100];
   current = 1;
   selectedConferences = [];
 
@@ -21,19 +23,48 @@ export class PapersComponent implements OnInit {
     private paperService: PaperService,
     private conferencesService: ConferencesService
   ) {
-    this.conferencesService.selectedConferences.subscribe(
+    /*conferencesService.selectedConferences.subscribe(
       conferences => (this.selectedConferences = conferences)
-    );
+    );*/
   }
+
+  filterPapers(): void {
+    if (this.allPapers && this.selectedConferences) {
+      this.papers = this.allPapers.filter(paper =>
+        this.selectedConferences.includes(paper.conference)
+      );
+    } else {
+      this.papers = [];
+    }
+    this.length = this.papers.length;
+    this.papersInPage = this.papers.slice(0, this.pageSize);
+  }
+
   getPapers(): void {
     this.paperService.getPapers().subscribe((paperList: Paper[]) => {
-      this.papers = paperList;
-      this.length = this.papers.length;
-      this.papersInPage = this.papers.slice(0, this.pageSize);
+      this.allPapers = paperList;
+      this.allPapers.sort((a, b) => {
+        if (a.title < b.title) {
+          return -1;
+        }
+        if (a.title > b.title) {
+          return 1;
+        }
+        return 0;
+      });
+      this.filterPapers();
+    });
+  }
+
+  getConferences(): void {
+    this.conferencesService.selectedConferences.subscribe(conferences => {
+      this.selectedConferences = conferences;
+      this.filterPapers();
     });
   }
 
   ngOnInit() {
+    this.getConferences();
     this.getPapers();
   }
 
