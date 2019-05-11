@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Paper } from '../paper';
-import { PaperService } from '../paper.service';
 import { PageEvent } from '@angular/material/paginator';
-import { ConferencesService } from '../conferences.service';
+import { Paper } from '../paper';
+import { StatisticService } from '../statistic.service';
 
 @Component({
   selector: 'app-papers',
@@ -19,10 +18,7 @@ export class PapersComponent implements OnInit {
   current = 1;
   selectedConferences = [];
 
-  constructor(
-    private paperService: PaperService,
-    private conferencesService: ConferencesService
-  ) {
+  constructor(private statisticService: StatisticService) {
     /*conferencesService.selectedConferences.subscribe(
       conferences => (this.selectedConferences = conferences)
     );*/
@@ -41,7 +37,7 @@ export class PapersComponent implements OnInit {
   }
 
   getPapers(): void {
-    this.paperService.getPapers().subscribe((paperList: Paper[]) => {
+    this.statisticService.getPapers().subscribe((paperList: Paper[]) => {
       this.allPapers = paperList;
       this.allPapers.sort((a, b) => {
         if (a.title < b.title) {
@@ -57,7 +53,7 @@ export class PapersComponent implements OnInit {
   }
 
   getConferences(): void {
-    this.conferencesService.selectedConferences.subscribe(conferences => {
+    this.statisticService.selectedConferences.subscribe(conferences => {
       this.selectedConferences = conferences;
       this.filterPapers();
     });

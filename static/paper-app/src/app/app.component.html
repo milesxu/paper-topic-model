@@ -5,10 +5,13 @@
       <button mat-button (click)="gotoUrl('/')">Home</button>
       <button mat-button [matMenuTriggerFor]="menu">Statistic Results</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="gotoUrl('/maps')">Region Visualization</button>
-        <button mat-menu-item (click)="gotoUrl('/word-cloud')">Topic Clusters</button>
+        <button mat-menu-item (click)="gotoUrl('/maps')">Region
+          Visualization</button>
+        <button mat-menu-item (click)="gotoUrl('/word-cloud')">Topic
+          Clusters</button>
       </mat-menu>
-      <button mat-button (click)="gotoUrl('/performance')">Performance Comparison</button>
+      <button mat-button (click)="gotoUrl('/performance')">Performance
+        Comparison</button>
       <!--<mat-form-field>
         <input matInput type="text" name="search" placeholder="Keywords..." id="main_search">
       </mat-form-field>
@@ -19,8 +22,8 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened>
-    <app-category-tree></app-category-tree>
+  <mat-drawer mode="side" [(opened)]="openSide">
+    <app-category-tree [singleCheck]="singleCheck"></app-category-tree>
   </mat-drawer>
   <mat-drawer-content>
     <router-outlet></router-outlet>

@@ -3,9 +3,12 @@ import {
   Injectable,
   OnInit,
   AfterViewInit,
-  ViewChild
+  ViewChild,
+  Input,
+  OnChanges,
+  SimpleChange
 } from '@angular/core';
-import { ConferencesService } from '../conferences.service';
+import { StatisticService } from '../statistic.service';
 import {
   NzFormatEmitEvent,
   NzTreeComponent,
@@ -18,9 +21,9 @@ import {
   templateUrl: './category-tree.component.html',
   styleUrls: ['./category-tree.component.css']
 })
-export class CategoryTreeComponent implements OnInit, AfterViewInit {
-  constructor(private conferencesService: ConferencesService) {}
-
+export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
+  constructor(private statisticService: StatisticService) {}
+  @Input() singleCheck: boolean;
   @ViewChild('nzTreeComponent') nzTreeComponent: NzTreeComponent;
   defaultCheckedKeys = ['2001'];
   defaultSelectedKeys = ['2001'];
@@ -85,7 +88,7 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit {
         }
       }
     });
-    this.conferencesService.changeSelectedConferences(temp);
+    this.statisticService.changeSelectedConferences(temp);
   }
 
   // nzSelectedKeys change
@@ -107,5 +110,14 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit {
       this.nzTreeComponent.getSelectedNodeList(),
       this.nzTreeComponent.getExpandedNodeList()
     );
+  }
+
+  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+    console.log(changes);
+    for (const propKey in changes) {
+      if (propKey === 'singleCheck') {
+        console.log(changes[propKey].currentValue);
+      }
+    }
   }
 }

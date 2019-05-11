@@ -440,15 +440,28 @@ def paper_info_build(basic_path, org_build=False, crawl=False,
             json.dump(papers, jfile)
 
 
+def generate_org_json():
+    # print(org_names.items())
+    org_list = []
+    for key, value in org_names.items():
+        org_list.append({
+            'country': key,
+            'organizations': value
+        })
+    with open('orgs.json', 'w+') as ofile:
+        json.dump(org_list, ofile)
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('path', type=str, help='path for papers')
-    parser.add_argument('-org', default=False, action='store_true',
-                        help='whether extract org name from txt file')
-    parser.add_argument('-crawl', default=False, action='store_true',
-                        help='whether extract org name from txt file')
-    parser.add_argument('-write', default=False, action='store_true',
-                        help='whether extract org name from txt file')
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('path', type=str, help='path for papers')
+    # parser.add_argument('-org', default=False, action='store_true',
+    #                     help='whether extract org name from txt file')
+    # parser.add_argument('-crawl', default=False, action='store_true',
+    #                     help='whether extract org name from txt file')
+    # parser.add_argument('-write', default=False, action='store_true',
+    #                     help='whether extract org name from txt file')
+    # args = parser.parse_args()
     # print(args.path, args.org, args.crawl, args.write)
-    paper_info_build(args.path, args.org, args.crawl, args.write)
+    # paper_info_build(args.path, args.org, args.crawl, args.write)
+    generate_org_json()
