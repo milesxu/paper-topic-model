@@ -103,8 +103,8 @@ export class MapsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openDialog() {
     this.dialog.open(RankDialogComponent, {
-      height: '400px',
-      width: '600px',
+      height: '480px',
+      width: '720px',
       data: this.organizationRank
     });
   }
