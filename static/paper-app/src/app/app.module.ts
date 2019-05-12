@@ -27,9 +27,17 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
-import { NzTreeModule, NZ_I18N, en_US } from 'ng-zorro-antd';
+import { MatDialogModule } from '@angular/material/dialog';
+import {
+  NzTreeModule,
+  // NzModalModule,
+  NZ_I18N,
+  en_US
+  // NZ_MODAL_CONFIG
+} from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
+import { RankDialogComponent } from './rank-dialog/rank-dialog.component';
 
 registerLocaleData(en);
 
@@ -41,7 +49,8 @@ registerLocaleData(en);
     PaperDetailComponent,
     PerformanceComponent,
     WordCloudComponent,
-    CategoryTreeComponent
+    CategoryTreeComponent,
+    RankDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -64,9 +73,15 @@ registerLocaleData(en);
     MatSelectModule,
     MatInputModule,
     MatTableModule,
-    NzTreeModule
+    NzTreeModule,
+    // NzModalModule,
+    MatDialogModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  entryComponents: [RankDialogComponent],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US }
+    // { provide: NZ_MODAL_CONFIG, useValue: { nzMaskClosable: true } }
+  ],
   // providers: [],
   bootstrap: [AppComponent]
 })
