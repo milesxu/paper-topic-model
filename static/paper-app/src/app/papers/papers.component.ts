@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { Paper } from '../paper';
-import { StatisticService } from '../statistic.service';
+import { Component, OnInit } from "@angular/core";
+import { PageEvent } from "@angular/material/paginator";
+import { Paper } from "../paper";
+import { StatisticService } from "../statistic.service";
 
 @Component({
-  selector: 'app-papers',
-  templateUrl: './papers.component.html',
-  styleUrls: ['./papers.component.css']
+  selector: "app-papers",
+  templateUrl: "./papers.component.html",
+  styleUrls: ["./papers.component.css"]
 })
 export class PapersComponent implements OnInit {
   length = 0;
@@ -24,15 +24,15 @@ export class PapersComponent implements OnInit {
     );*/
   }
 
-  filterPapers(): void {
-    if (this.allPapers && this.selectedConferences) {
-      this.papers = this.allPapers.filter(paper =>
-        this.selectedConferences.includes(paper.conference)
-      );
-    } else {
-      this.papers = [];
-    }
-  }
+  // filterPapers(): void {
+  //   if (this.allPapers && this.selectedConferences) {
+  //     this.papers = this.allPapers.filter(paper =>
+  //       this.selectedConferences.includes(paper.conference)
+  //     );
+  //   } else {
+  //     this.papers = [];
+  //   }
+  // }
 
   getPapers(): void {
     this.statisticService.selectedPapers.subscribe((paperList: Paper[]) => {
@@ -42,12 +42,12 @@ export class PapersComponent implements OnInit {
     });
   }
 
-  getConferences(): void {
-    this.statisticService.selectedConferences.subscribe(conferences => {
-      this.selectedConferences = conferences;
-      this.filterPapers();
-    });
-  }
+  // getConferences(): void {
+  //   this.statisticService.selectedConferences.subscribe(conferences => {
+  //     this.selectedConferences = conferences;
+  //     this.filterPapers();
+  //   });
+  // }
 
   ngOnInit() {
     // this.getConferences();
