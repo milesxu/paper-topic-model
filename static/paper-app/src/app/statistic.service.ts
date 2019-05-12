@@ -9,24 +9,45 @@ import { Organization } from './organization';
 })
 export class StatisticService {
   private conferencesSource = new BehaviorSubject<string[]>(['NeurIPS2018']);
-  private conferences: string[] = ['NeurIPS2018'];
   selectedConferences = this.conferencesSource.asObservable();
-  constructor(private http: HttpClient) {}
-
-  getPapers() {
-    return this.http.get<Paper[]>('assets/papers.json');
+  private paperSource = new Subject<Paper[]>();
+  selectedPapers = this.paperSource.asObservable();
+  allPapers: Paper[] = [];
+  organization: Organization[] = [];
+  constructor(private http: HttpClient) {
+    this.getPapers(http);
+    this.http.get<Organization[]>('assets/orgs.json').subscribe(orgs => {
+      this.organization = orgs;
+    });
   }
 
-  getOrganization() {
-    return this.http.get<Organization[]>('assets/orgs.json');
+  getPapers(http: HttpClient) {
+    http.get<Paper[]>('assets/papers.json').subscribe(papers => {
+      this.allPapers = papers;
+      this.allPapers.sort((a, b) => {
+        if (a.title < b.title) {
+          return -1;
+        }
+        if (a.title > b.title) {
+          return 1;
+        }
+        return 0;
+      });
+      this.paperSource.next(this.filerPapers(['NeurIPS2018']));
+    });
   }
+
+  filerPapers(conferences: string[]): Paper[] {
+    return this.allPapers.filter(paper =>
+      conferences.includes(paper.conference)
+    );
+  }
+
+  getOrganization() {}
 
   changeSelectedConferences(conferences: string[]) {
     // console.log(conferences);
     this.conferencesSource.next(conferences);
-  }
-
-  getSelectedConferences(): Observable<string[]> {
-    return of(this.conferences);
+    this.paperSource.next(this.filerPapers(conferences));
   }
 }

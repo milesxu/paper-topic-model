@@ -32,23 +32,13 @@ export class PapersComponent implements OnInit {
     } else {
       this.papers = [];
     }
-    this.length = this.papers.length;
-    this.papersInPage = this.papers.slice(0, this.pageSize);
   }
 
   getPapers(): void {
-    this.statisticService.getPapers().subscribe((paperList: Paper[]) => {
-      this.allPapers = paperList;
-      this.allPapers.sort((a, b) => {
-        if (a.title < b.title) {
-          return -1;
-        }
-        if (a.title > b.title) {
-          return 1;
-        }
-        return 0;
-      });
-      this.filterPapers();
+    this.statisticService.selectedPapers.subscribe((paperList: Paper[]) => {
+      this.papers = paperList;
+      this.length = this.papers.length;
+      this.papersInPage = this.papers.slice(0, this.pageSize);
     });
   }
 
@@ -60,7 +50,7 @@ export class PapersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getConferences();
+    // this.getConferences();
     this.getPapers();
   }
 
