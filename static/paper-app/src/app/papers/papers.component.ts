@@ -18,21 +18,7 @@ export class PapersComponent implements OnInit {
   current = 1;
   selectedConferences = [];
 
-  constructor(private statisticService: StatisticService) {
-    /*conferencesService.selectedConferences.subscribe(
-      conferences => (this.selectedConferences = conferences)
-    );*/
-  }
-
-  // filterPapers(): void {
-  //   if (this.allPapers && this.selectedConferences) {
-  //     this.papers = this.allPapers.filter(paper =>
-  //       this.selectedConferences.includes(paper.conference)
-  //     );
-  //   } else {
-  //     this.papers = [];
-  //   }
-  // }
+  constructor(private statisticService: StatisticService) {}
 
   getPapers(): void {
     this.statisticService.selectedPapers.subscribe((paperList: Paper[]) => {
@@ -42,15 +28,7 @@ export class PapersComponent implements OnInit {
     });
   }
 
-  // getConferences(): void {
-  //   this.statisticService.selectedConferences.subscribe(conferences => {
-  //     this.selectedConferences = conferences;
-  //     this.filterPapers();
-  //   });
-  // }
-
   ngOnInit() {
-    // this.getConferences();
     this.getPapers();
   }
 
