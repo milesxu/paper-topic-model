@@ -13,8 +13,9 @@ path = './data/2018/txt'
 
 
 def process_txt(path, process=True):
-    filenames = os.listdir(path)
     basename = os.path.basename(path)
+    path = os.path.join(path, 'txt')
+    filenames = os.listdir(path)
     filejson = basename + '-filename.json'
     with open(filejson, 'w+') as jfile:
         json.dump(filenames, jfile)
