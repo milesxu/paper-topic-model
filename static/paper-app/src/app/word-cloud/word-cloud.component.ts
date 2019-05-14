@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
 import HC_wordcloud from 'highcharts/modules/wordcloud';
 HC_wordcloud(Highcharts);
 import { Word } from '../word';
 import { WordsService } from '../words.service';
+import { StatisticService } from '../statistic.service';
 
 @Component({
   selector: 'app-word-cloud',
@@ -11,6 +13,12 @@ import { WordsService } from '../words.service';
   styleUrls: ['./word-cloud.component.css']
 })
 export class WordCloudComponent implements OnInit {
+  constructor(
+    private wordService: WordsService,
+    private router: Router,
+    private statisticService: StatisticService
+  ) {}
+
   word_data: Word[];
   Highcharts = Highcharts;
   updateFlag = false;
@@ -19,17 +27,32 @@ export class WordCloudComponent implements OnInit {
       {
         type: 'wordcloud',
         data: [],
-        name: 'Occurrences'
+        name: 'Occurrences',
+        events: {
+          click: (event: Highcharts.SeriesClickEventObject) =>
+            this.router.navigate([
+              'papers',
+              {
+                topic: event.point.name
+              }
+            ])
+        }
       }
     ],
     title: {
       text: 'Wordcloud of Topic words'
     }
   };
-  constructor(private wordService: WordsService) {}
+
+  // clickWord(event: Highcharts.SeriesClickEventObject) {
+  //   console.log(event.point.name);
+  //   this.router.navigate(['papers'], {
+  //     queryParams: { topic: event.point.name }
+  //   });
+  // }
 
   getWords(): void {
-    this.wordService.getWords().subscribe((wordList: Word[]) => {
+    this.statisticService.selectedWords.subscribe((wordList: Word[]) => {
       this.word_data = wordList;
       // this.chartOptions.series = [
       //   { type: 'wordcloud', data: this.word_data, name: 'Occurrences' }

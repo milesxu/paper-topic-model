@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Paper } from '../paper';
 import { StatisticService } from '../statistic.service';
 
@@ -17,19 +18,33 @@ export class PapersComponent implements OnInit {
   pageSizeOptions = [10, 25, 50, 100];
   current = 1;
   selectedConferences = [];
+  sub: any;
 
-  constructor(private statisticService: StatisticService) {}
+  constructor(
+    private statisticService: StatisticService,
+    private route: ActivatedRoute
+  ) {}
 
   getPapers(): void {
     this.statisticService.selectedPapers.subscribe((paperList: Paper[]) => {
       this.papers = paperList;
       this.length = this.papers.length;
       this.papersInPage = this.papers.slice(0, this.pageSize);
+      console.log(this.papers.length);
     });
   }
 
   ngOnInit() {
     this.getPapers();
+    this.route.paramMap.subscribe(p => {
+      const topic = p.has('topic') ? p.get('topic') : '';
+      console.log(topic);
+      if (topic) {
+        this.papers = this.statisticService.getPaperByTopic([topic]);
+        this.length = this.papers.length;
+        this.papersInPage = this.papers.slice(0, this.pageSize);
+      }
+    });
   }
 
   pageEvent(event: PageEvent): void {

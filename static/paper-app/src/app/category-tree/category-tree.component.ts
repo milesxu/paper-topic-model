@@ -73,11 +73,17 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
   ];
 
   nzClick(event: NzFormatEmitEvent): void {
-    console.log(event);
+    // console.log(event);
   }
 
   nzCheck(event: NzFormatEmitEvent): void {
-    // console.log(event);
+    console.log(event);
+    if (this.singleCheck) {
+      while (event.nodes.length > 1) {
+        event.nodes[0].isChecked = false;
+        event.nodes[0].setSyncChecked();
+      }
+    }
     const temp = [];
     event.checkedKeys.forEach(key => {
       if (key.isLeaf) {
@@ -93,7 +99,7 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
 
   // nzSelectedKeys change
   nzSelect(keys: string[]): void {
-    console.log(keys, this.nzTreeComponent.getSelectedNodeList());
+    // console.log(keys, this.nzTreeComponent.getSelectedNodeList());
   }
 
   ngOnInit() {
@@ -104,16 +110,16 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
     // get node by key: '10011'
     // console.log(this.nzTreeComponent.getTreeNodeByKey('10011'));
     // use tree methods
-    console.log(
-      this.nzTreeComponent.getTreeNodes(),
-      this.nzTreeComponent.getCheckedNodeList(),
-      this.nzTreeComponent.getSelectedNodeList(),
-      this.nzTreeComponent.getExpandedNodeList()
-    );
+    // console.log(
+    //   this.nzTreeComponent.getTreeNodes(),
+    //   this.nzTreeComponent.getCheckedNodeList(),
+    //   this.nzTreeComponent.getSelectedNodeList(),
+    //   this.nzTreeComponent.getExpandedNodeList()
+    // );
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    console.log(changes);
+    // console.log(changes);
     for (const propKey in changes) {
       if (propKey === 'singleCheck') {
         console.log(changes[propKey].currentValue);

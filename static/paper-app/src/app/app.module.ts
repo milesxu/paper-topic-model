@@ -54,7 +54,6 @@ registerLocaleData(en);
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -75,7 +74,8 @@ registerLocaleData(en);
     MatTableModule,
     NzTreeModule,
     // NzModalModule,
-    MatDialogModule
+    MatDialogModule,
+    AppRoutingModule
   ],
   entryComponents: [RankDialogComponent],
   providers: [

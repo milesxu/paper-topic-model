@@ -66,7 +66,7 @@ export class MapsComponent implements OnInit, AfterViewInit, OnDestroy {
 
         template.events.on('hit', event => {
           // console.log(event.target.dataItem.dataContext.id);
-          const c_id: string = event.target.dataItem.dataContext.id;
+          const c_id: string = event.target.dataItem.dataContext['id'];
           this.organizationRank = this.statisticService.getOrganizationRank(
             c_id
           );
@@ -110,11 +110,11 @@ export class MapsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.getDistribute();
+    // this.getDistribute();
   }
 
   ngOnInit() {
-    // this.getDistribute();
+    this.getDistribute();
   }
 
   ngOnDestroy(): void {
