@@ -1,14 +1,24 @@
+.paper-app {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 3rem;
+  width: 100%;
+}
+
 .toolbar {
-  position: sticky;
-  position: -webkit-sticky;
+  /* position: sticky; */
+  /* position: -webkit-sticky; */
+  position: fixed;
   /* For macOS/iOS Safari */
   top: 0;
   /* Sets the sticky toolbar to be on top */
-  z-index: 1000;
+  z-index: 2;
   /* Ensure that your app's content doesn't overlap the toolbar */
   min-height: 3rem;
   max-height: 3rem;
 }
+
 
 mat-drawer-container {
   height: calc(100% - 64px);
