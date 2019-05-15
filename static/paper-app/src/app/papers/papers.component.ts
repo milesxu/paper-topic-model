@@ -38,11 +38,12 @@ export class PapersComponent implements OnInit {
     this.route.paramMap.subscribe(p => {
       const topic = p.has('topic') ? p.get('topic') : '';
       // console.log(topic);
-      if (topic) {
+      /*if (topic) {
         this.paperService.getPaperByTopic([topic]);
         // this.length = this.papers.length;
         // this.papersInPage = this.papers.slice(0, this.pageSize);
-      }
+      }*/
+      this.paperService.changeTopic([topic]);
     });
   }
 

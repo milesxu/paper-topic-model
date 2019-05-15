@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, of, Observable, Subject } from 'rxjs';
 import 'rxjs/add/operator/skip';
-import { Organization } from './organization';
+// import { Organization } from './organization';
 // import { Distribute } from './distribute';
-import { OrganizationRank } from './organization-rank';
+// import { OrganizationRank } from './organization-rank';
 import { Word } from './word';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class StatisticService {
   private wordSource = new BehaviorSubject<Word[]>(undefined);
   selectedWords: Observable<Word[]> = this.wordSource.asObservable().skip(1);
   // zeroDistribute: Distribute[] = [];
-  organization: Organization[] = [];
+  // organization: Organization[] = [];
   paperCountry: number[];
   confWords: { conference: string; word: Word[] }[] = [];
   conferences: string[] = ['NeurIPS2018'];
@@ -26,7 +26,7 @@ export class StatisticService {
 
   async DataInitialization(http: HttpClient) {
     // await this.getPapers(http);
-    await this.getOrganization(http);
+    // await this.getOrganization(http);
     // await this.getDistribute(http);
     // this.DistributeInit();
     // this.distributeSource.next(this.computeDistribute(['NeurIPS2018']));
@@ -57,17 +57,17 @@ export class StatisticService {
     );
   }*/
 
-  async getOrganization(http: HttpClient) {
-    /*http.get<Organization[]>('assets/orgs.json').subscribe(orgs => {
-      this.organization = orgs;
-    });*/
-    await http
-      .get<Organization[]>('assets/orgs.json')
-      .toPromise()
-      .then(orgs => {
-        this.organization = orgs;
-      });
-  }
+  // async getOrganization(http: HttpClient) {
+  //   http.get<Organization[]>('assets/orgs.json').subscribe(orgs => {
+  //     this.organization = orgs;
+  //   });
+  //   await http
+  //     .get<Organization[]>('assets/orgs.json')
+  //     .toPromise()
+  //     .then(orgs => {
+  //       this.organization = orgs;
+  //     });
+  // }
 
   /*async getDistribute(http: HttpClient) {
     await http

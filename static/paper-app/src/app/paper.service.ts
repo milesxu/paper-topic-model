@@ -20,6 +20,7 @@ export class PaperService {
   private allPapers: Paper[] = [];
   private paperSource = new Subject<Paper[]>();
   papers$ = this.paperSource.asObservable();
+  private topic: string[] = [];
   constructor(
     private http: HttpClient,
     private conferenceService: ConferenceService
@@ -53,13 +54,21 @@ export class PaperService {
   }
 
   filterPapers(conference: string[], papers: Paper[]) {
-    return papers.filter(p => conference.includes(p.conference));
+    return this.getPaperByTopic(
+      papers.filter(p => conference.includes(p.conference))
+    );
   }
 
-  getPaperByTopic(topic: string[]) {
-    const papers = topic
-      ? this.papers.filter(p => p.abstract.includes(topic[0]))
+  getPaperByTopic(papers: Paper[]) {
+    return this.topic
+      ? papers.filter(p => p.abstract.includes(this.topic[0]))
       : [];
-    this.paperSource.next(papers);
+  }
+
+  changeTopic(topic: string[]) {
+    this.topic = topic;
+    const conf = this.conferenceService.conferences;
+    const papers = this.filterPapers(conf, this.allPapers);
+    this.paperSource.next(this.getPaperByTopic(papers));
   }
 }

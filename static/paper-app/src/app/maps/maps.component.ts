@@ -9,10 +9,13 @@ import * as am4core from '@amcharts/amcharts4/core';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import * as am4maps from '@amcharts/amcharts4/maps';
 import am4geodata_worldHigh from '@amcharts/amcharts4-geodata/worldHigh';
-import { Distribute, DistributeService } from '../distribute.service';
+import {
+  Distribute,
+  DistributeService,
+  OrganizationRank
+} from '../distribute.service';
 import { MatDialog } from '@angular/material';
 import { RankDialogComponent } from '../rank-dialog/rank-dialog.component';
-import { OrganizationRank } from '../organization-rank';
 
 am4core.useTheme(am4themes_animated);
 
@@ -56,7 +59,7 @@ export class MapsComponent implements OnInit, AfterViewInit, OnDestroy {
         wordSeries.data = this.distribute;
         chart.series.push(wordSeries);
         // wordSeries.data = dists;
-        console.log(wordSeries.data);
+        // console.log(wordSeries.data);
 
         const template = wordSeries.mapPolygons.template;
         template.tooltipText = '{name}: {value}';
@@ -64,10 +67,9 @@ export class MapsComponent implements OnInit, AfterViewInit, OnDestroy {
         template.events.on('hit', event => {
           // console.log(event.target.dataItem.dataContext.id);
           const c_id: string = event.target.dataItem.dataContext['id'];
-          this.organizationRank = undefined;
-          // this.statisticservice.getorganizationrank(
-          //   c_id
-          // );
+          this.organizationRank = this.distributeService.getOrganizationRank(
+            c_id
+          );
           // this.isVisible = true;
           this.openDialog();
         });
