@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { StatisticService } from '../statistic.service';
 import { Paper, PaperService } from '../paper.service';
 
 @Component({
@@ -21,13 +20,12 @@ export class PapersComponent implements OnInit {
   sub: any;
 
   constructor(
-    private statisticService: StatisticService,
     private route: ActivatedRoute,
     private paperService: PaperService
   ) {}
 
   getPapers(): void {
-    this.paperService.papers.subscribe((paperList: Paper[]) => {
+    this.paperService.papers$.subscribe((paperList: Paper[]) => {
       this.papers = paperList;
       this.length = this.papers.length;
       this.papersInPage = this.papers.slice(0, this.pageSize);
@@ -39,11 +37,11 @@ export class PapersComponent implements OnInit {
     this.getPapers();
     this.route.paramMap.subscribe(p => {
       const topic = p.has('topic') ? p.get('topic') : '';
-      console.log(topic);
+      // console.log(topic);
       if (topic) {
-        this.papers = this.statisticService.getPaperByTopic([topic]);
-        this.length = this.papers.length;
-        this.papersInPage = this.papers.slice(0, this.pageSize);
+        this.paperService.getPaperByTopic([topic]);
+        // this.length = this.papers.length;
+        // this.papersInPage = this.papers.slice(0, this.pageSize);
       }
     });
   }

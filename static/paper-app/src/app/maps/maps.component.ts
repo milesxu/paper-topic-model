@@ -9,9 +9,7 @@ import * as am4core from '@amcharts/amcharts4/core';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import * as am4maps from '@amcharts/amcharts4/maps';
 import am4geodata_worldHigh from '@amcharts/amcharts4-geodata/worldHigh';
-import { Distribute } from '../distribute';
-import { DistributeService } from '../distribute.service';
-import { StatisticService } from '../statistic.service';
+import { Distribute, DistributeService } from '../distribute.service';
 import { MatDialog } from '@angular/material';
 import { RankDialogComponent } from '../rank-dialog/rank-dialog.component';
 import { OrganizationRank } from '../organization-rank';
@@ -31,12 +29,11 @@ export class MapsComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private zone: NgZone,
     private distributeService: DistributeService,
-    private statisticService: StatisticService,
     public dialog: MatDialog
   ) {}
 
   getDistribute(): void {
-    this.statisticService.distributes.subscribe(
+    this.distributeService.distribute$.subscribe(
       (dists: Distribute[]) => {
         this.distribute = dists;
         // this.zone.runOutsideAngular(() => {
@@ -67,9 +64,10 @@ export class MapsComponent implements OnInit, AfterViewInit, OnDestroy {
         template.events.on('hit', event => {
           // console.log(event.target.dataItem.dataContext.id);
           const c_id: string = event.target.dataItem.dataContext['id'];
-          this.organizationRank = this.statisticService.getOrganizationRank(
-            c_id
-          );
+          this.organizationRank = undefined;
+          // this.statisticservice.getorganizationrank(
+          //   c_id
+          // );
           // this.isVisible = true;
           this.openDialog();
         });

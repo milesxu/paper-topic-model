@@ -19,7 +19,7 @@ export class Paper {
 export class PaperService {
   private allPapers: Paper[] = [];
   private paperSource = new Subject<Paper[]>();
-  papers = this.paperSource.asObservable();
+  papers$ = this.paperSource.asObservable();
   constructor(
     private http: HttpClient,
     private conferenceService: ConferenceService
@@ -35,10 +35,15 @@ export class PaperService {
         }
         return 0;
       });
-      const confs = this.conferenceService.conferences;
-      this.paperSource.next(this.filterPapers(confs, papers));
+      // const confs = this.conferenceService.conferences;
+      this.paperSource.next(this.papers);
     });
     this.getPapers();
+  }
+
+  get papers() {
+    const confs = this.conferenceService.conferences;
+    return this.filterPapers(confs, this.allPapers);
   }
 
   getPapers() {
@@ -49,5 +54,12 @@ export class PaperService {
 
   filterPapers(conference: string[], papers: Paper[]) {
     return papers.filter(p => conference.includes(p.conference));
+  }
+
+  getPaperByTopic(topic: string[]) {
+    const papers = topic
+      ? this.papers.filter(p => p.abstract.includes(topic[0]))
+      : [];
+    this.paperSource.next(papers);
   }
 }

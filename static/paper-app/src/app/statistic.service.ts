@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, of, Observable, Subject } from 'rxjs';
 import 'rxjs/add/operator/skip';
-import { Paper } from './paper';
 import { Organization } from './organization';
-import { Distribute } from './distribute';
+// import { Distribute } from './distribute';
 import { OrganizationRank } from './organization-rank';
 import { Word } from './word';
 
@@ -12,14 +11,11 @@ import { Word } from './word';
   providedIn: 'root'
 })
 export class StatisticService {
-  private paperSource = new BehaviorSubject<Paper[]>(undefined);
-  selectedPapers: Observable<Paper[]> = this.paperSource.asObservable().skip(1);
-  private distributeSource = new BehaviorSubject<Distribute[]>(undefined);
-  distributes: Observable<Distribute[]> = this.distributeSource.asObservable();
+  // private distributeSource = new BehaviorSubject<Distribute[]>(undefined);
+  // distributes: Observable<Distribute[]> = this.distributeSource.asObservable();
   private wordSource = new BehaviorSubject<Word[]>(undefined);
   selectedWords: Observable<Word[]> = this.wordSource.asObservable().skip(1);
-  allPapers: Paper[] = [];
-  zeroDistribute: Distribute[] = [];
+  // zeroDistribute: Distribute[] = [];
   organization: Organization[] = [];
   paperCountry: number[];
   confWords: { conference: string; word: Word[] }[] = [];
@@ -29,22 +25,22 @@ export class StatisticService {
   }
 
   async DataInitialization(http: HttpClient) {
-    await this.getPapers(http);
+    // await this.getPapers(http);
     await this.getOrganization(http);
-    await this.getDistribute(http);
-    this.DistributeInit();
+    // await this.getDistribute(http);
+    // this.DistributeInit();
     // this.distributeSource.next(this.computeDistribute(['NeurIPS2018']));
-    this.paperSource.next(this.allPapers);
-    this.distributeSource.next(this.computeDistribute['NeurIPS2018']);
+    // this.paperSource.next(this.allPapers);
+    // this.distributeSource.next(this.computeDistribute['NeurIPS2018']);
     // console.log(this.paperCountry);
     await this.getConferenceWords(http);
     // this.wordSource.next(this.computeWord('NeurIPS2018'));
     this.wordSource.next(this.computeWord('NeurIPS2018'));
   }
 
-  async getPapers(http: HttpClient) {
-    /*http.get<Paper[]>('assets/papers.json').subscribe(papers => {
-    });*/
+  /*async getPapers(http: HttpClient) {
+    http.get<Paper[]>('assets/papers.json').subscribe(papers => {
+    });
     await http
       .get<Paper[]>('assets/papers.json')
       .toPromise()
@@ -59,7 +55,7 @@ export class StatisticService {
     return this.allPapers.filter(paper =>
       conferences.includes(paper.conference)
     );
-  }
+  }*/
 
   async getOrganization(http: HttpClient) {
     /*http.get<Organization[]>('assets/orgs.json').subscribe(orgs => {
@@ -73,7 +69,7 @@ export class StatisticService {
       });
   }
 
-  async getDistribute(http: HttpClient) {
+  /*async getDistribute(http: HttpClient) {
     await http
       .get<Distribute[]>('assets/distribute.json')
       .toPromise()
@@ -86,7 +82,7 @@ export class StatisticService {
           });
         });
       });
-  }
+  }*/
 
   async getConferenceWords(http: HttpClient) {
     // const conf = ["NeurIPS2018", "ICLR2019", "ICML2018", "CVPR2018"];
@@ -149,88 +145,88 @@ export class StatisticService {
     return this.confWords.find(cw => cw.conference === conference).word;
   }
 
-  computeDistribute(conferences: string[]): Distribute[] {
-    const dist: Distribute[] = [...this.zeroDistribute];
-    // console.log(dist);
-    this.allPapers.forEach((paper, id) => {
-      if (conferences.includes(paper.conference) && this.paperCountry[id] > 0) {
-        ++dist[this.paperCountry[id]].value;
-      }
-    });
-    return dist;
-  }
+  // computeDistribute(conferences: string[]): Distribute[] {
+  //   const dist: Distribute[] = [...this.zeroDistribute];
+  //   // console.log(dist);
+  //   this.allPapers.forEach((paper, id) => {
+  //     if (conferences.includes(paper.conference) && this.paperCountry[id] > 0) {
+  //       ++dist[this.paperCountry[id]].value;
+  //     }
+  //   });
+  //   return dist;
+  // }
 
-  DistributeInit(): void {
-    // console.log(this.zeroDistribute);
-    this.paperCountry = this.allPapers.map(paper => {
-      const org = this.organization.find(o => {
-        return o.organizations.includes(paper.organization);
-      });
-      if (org) {
-        return this.zeroDistribute.findIndex(d => {
-          return d.id === org.country;
-        });
-      }
-      return -1;
-    });
-    // this.distributeSource.next(this.computeDistribute(['NeurIPS2018']));
-  }
+  // DistributeInit(): void {
+  //   // console.log(this.zeroDistribute);
+  //   this.paperCountry = this.allPapers.map(paper => {
+  //     const org = this.organization.find(o => {
+  //       return o.organizations.includes(paper.organization);
+  //     });
+  //     if (org) {
+  //       return this.zeroDistribute.findIndex(d => {
+  //         return d.id === org.country;
+  //       });
+  //     }
+  //     return -1;
+  //   });
+  //   // this.distributeSource.next(this.computeDistribute(['NeurIPS2018']));
+  // }
 
-  changeSelectedConferences(conferences: string[]) {
-    // console.log(conferences);
-    this.conferences = conferences.filter((v, i, self) => {
-      return self.indexOf(v) === i;
-    });
-    console.log(this.conferences);
-    // this.conferences = conferences;
-    this.paperSource.next(this.filerPapers(conferences));
-    this.distributeSource.next(this.computeDistribute(conferences));
-    this.wordSource.next(this.computeWord(conferences[0]));
-  }
+  // changeSelectedConferences(conferences: string[]) {
+  //   // console.log(conferences);
+  //   this.conferences = conferences.filter((v, i, self) => {
+  //     return self.indexOf(v) === i;
+  //   });
+  //   console.log(this.conferences);
+  //   // this.conferences = conferences;
+  //   this.paperSource.next(this.filerPapers(conferences));
+  //   this.distributeSource.next(this.computeDistribute(conferences));
+  //   this.wordSource.next(this.computeWord(conferences[0]));
+  // }
 
-  getOrganizationRank(id: string): OrganizationRank {
-    const country = this.zeroDistribute.find(d => d.id === id).name;
-    const country_id = this.zeroDistribute.findIndex(d => d.id === id);
-    if (this.conferences) {
-      const ranks: { organization: string; papers: number }[] = [];
-      this.allPapers.forEach((p, index) => {
-        if (
-          this.conferences.includes(p.conference) &&
-          p.organization &&
-          this.paperCountry[index] === country_id
-        ) {
-          const org_id = ranks.findIndex(
-            r => r.organization === p.organization
-          );
-          if (org_id === -1) {
-            ranks.push({ organization: p.organization, papers: 1 });
-          } else {
-            ++ranks[org_id].papers;
-          }
-        }
-      });
-      ranks.sort((a, b) => {
-        return b.papers - a.papers;
-      });
-      if (ranks.length > 10) {
-        ranks.length = 10;
-      }
-      return {
-        country: country,
-        ranks: ranks
-      };
-    }
-    return {
-      country: country,
-      ranks: []
-    };
-  }
+  // getOrganizationRank(id: string): OrganizationRank {
+  //   const country = this.zeroDistribute.find(d => d.id === id).name;
+  //   const country_id = this.zeroDistribute.findIndex(d => d.id === id);
+  //   if (this.conferences) {
+  //     const ranks: { organization: string; papers: number }[] = [];
+  //     this.allPapers.forEach((p, index) => {
+  //       if (
+  //         this.conferences.includes(p.conference) &&
+  //         p.organization &&
+  //         this.paperCountry[index] === country_id
+  //       ) {
+  //         const org_id = ranks.findIndex(
+  //           r => r.organization === p.organization
+  //         );
+  //         if (org_id === -1) {
+  //           ranks.push({ organization: p.organization, papers: 1 });
+  //         } else {
+  //           ++ranks[org_id].papers;
+  //         }
+  //       }
+  //     });
+  //     ranks.sort((a, b) => {
+  //       return b.papers - a.papers;
+  //     });
+  //     if (ranks.length > 10) {
+  //       ranks.length = 10;
+  //     }
+  //     return {
+  //       country: country,
+  //       ranks: ranks
+  //     };
+  //   }
+  //   return {
+  //     country: country,
+  //     ranks: []
+  //   };
+  // }
 
-  getPaperByTopic(topic: string[]): Paper[] {
-    if (topic) {
-      return this.allPapers.filter(p => p.abstract.includes(topic[0]));
-    } else {
-      return [];
-    }
-  }
+  // getPaperByTopic(topic: string[]): Paper[] {
+  //   if (topic) {
+  //     return this.allPapers.filter(p => p.abstract.includes(topic[0]));
+  //   } else {
+  //     return [];
+  //   }
+  // }
 }
