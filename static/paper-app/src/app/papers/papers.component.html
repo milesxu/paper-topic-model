@@ -1,11 +1,9 @@
 <div class="papers">
-
   <ul>
     <li *ngFor="let paper of papersInPage">
       <app-paper-detail [paper]="paper"></app-paper-detail>
     </li>
   </ul>
-
   <div class="container">
     <div class="label">Go to page:</div>
     <mat-form-field class="input-form"><input matInput maxlength="5">

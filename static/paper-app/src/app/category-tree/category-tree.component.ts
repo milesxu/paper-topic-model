@@ -8,13 +8,13 @@ import {
   OnChanges,
   SimpleChange
 } from '@angular/core';
-import { StatisticService } from '../statistic.service';
 import {
   NzFormatEmitEvent,
   NzTreeComponent,
   NzTreeNodeOptions,
   isTemplateRef
 } from 'ng-zorro-antd';
+import { ConferenceService } from '../conference.service';
 
 @Component({
   selector: 'app-category-tree',
@@ -22,7 +22,7 @@ import {
   styleUrls: ['./category-tree.component.css']
 })
 export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
-  constructor(private statisticService: StatisticService) {}
+  constructor(private conferenceService: ConferenceService) {}
   @Input() singleCheck: boolean;
   @ViewChild('nzTreeComponent') nzTreeComponent: NzTreeComponent;
   defaultCheckedKeys = ['2001'];
@@ -94,7 +94,7 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
         }
       }
     });
-    this.statisticService.changeSelectedConferences(temp);
+    this.conferenceService.changeConference(temp);
   }
 
   // nzSelectedKeys change
@@ -120,10 +120,10 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     // console.log(changes);
-    for (const propKey in changes) {
+    /*for (const propKey in changes) {
       if (propKey === 'singleCheck') {
         console.log(changes[propKey].currentValue);
       }
-    }
+    }*/
   }
 }

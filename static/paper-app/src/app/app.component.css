@@ -4,6 +4,8 @@
   position: absolute;
   top: 3rem;
   width: 100%;
+  min-height: calc(100% - 64px);
+  height: calc(100vh-48px);
 }
 
 .toolbar {
@@ -21,7 +23,9 @@
 
 
 mat-drawer-container {
-  height: calc(100% - 64px);
+  /* height: calc(100% - 64px); */
+  min-height: calc(100% - 64px);
+  height: 100%;
   height: -o-calc(100% - 65px);
   /* opera */
   height: -webkit-calc(100% - 65px);
@@ -42,4 +46,8 @@ mat-drawer {
 #main_search {
   margin-left: 2rem;
   /* font-size: 1rem; */
+}
+
+.main-content {
+  min-height: 95vh;
 }
