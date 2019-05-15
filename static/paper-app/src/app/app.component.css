@@ -6,6 +6,8 @@
   /* Sets the sticky toolbar to be on top */
   z-index: 1000;
   /* Ensure that your app's content doesn't overlap the toolbar */
+  min-height: 3rem;
+  max-height: 3rem;
 }
 
 mat-drawer-container {
@@ -20,7 +22,7 @@ mat-drawer-container {
 }
 
 mat-drawer {
-  width: 20rem;
+  width: 16rem;
 }
 
 .title {
