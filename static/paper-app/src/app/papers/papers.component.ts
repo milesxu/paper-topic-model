@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Paper } from '../paper';
 import { StatisticService } from '../statistic.service';
+import { Paper, PaperService } from '../paper.service';
 
 @Component({
   selector: 'app-papers',
@@ -22,15 +22,16 @@ export class PapersComponent implements OnInit {
 
   constructor(
     private statisticService: StatisticService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private paperService: PaperService
   ) {}
 
   getPapers(): void {
-    this.statisticService.selectedPapers.subscribe((paperList: Paper[]) => {
+    this.paperService.papers.subscribe((paperList: Paper[]) => {
       this.papers = paperList;
       this.length = this.papers.length;
       this.papersInPage = this.papers.slice(0, this.pageSize);
-      console.log(this.papers.length);
+      // console.log(this.papers.length);
     });
   }
 

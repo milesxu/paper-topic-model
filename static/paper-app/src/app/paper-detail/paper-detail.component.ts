@@ -6,7 +6,8 @@ import {
   ViewChild,
   AfterViewInit
 } from '@angular/core';
-import { Paper } from '../paper';
+// import { Paper } from '../paper';
+import { Paper, PaperService } from '../paper.service';
 declare var MathJax: any;
 
 @Component({

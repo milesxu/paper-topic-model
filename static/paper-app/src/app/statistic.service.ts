@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, of, Observable, Subject } from 'rxjs';
-import 'rxjs/add/operator/skip';
-import { Paper } from './paper';
-import { Organization } from './organization';
-import { Distribute } from './distribute';
-import { OrganizationRank } from './organization-rank';
-import { Word } from './word';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, of, Observable, Subject } from "rxjs";
+import "rxjs/add/operator/skip";
+import { Paper } from "./paper";
+import { Organization } from "./organization";
+import { Distribute } from "./distribute";
+import { OrganizationRank } from "./organization-rank";
+import { Word } from "./word";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class StatisticService {
-  private conferencesSource = new BehaviorSubject<string[]>(['NeurIPS2018']);
+  conferencesSource = new BehaviorSubject<string[]>(["NeurIPS2018"]);
   selectedConferences = this.conferencesSource.asObservable();
   private paperSource = new BehaviorSubject<Paper[]>(undefined);
   selectedPapers: Observable<Paper[]> = this.paperSource.asObservable().skip(1);
@@ -25,7 +25,7 @@ export class StatisticService {
   organization: Organization[] = [];
   paperCountry: number[];
   confWords: { conference: string; word: Word[] }[] = [];
-  conferences: string[] = ['NeurIPS2018'];
+  conferences: string[] = ["NeurIPS2018"];
   constructor(private http: HttpClient) {
     this.DataInitialization(http);
   }
@@ -37,31 +37,23 @@ export class StatisticService {
     this.DistributeInit();
     // this.distributeSource.next(this.computeDistribute(['NeurIPS2018']));
     this.paperSource.next(this.allPapers);
-    this.distributeSource.next(this.computeDistribute['NeurIPS2018']);
+    this.distributeSource.next(this.computeDistribute["NeurIPS2018"]);
     // console.log(this.paperCountry);
     await this.getConferenceWords(http);
     // this.wordSource.next(this.computeWord('NeurIPS2018'));
-    this.wordSource.next(this.computeWord('NeurIPS2018'));
+    this.wordSource.next(this.computeWord("NeurIPS2018"));
   }
 
   async getPapers(http: HttpClient) {
     /*http.get<Paper[]>('assets/papers.json').subscribe(papers => {
     });*/
     await http
-      .get<Paper[]>('assets/papers.json')
+      .get<Paper[]>("assets/papers.json")
       .toPromise()
       .then(papers => {
         this.allPapers = papers;
-        this.allPapers.sort((a, b) => {
-          if (a.title < b.title) {
-            return -1;
-          }
-          if (a.title > b.title) {
-            return 1;
-          }
-          return 0;
-        });
-        this.paperSource.next(this.filerPapers(['NeurIPS2018']));
+
+        this.paperSource.next(this.filerPapers(["NeurIPS2018"]));
       });
   }
 
@@ -76,7 +68,7 @@ export class StatisticService {
       this.organization = orgs;
     });*/
     await http
-      .get<Organization[]>('assets/orgs.json')
+      .get<Organization[]>("assets/orgs.json")
       .toPromise()
       .then(orgs => {
         this.organization = orgs;
@@ -85,7 +77,7 @@ export class StatisticService {
 
   async getDistribute(http: HttpClient) {
     await http
-      .get<Distribute[]>('assets/distribute.json')
+      .get<Distribute[]>("assets/distribute.json")
       .toPromise()
       .then(dist => {
         dist.forEach(d => {
@@ -118,38 +110,38 @@ export class StatisticService {
     //     });
     // });
     await http
-      .get<Word[]>('assets/nips2018_word_cloud.json')
+      .get<Word[]>("assets/nips2018_word_cloud.json")
       .toPromise()
       .then(w => {
         this.confWords.push({
-          conference: 'NeurIPS2018',
+          conference: "NeurIPS2018",
           word: w
         });
       });
     await http
-      .get<Word[]>('assets/iclr2019_word_cloud.json')
+      .get<Word[]>("assets/iclr2019_word_cloud.json")
       .toPromise()
       .then(w => {
         this.confWords.push({
-          conference: 'ICLR2019',
+          conference: "ICLR2019",
           word: w
         });
       });
     await http
-      .get<Word[]>('assets/icml2018_word_cloud.json')
+      .get<Word[]>("assets/icml2018_word_cloud.json")
       .toPromise()
       .then(w => {
         this.confWords.push({
-          conference: 'ICML2018',
+          conference: "ICML2018",
           word: w
         });
       });
     await http
-      .get<Word[]>('assets/cvpr2018_word_cloud.json')
+      .get<Word[]>("assets/cvpr2018_word_cloud.json")
       .toPromise()
       .then(w => {
         this.confWords.push({
-          conference: 'CVPR2018',
+          conference: "CVPR2018",
           word: w
         });
       });
