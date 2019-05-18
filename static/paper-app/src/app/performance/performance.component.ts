@@ -3,6 +3,7 @@ import * as Highcharts from 'highcharts';
 import { PerformanceResult } from '../perf-result';
 import { PerfResultService } from '../perf-result.service';
 import { MatTableDataSource } from '@angular/material';
+import { PerformanceService } from '../performance.service';
 
 export interface ResultCompare {
   epoch: number;
@@ -59,7 +60,8 @@ export class PerformanceComponent implements OnInit {
       }
     }
   };
-  constructor(private perfResultService: PerfResultService) {}
+  constructor(private perfResultService: PerfResultService,
+    private performanceService: PerformanceService) {}
 
   getResultCPU(epoch: number): void {
     this.perfResultService.getResultCPU(epoch, 3.6).subscribe(

@@ -28,16 +28,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
-import {
-  NzTreeModule,
-  // NzModalModule,
-  NZ_I18N,
-  en_US
-  // NZ_MODAL_CONFIG
-} from 'ng-zorro-antd';
+import { NzTreeModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { RankDialogComponent } from './rank-dialog/rank-dialog.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { API_URL } from './env';
+
+const config: SocketIoConfig = { url: API_URL, options: {} };
 
 registerLocaleData(en);
 
@@ -75,7 +73,8 @@ registerLocaleData(en);
     NzTreeModule,
     // NzModalModule,
     MatDialogModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SocketIoModule.forRoot(config)
   ],
   entryComponents: [RankDialogComponent],
   providers: [

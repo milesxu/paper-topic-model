@@ -29,6 +29,7 @@
     "highcharts": "^7.1.1",
     "highcharts-angular": "^2.4.0",
     "ng-zorro-antd": "^7.3.3",
+    "ngx-socket-io": "^2.1.1",
     "rxjs": "~6.5.2",
     "rxjs-compat": "^6.5.1",
     "tslib": "^1.9.0",

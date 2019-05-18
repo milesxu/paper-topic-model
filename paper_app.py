@@ -1,11 +1,19 @@
-from flask import Flask, jsonify, Response, stream_with_context, request, flash
-from flask_cors import CORS
-import time
-import json
-from datetime import datetime
 import database_operations as ops
+from datetime import datetime
+from flask_socketio import SocketIO, emit
+import json
+import time
+from flask_cors import CORS
+from flask import Flask, jsonify, Response, stream_with_context, request, flash
+import examples.topic_models.sparse_lntm_mcem_demo as lntm
+import tensorflow as tf
+sdd_module = tf.load_op_library(
+    './examples/topic_models/sparse_dense_dense.so')
+sdd = sdd_module.sparse_dense_dense
 app = Flask(__name__)
 CORS(app)
+socketio = SocketIO(app)
+app.debug = True
 
 
 @app.route('/')
@@ -65,5 +73,23 @@ def stream_view():
     rows = generate()
     # return Response(
     #     stream_with_context(stream_template('template.html', rows=rows)))
-    return Response(
-        stream_with_context(generate()), mimetype='application/json')
+    # return Response(
+    # stream_with_context(generate()), mimetype='application/json')
+    return Response(generate(), mimetype='application/json')
+
+
+@socketio.on('connect')
+def test_connect():
+    print('connected!')
+    emit('my response', {'data': 'Connected'})
+
+
+@socketio.on('consume')
+def consuming_test():
+    for str in lntm.timeConsumingTest():
+        emit('consumed', str)
+
+
+if __name__ == "__main__":
+    # app.run(debug=True, port=8080)
+    socketio.run(app, port=8080)
