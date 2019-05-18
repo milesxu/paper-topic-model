@@ -5,11 +5,7 @@ import json
 import time
 from flask_cors import CORS
 from flask import Flask, jsonify, Response, stream_with_context, request, flash
-import examples.topic_models.sparse_lntm_mcem_demo as lntm
-import tensorflow as tf
-sdd_module = tf.load_op_library(
-    './examples/topic_models/sparse_dense_dense.so')
-sdd = sdd_module.sparse_dense_dense
+import examples.topic_models as models
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app)
@@ -86,7 +82,7 @@ def test_connect():
 
 @socketio.on('consume')
 def consuming_test():
-    for str in lntm.timeConsumingTest():
+    for str in models.lntm.timeConsumingTest():
         emit('consumed', str)
 
 
