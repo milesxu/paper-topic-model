@@ -5,14 +5,17 @@ import json
 import time
 from flask_cors import CORS
 from flask import Flask, jsonify, Response, stream_with_context, request, flash
-import examples.topic_models.sparse_lntm_mcem_demo as lntm
+import examples.topic_models.sparse_lntm_mcem_concise as lntm
 from threading import Thread, Event
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, async_mode="threading")
+# socketio = SocketIO(app, async_mode='gevent')
 app.debug = True
 
 thread = Thread()
+gpu_thread = Thread()
+cpu_thread = Thread()
 
 
 class ConsumeThread(Thread):
@@ -30,6 +33,36 @@ class ConsumeThread(Thread):
 
     def run(self):
         self.consume()
+
+
+class GPUThread(Thread):
+    def __init__(self):
+        super(GPUThread, self).__init__()
+
+    def compute(self):
+        path = './data/nips2018/dataset'
+        basename = 'nips2018'
+        epochs = 6
+        for e, t, p in lntm.concise_gpu(path, basename, epochs):
+            socketio.emit('gpu', {'count': e, 'timing': t, 'perplexity': p})
+
+    def run(self):
+        self.compute()
+
+
+class CPUThread(Thread):
+    def __init__(self):
+        super(CPUThread, self).__init__()
+
+    def compute(self):
+        path = './data/nips2018/dataset'
+        basename = 'nips2018'
+        epochs = 6
+        for e, t, p in lntm.concise_cpu(path, basename, epochs):
+            socketio.emit('cpu', {'count': e, 'timing': t, 'perplexity': p})
+
+    def run(self):
+        self.compute()
 
 
 @app.route('/')
@@ -111,6 +144,22 @@ def consuming_test():
     if not thread.isAlive():
         thread = ConsumeThread()
     thread.start()
+
+
+@socketio.on('gpu test')
+def gpu_test():
+    global gpu_thread
+    if not gpu_thread.isAlive():
+        gpu_thread = GPUThread()
+    gpu_thread.start()
+
+
+@socketio.on('cpu test')
+def cpu_test():
+    global cpu_thread
+    if not cpu_thread.isAlive():
+        cpu_thread = CPUThread()
+    cpu_thread.start()
 
 
 if __name__ == "__main__":

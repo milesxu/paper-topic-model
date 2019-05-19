@@ -66,26 +66,34 @@ export class PerformanceComponent implements OnInit {
   ) {}
 
   getResultCPU(epoch: number): void {
-    this.perfResultService.getResultCPU(epoch, 3.6).subscribe(
-      (result: PerformanceResult) => {
-        this.cpu_result.push(result);
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        this.pushChart();
-        this.pushTable();
-      }
-    );
+    // this.perfResultService.getResultCPU(epoch, 3.6).subscribe(
+    //   (result: PerformanceResult) => {
+    //     this.cpu_result.push(result);
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   },
+    //   () => {
+    //     this.pushChart();
+    //     this.pushTable();
+    //   }
+    // );
+    this.performanceService.cpu.subscribe(perf => {
+      this.cpu_result.push(perf);
+    });
+    this.performanceService.cpu_test();
   }
 
   getResultGPU(epoch: number): void {
-    this.perfResultService
-      .getResultGPU(epoch, 0.98)
-      .subscribe((result: PerformanceResult) => {
-        this.gpu_result.push(result);
-      });
+    // this.perfResultService
+    //   .getResultGPU(epoch, 0.98)
+    //   .subscribe((result: PerformanceResult) => {
+    //     this.gpu_result.push(result);
+    //   });
+    this.performanceService.gpu.subscribe(perf => {
+      this.gpu_result.push(perf);
+    });
+    this.performanceService.gpu_test();
   }
 
   pushTable(): void {
@@ -109,7 +117,14 @@ export class PerformanceComponent implements OnInit {
     this.updateFlag = true;
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  runSim() {
+    this.getResultCPU(this.epochNum);
+    this.getResultGPU(this.epochNum);
+  }
+
+  consumeTest() {
     this.performanceService.consumed.subscribe(i => {
       console.log(i);
       this.gpu_result.push({
@@ -119,10 +134,5 @@ export class PerformanceComponent implements OnInit {
       });
     });
     this.performanceService.consume();
-  }
-
-  runSim() {
-    this.getResultCPU(this.epochNum);
-    this.getResultGPU(this.epochNum);
   }
 }

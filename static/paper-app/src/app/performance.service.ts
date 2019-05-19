@@ -11,8 +11,11 @@ export class PerformanceResult {
   providedIn: 'root'
 })
 export class PerformanceService {
-  // connected = this.socket.fromEvent<string>('my response');
+  connected = this.socket.fromEvent<string>('my response');
   consumed = this.socket.fromEvent<number>('consumed');
+  gpu = this.socket.fromEvent<PerformanceResult>('gpu');
+  cpu = this.socket.fromEvent<PerformanceResult>('cpu');
+  complete = this.socket.fromEvent<number>('complete');
   constructor(private socket: Socket) {
     // this.connected.subscribe(conn => console.log(conn));
     socket
@@ -24,5 +27,13 @@ export class PerformanceService {
 
   consume() {
     this.socket.emit('consume');
+  }
+
+  gpu_test() {
+    this.socket.emit('gpu test');
+  }
+
+  cpu_test() {
+    this.socket.emit('cpu test');
   }
 }
