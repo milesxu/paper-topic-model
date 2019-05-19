@@ -60,8 +60,10 @@ export class PerformanceComponent implements OnInit {
       }
     }
   };
-  constructor(private perfResultService: PerfResultService,
-    private performanceService: PerformanceService) {}
+  constructor(
+    private perfResultService: PerfResultService,
+    private performanceService: PerformanceService
+  ) {}
 
   getResultCPU(epoch: number): void {
     this.perfResultService.getResultCPU(epoch, 3.6).subscribe(
@@ -107,7 +109,17 @@ export class PerformanceComponent implements OnInit {
     this.updateFlag = true;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.performanceService.consumed.subscribe(i => {
+      console.log(i);
+      this.gpu_result.push({
+        count: i,
+        timing: i,
+        perplexity: i
+      });
+    });
+    this.performanceService.consume();
+  }
 
   runSim() {
     this.getResultCPU(this.epochNum);

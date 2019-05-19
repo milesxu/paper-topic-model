@@ -12,12 +12,17 @@ export class PerformanceResult {
 })
 export class PerformanceService {
   // connected = this.socket.fromEvent<string>('my response');
+  consumed = this.socket.fromEvent<number>('consumed');
   constructor(private socket: Socket) {
     // this.connected.subscribe(conn => console.log(conn));
     socket
       .fromEvent<string>('my response')
       .subscribe(rspns => console.log(rspns));
-    socket.fromEvent<string>('consumed').subscribe(str => console.log(str));
-    socket.emit('consume');
+    // socket.fromEvent<string>('consumed').subscribe(str => console.log(str));
+    // socket.emit('consume');
+  }
+
+  consume() {
+    this.socket.emit('consume');
   }
 }

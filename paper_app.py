@@ -5,11 +5,31 @@ import json
 import time
 from flask_cors import CORS
 from flask import Flask, jsonify, Response, stream_with_context, request, flash
-import examples.topic_models as models
+import examples.topic_models.sparse_lntm_mcem_demo as lntm
+from threading import Thread, Event
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode="threading")
 app.debug = True
+
+thread = Thread()
+
+
+class ConsumeThread(Thread):
+    def __init__(self):
+        self.delay = 2
+        self.e = Event()
+        super(ConsumeThread, self).__init__()
+
+    def consume(self):
+        for i in range(5):
+            # while not self.e.wait(self.delay):
+            socketio.emit('consumed', i)
+            print('generated!')
+            time.sleep(self.delay)
+
+    def run(self):
+        self.consume()
 
 
 @app.route('/')
@@ -82,8 +102,15 @@ def test_connect():
 
 @socketio.on('consume')
 def consuming_test():
-    for str in models.lntm.timeConsumingTest():
-        emit('consumed', str)
+    # for str in lntm.timeConsumingTest():
+        # emit('consumed', str)
+    # for i in range(5):
+    #     socketio.emit('consumed', str(i))
+    #     time.sleep(2)
+    global thread
+    if not thread.isAlive():
+        thread = ConsumeThread()
+    thread.start()
 
 
 if __name__ == "__main__":
