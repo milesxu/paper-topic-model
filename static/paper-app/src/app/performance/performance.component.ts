@@ -96,28 +96,28 @@ export class PerformanceComponent implements OnInit {
     this.performanceService.gpu_test();
   }
 
-  pushTable(): void {
-    const r = this.cpu_result[0].timing / this.gpu_result[0].timing;
+  pushTable(epoch, cpu, gpu): void {
+    const r = cpu / gpu;
     this.tableData.push({
-      epoch: this.epochNum,
-      cpu: this.cpu_result[0].timing,
-      gpu: this.gpu_result[0].timing,
+      epoch: epoch,
+      cpu: cpu,
+      gpu: gpu,
       rate: r
     });
     this.dataSource = new MatTableDataSource(this.tableData);
-    this.cpu_result = [];
-    this.gpu_result = [];
   }
 
-  pushChart(): void {
+  pushChart(cpu, gpu): void {
     const len = this.chartOptions.xAxis.categories.length + 1;
     this.chartOptions.xAxis.categories.push(len);
-    this.chartOptions.series[0].data.push(this.cpu_result[0].timing);
-    this.chartOptions.series[1].data.push(this.gpu_result[0].timing);
+    this.chartOptions.series[0].data.push(cpu);
+    this.chartOptions.series[1].data.push(gpu);
     this.updateFlag = true;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.resultAnalysis();
+  }
 
   runSim() {
     this.getResultCPU(this.epochNum);
@@ -126,7 +126,7 @@ export class PerformanceComponent implements OnInit {
 
   consumeTest() {
     this.performanceService.consumed.subscribe(i => {
-      console.log(i);
+      // console.log(i);
       this.gpu_result.push({
         count: i,
         timing: i,
@@ -134,5 +134,23 @@ export class PerformanceComponent implements OnInit {
       });
     });
     this.performanceService.consume();
+  }
+
+  resultAnalysis() {
+    this.performanceService.complete.subscribe(c => {
+      const epoch = this.epochNum;
+      let cpu_time = this.cpu_result.reduce((t, cr) => {
+        return t + cr.timing;
+      }, 0);
+      cpu_time /= epoch;
+      let gpu_time = this.gpu_result.reduce((t, gr) => {
+        return t + gr.timing;
+      }, 0);
+      gpu_time /= epoch;
+      this.pushTable(epoch, cpu_time, gpu_time);
+      this.pushChart(cpu_time, gpu_time);
+      this.cpu_result = [];
+      this.gpu_result = [];
+    });
   }
 }

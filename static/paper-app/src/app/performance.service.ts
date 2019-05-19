@@ -15,7 +15,7 @@ export class PerformanceService {
   consumed = this.socket.fromEvent<number>('consumed');
   gpu = this.socket.fromEvent<PerformanceResult>('gpu');
   cpu = this.socket.fromEvent<PerformanceResult>('cpu');
-  complete = this.socket.fromEvent<number>('complete');
+  complete = this.socket.fromEvent<string>('complete');
   constructor(private socket: Socket) {
     // this.connected.subscribe(conn => console.log(conn));
     socket

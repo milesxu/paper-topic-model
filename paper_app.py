@@ -5,7 +5,8 @@ import json
 import time
 from flask_cors import CORS
 from flask import Flask, jsonify, Response, stream_with_context, request, flash
-import examples.topic_models.sparse_lntm_mcem_concise as lntm
+import examples.topic_models.sparse_lntm_mcem_cpu as lntm_cpu
+import examples.topic_models.sparse_lntm_mcem_gpu as lntm_gpu
 from threading import Thread, Event
 app = Flask(__name__)
 CORS(app)
@@ -43,7 +44,7 @@ class GPUThread(Thread):
         path = './data/nips2018/dataset'
         basename = 'nips2018'
         epochs = 6
-        for e, t, p in lntm.concise_gpu(path, basename, epochs):
+        for e, t, p in lntm_gpu.concise_gpu(path, basename, epochs):
             socketio.emit('gpu', {'count': e, 'timing': t, 'perplexity': p})
 
     def run(self):
@@ -58,8 +59,9 @@ class CPUThread(Thread):
         path = './data/nips2018/dataset'
         basename = 'nips2018'
         epochs = 6
-        for e, t, p in lntm.concise_cpu(path, basename, epochs):
+        for e, t, p in lntm_cpu.concise_cpu_origin(path, basename, epochs):
             socketio.emit('cpu', {'count': e, 'timing': t, 'perplexity': p})
+        socketio.emit('complete', 'complete')
 
     def run(self):
         self.compute()
