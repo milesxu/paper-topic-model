@@ -93,7 +93,7 @@ export class PerformanceComponent implements OnInit {
     this.performanceService.gpu.subscribe(perf => {
       this.gpu_result.push(perf);
     });
-    this.performanceService.gpu_test();
+    // this.performanceService.gpu_test();
   }
 
   pushTable(epoch, cpu, gpu): void {

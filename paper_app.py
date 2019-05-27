@@ -46,6 +46,7 @@ class GPUThread(Thread):
         epochs = 6
         for e, t, p in lntm_gpu.concise_gpu(path, basename, epochs):
             socketio.emit('gpu', {'count': e, 'timing': t, 'perplexity': p})
+        socketio.emit('complete', 'complete')
 
     def run(self):
         self.compute()
@@ -61,7 +62,7 @@ class CPUThread(Thread):
         epochs = 6
         for e, t, p in lntm_cpu.concise_cpu_origin(path, basename, epochs):
             socketio.emit('cpu', {'count': e, 'timing': t, 'perplexity': p})
-        socketio.emit('complete', 'complete')
+        # socketio.emit('complete', 'complete')
 
     def run(self):
         self.compute()
@@ -159,9 +160,14 @@ def gpu_test():
 @socketio.on('cpu test')
 def cpu_test():
     global cpu_thread
+    global gpu_thread
     if not cpu_thread.isAlive():
         cpu_thread = CPUThread()
     cpu_thread.start()
+    cpu_thread.join()
+    if not gpu_thread.is_alive():
+        gpu_thread = GPUThread()
+    gpu_thread.start()
 
 
 if __name__ == "__main__":
