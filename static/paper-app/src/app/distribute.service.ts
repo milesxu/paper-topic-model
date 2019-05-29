@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, forkJoin } from 'rxjs';
+import 'rxjs/add/operator/skip';
 import { ConferenceService } from './conference.service';
 import { Paper } from './paper.service';
 
@@ -23,7 +24,7 @@ export class OrganizationRank {
 export class DistributeService {
   private distributeSource = new BehaviorSubject<Distribute[]>([]);
   private zeroDistribute: Distribute[] = [];
-  distribute$ = this.distributeSource.asObservable();
+  distribute$ = this.distributeSource.asObservable().skip(1);
   private organizations: Organization[] = [];
   private paperCountry: number[] = [];
   private paperConference: string[] = [];

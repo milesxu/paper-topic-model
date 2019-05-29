@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
 import HC_wordcloud from 'highcharts/modules/wordcloud';
 HC_wordcloud(Highcharts);
-import { Word } from '../word';
-import { WordsService } from '../words.service';
-import { StatisticService } from '../statistic.service';
+import { WordsService, Word } from '../words.service';
 
 @Component({
   selector: 'app-word-cloud',
@@ -13,11 +11,7 @@ import { StatisticService } from '../statistic.service';
   styleUrls: ['./word-cloud.component.css']
 })
 export class WordCloudComponent implements OnInit {
-  constructor(
-    private wordService: WordsService,
-    private router: Router,
-    private statisticService: StatisticService
-  ) {}
+  constructor(private wordService: WordsService, private router: Router) {}
 
   word_data: Word[];
   Highcharts = Highcharts;
@@ -52,7 +46,7 @@ export class WordCloudComponent implements OnInit {
   // }
 
   getWords(): void {
-    this.statisticService.selectedWords.subscribe((wordList: Word[]) => {
+    this.wordService.selectedWords.subscribe((wordList: Word[]) => {
       this.word_data = wordList;
       // this.chartOptions.series = [
       //   { type: 'wordcloud', data: this.word_data, name: 'Occurrences' }
