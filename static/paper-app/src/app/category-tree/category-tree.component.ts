@@ -15,6 +15,7 @@ import {
   isTemplateRef
 } from 'ng-zorro-antd';
 import { ConferenceService } from '../conference.service';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-category-tree',
@@ -22,7 +23,10 @@ import { ConferenceService } from '../conference.service';
   styleUrls: ['./category-tree.component.css']
 })
 export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
-  constructor(private conferenceService: ConferenceService) {}
+  constructor(
+    private conferenceService: ConferenceService,
+    private stateService: StateService
+  ) {}
   @Input() singleCheck: boolean;
   @ViewChild('nzTreeComponent') nzTreeComponent: NzTreeComponent;
   defaultCheckedKeys = ['2001'];
@@ -80,8 +84,13 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
     console.log(event);
     if (this.singleCheck) {
       while (event.nodes.length > 1) {
-        event.nodes[0].isChecked = false;
-        event.nodes[0].setSyncChecked();
+        const node = event.nodes.shift();
+        node.isChecked = false;
+        node.setSyncChecked();
+        // event.nodes[0].isChecked = false;
+        // event.nodes[0].setSyncChecked();
+        // event.nodes[0].setChecked(false, false);
+        // node.setChecked(false, false);
       }
     }
     const temp = [];

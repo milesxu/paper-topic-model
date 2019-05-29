@@ -1,17 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
 import HC_wordcloud from 'highcharts/modules/wordcloud';
 HC_wordcloud(Highcharts);
 import { WordsService, Word } from '../words.service';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-word-cloud',
   templateUrl: './word-cloud.component.html',
   styleUrls: ['./word-cloud.component.css']
 })
-export class WordCloudComponent implements OnInit {
-  constructor(private wordService: WordsService, private router: Router) {}
+export class WordCloudComponent implements OnInit, OnDestroy {
+  constructor(
+    private wordService: WordsService,
+    private router: Router,
+    private stateService: StateService
+  ) {}
 
   word_data: Word[];
   Highcharts = Highcharts;
@@ -58,5 +63,10 @@ export class WordCloudComponent implements OnInit {
 
   ngOnInit() {
     this.getWords();
+    this.stateService.singleCheckUpdate(true);
+  }
+
+  ngOnDestroy() {
+    this.stateService.singleCheckUpdate(false);
   }
 }
