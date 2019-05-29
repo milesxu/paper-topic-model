@@ -11,7 +11,7 @@ from threading import Thread, Event
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, async_mode="threading")
-# socketio = SocketIO(app, async_mode='gevent')
+# socketio = SocketIO(app, async_mode="eventlet")
 app.debug = True
 
 thread = Thread()

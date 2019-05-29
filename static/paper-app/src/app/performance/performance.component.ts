@@ -1,9 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import { PerformanceResult } from '../perf-result';
-import { PerfResultService } from '../perf-result.service';
 import { MatTableDataSource } from '@angular/material';
-import { PerformanceService } from '../performance.service';
+import { PerformanceService, PerformanceResult } from '../performance.service';
+import { Subscription } from 'rxjs';
 
 export interface ResultCompare {
   epoch: number;
@@ -22,7 +21,7 @@ export interface TimeCompare {
   templateUrl: './performance.component.html',
   styleUrls: ['./performance.component.css']
 })
-export class PerformanceComponent implements OnInit {
+export class PerformanceComponent implements OnInit, OnDestroy {
   selectedSubject = 'lntm_train';
   selectedDataset = 'nips2018';
   epochNum = 6;
@@ -60,39 +59,17 @@ export class PerformanceComponent implements OnInit {
       }
     }
   };
-  constructor(
-    private perfResultService: PerfResultService,
-    private performanceService: PerformanceService
-  ) {}
+  cpu_sub: Subscription;
+  gpu_sub: Subscription;
+  complete_sub: Subscription;
+
+  constructor(private performanceService: PerformanceService) {}
 
   getResultCPU(epoch: number): void {
-    // this.perfResultService.getResultCPU(epoch, 3.6).subscribe(
-    //   (result: PerformanceResult) => {
-    //     this.cpu_result.push(result);
-    //   },
-    //   error => {
-    //     console.log(error);
-    //   },
-    //   () => {
-    //     this.pushChart();
-    //     this.pushTable();
-    //   }
-    // );
-    this.performanceService.cpu.subscribe(perf => {
-      this.cpu_result.push(perf);
-    });
     this.performanceService.cpu_test();
   }
 
   getResultGPU(epoch: number): void {
-    // this.perfResultService
-    //   .getResultGPU(epoch, 0.98)
-    //   .subscribe((result: PerformanceResult) => {
-    //     this.gpu_result.push(result);
-    //   });
-    this.performanceService.gpu.subscribe(perf => {
-      this.gpu_result.push(perf);
-    });
     // this.performanceService.gpu_test();
   }
 
@@ -116,7 +93,21 @@ export class PerformanceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.resultAnalysis();
+    this.cpu_sub = this.performanceService.cpu.subscribe(perf => {
+      this.cpu_result.push(perf);
+    });
+    this.gpu_sub = this.performanceService.gpu.subscribe(perf => {
+      this.gpu_result.push(perf);
+    });
+    this.complete_sub = this.performanceService.complete.subscribe(c => {
+      this.resultAnalysis();
+    });
+  }
+
+  ngOnDestroy() {
+    this.cpu_sub.unsubscribe();
+    this.gpu_sub.unsubscribe();
+    this.complete_sub.unsubscribe();
   }
 
   runSim() {
@@ -137,20 +128,18 @@ export class PerformanceComponent implements OnInit {
   }
 
   resultAnalysis() {
-    this.performanceService.complete.subscribe(c => {
-      const epoch = this.epochNum;
-      let cpu_time = this.cpu_result.reduce((t, cr) => {
-        return t + cr.timing;
-      }, 0);
-      cpu_time /= epoch;
-      let gpu_time = this.gpu_result.reduce((t, gr) => {
-        return t + gr.timing;
-      }, 0);
-      gpu_time /= epoch;
-      this.pushTable(epoch, cpu_time, gpu_time);
-      this.pushChart(cpu_time, gpu_time);
-      this.cpu_result = [];
-      this.gpu_result = [];
-    });
+    const epoch = this.epochNum;
+    let cpu_time = this.cpu_result.reduce((t, cr) => {
+      return t + cr.timing;
+    }, 0);
+    cpu_time /= epoch;
+    let gpu_time = this.gpu_result.reduce((t, gr) => {
+      return t + gr.timing;
+    }, 0);
+    gpu_time /= epoch;
+    this.pushTable(epoch, cpu_time, gpu_time);
+    this.pushChart(cpu_time, gpu_time);
+    this.cpu_result = [];
+    this.gpu_result = [];
   }
 }
