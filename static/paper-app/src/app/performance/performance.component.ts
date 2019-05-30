@@ -66,7 +66,7 @@ export class PerformanceComponent implements OnInit, OnDestroy {
   constructor(private performanceService: PerformanceService) {}
 
   getResultCPU(epoch: number): void {
-    this.performanceService.cpu_test();
+    this.performanceService.cpu_test(this.selectedDataset, this.epochNum);
   }
 
   getResultGPU(epoch: number): void {

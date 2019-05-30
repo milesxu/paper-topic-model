@@ -37,14 +37,14 @@ class ConsumeThread(Thread):
 
 
 class GPUThread(Thread):
-    def __init__(self):
+    def __init__(self, conference, epoch):
         super(GPUThread, self).__init__()
+        self.basename = conference
+        self.epoch = epoch
 
     def compute(self):
-        path = './data/nips2018/dataset'
-        basename = 'nips2018'
-        epochs = 6
-        for e, t, p in lntm_gpu.concise_gpu(path, basename, epochs):
+        path = f'./data/{self.basename}/dataset'
+        for e, t, p in lntm_gpu.concise_gpu(path, self.basename, self.epoch):
             socketio.emit('gpu', {'count': e, 'timing': t, 'perplexity': p})
         socketio.emit('complete', 'complete')
 
@@ -53,14 +53,15 @@ class GPUThread(Thread):
 
 
 class CPUThread(Thread):
-    def __init__(self):
+    def __init__(self, conference, epoch):
         super(CPUThread, self).__init__()
+        self.basename = conference
+        self.epoch = epoch
 
     def compute(self):
-        path = './data/nips2018/dataset'
-        basename = 'nips2018'
-        epochs = 6
-        for e, t, p in lntm_cpu.concise_cpu_origin(path, basename, epochs):
+        path = f'./data/{self.basename}/dataset'
+        for e, t, p in lntm_cpu.concise_cpu_origin(
+                path, self.basename, self.epoch):
             socketio.emit('cpu', {'count': e, 'timing': t, 'perplexity': p})
         # socketio.emit('complete', 'complete')
 
@@ -158,15 +159,17 @@ def gpu_test():
 
 
 @socketio.on('cpu test')
-def cpu_test():
+def cpu_test(json_str):
+    conf = json_str['conference']
+    epoch = json_str['epoch']
     global cpu_thread
     global gpu_thread
     if not cpu_thread.isAlive():
-        cpu_thread = CPUThread()
+        cpu_thread = CPUThread(conf, epoch)
     cpu_thread.start()
     cpu_thread.join()
     if not gpu_thread.is_alive():
-        gpu_thread = GPUThread()
+        gpu_thread = GPUThread(conf, epoch)
     gpu_thread.start()
 
 

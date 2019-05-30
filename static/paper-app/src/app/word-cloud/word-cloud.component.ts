@@ -63,6 +63,9 @@ export class WordCloudComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getWords();
+    this.word_data = this.wordService.word;
+    this.chartOptions.series[0].data = this.word_data;
+    this.updateFlag = true;
     this.stateService.singleCheckUpdate(true);
   }
 

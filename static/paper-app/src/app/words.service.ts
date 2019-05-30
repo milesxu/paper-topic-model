@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, forkJoin } from 'rxjs';
+import { ConferenceService } from './conference.service';
 export class Word {
   name: string;
   weight: number;
@@ -13,7 +14,10 @@ export class WordsService {
   private wordSource = new BehaviorSubject<Word[]>([]);
   selectedWords: Observable<Word[]> = this.wordSource.asObservable().skip(1);
   private confWords: { conference: string; word: Word[] }[] = [];
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private conferenceService: ConferenceService
+  ) {
     this.getWords();
   }
 
@@ -31,10 +35,23 @@ export class WordsService {
         { conference: 'CVPR2018', word: result.cvpr2018 }
       ];
       this.wordSource.next(this.computeWord('NeurIPS2018'));
+      this.updateWords();
     });
   }
 
+  get word() {
+    return this.wordSource.getValue();
+  }
+
   computeWord(conference: string): Word[] {
+    console.log(conference);
     return this.confWords.find(cw => cw.conference === conference).word;
+  }
+
+  updateWords() {
+    this.conferenceService.conferences$.subscribe(conf => {
+      console.log(conf);
+      this.wordSource.next(this.computeWord(conf[conf.length - 1]));
+    });
   }
 }

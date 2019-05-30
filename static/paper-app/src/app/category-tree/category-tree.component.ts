@@ -83,28 +83,26 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
 
   nzCheck(event: NzFormatEmitEvent): void {
     // console.log(event);
+    const nodes = this.getLeafNodes(event.nodes);
     if (this.singleCheck) {
-      while (event.nodes.length > 1) {
-        const node = event.nodes.shift();
-        node.isChecked = false;
-        node.setSyncChecked();
-      }
+      this.cleanNodes(nodes);
     }
     const temp = [];
-    event.checkedKeys.forEach(key => {
-      if (key.isLeaf) {
-        temp.push(key.title.replace(/ +/g, ''));
-      } else {
-        for (let i = 0; i < key.children.length; ++i) {
-          temp.push(key.children[i].title.replace(/ +/g, ''));
-        }
-      }
+    // nodes.forEach(nd => console.log(nd.title));
+    nodes.forEach(node => {
+      // if (key.isLeaf) {
+      temp.push(node.title.replace(/ +/g, ''));
+      // } else {
+      // for (let i = 0; i < key.children.length; ++i) {
+      // temp.push(key.children[i].title.replace(/ +/g, ''));
+      // }
+      // }
     });
     // console.log(this.nzTreeComponent.getCheckedNodeList());
     this.conferenceService.changeConference(temp);
   }
 
-  getCheckedLeafNodes(nodes: NzTreeNode[]) {
+  getLeafNodes(nodes: NzTreeNode[]) {
     const temp = [];
     nodes.forEach(nd => {
       if (nd.isLeaf) {
@@ -117,12 +115,12 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   cleanNodes(nodes: NzTreeNode[]) {
-    const temp = this.getCheckedLeafNodes(nodes);
-    while (temp.length > 1) {
-      const node = temp.shift();
+    while (nodes.length > 1) {
+      const node = nodes.shift();
       node.isChecked = false;
       node.setSyncChecked();
     }
+    // return nodes;
   }
 
   // nzSelectedKeys change
@@ -148,13 +146,15 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    console.log(changes);
+    // console.log(changes);
     for (const propKey in changes) {
       if (propKey === 'singleCheck') {
         // console.log(changes[propKey].currentValue);
         const singleCheckProp = changes['singleCheck'];
         if (singleCheckProp.currentValue === true) {
-          this.cleanNodes(this.nzTreeComponent.getCheckedNodeList());
+          this.cleanNodes(
+            this.getLeafNodes(this.nzTreeComponent.getCheckedNodeList())
+          );
         }
       }
     }

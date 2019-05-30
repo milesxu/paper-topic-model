@@ -17,6 +17,7 @@ export class ConferenceService {
   }
 
   changeConference(conf: string[]) {
+    console.log(conf);
     this.conferenceSource.next(conf);
   }
 }

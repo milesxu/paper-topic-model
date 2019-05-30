@@ -33,7 +33,7 @@ export class PerformanceService {
     this.socket.emit('gpu test');
   }
 
-  cpu_test() {
-    this.socket.emit('cpu test');
+  cpu_test(conference: string, epoch: number) {
+    this.socket.emit('cpu test', { conference: conference, epoch: epoch });
   }
 }

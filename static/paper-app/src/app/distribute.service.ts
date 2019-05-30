@@ -49,6 +49,10 @@ export class DistributeService {
     });
   }
 
+  get distribute() {
+    return this.distributeSource.getValue();
+  }
+
   DistributeInit(papers: Paper[]): void {
     // console.log(this.zeroDistribute);
     this.paperCountry = papers.map(paper => {
