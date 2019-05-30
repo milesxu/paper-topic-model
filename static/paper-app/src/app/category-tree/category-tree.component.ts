@@ -12,7 +12,8 @@ import {
   NzFormatEmitEvent,
   NzTreeComponent,
   NzTreeNodeOptions,
-  isTemplateRef
+  isTemplateRef,
+  NzTreeNode
 } from 'ng-zorro-antd';
 import { ConferenceService } from '../conference.service';
 import { StateService } from '../state.service';
@@ -81,16 +82,12 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   nzCheck(event: NzFormatEmitEvent): void {
-    console.log(event);
+    // console.log(event);
     if (this.singleCheck) {
       while (event.nodes.length > 1) {
         const node = event.nodes.shift();
         node.isChecked = false;
         node.setSyncChecked();
-        // event.nodes[0].isChecked = false;
-        // event.nodes[0].setSyncChecked();
-        // event.nodes[0].setChecked(false, false);
-        // node.setChecked(false, false);
       }
     }
     const temp = [];
@@ -103,7 +100,29 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
         }
       }
     });
+    // console.log(this.nzTreeComponent.getCheckedNodeList());
     this.conferenceService.changeConference(temp);
+  }
+
+  getCheckedLeafNodes(nodes: NzTreeNode[]) {
+    const temp = [];
+    nodes.forEach(nd => {
+      if (nd.isLeaf) {
+        temp.push(nd);
+      } else {
+        nd.children.forEach(ndc => temp.push(ndc));
+      }
+    });
+    return temp;
+  }
+
+  cleanNodes(nodes: NzTreeNode[]) {
+    const temp = this.getCheckedLeafNodes(nodes);
+    while (temp.length > 1) {
+      const node = temp.shift();
+      node.isChecked = false;
+      node.setSyncChecked();
+    }
   }
 
   // nzSelectedKeys change
@@ -112,6 +131,7 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
+    this.stateService.singleCheck$.subscribe(chk => (this.singleCheck = chk));
     // this.conferencesService.changeSelectedConferences(['NeurIPS2018']);
   }
 
@@ -128,11 +148,15 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    // console.log(changes);
-    /*for (const propKey in changes) {
+    console.log(changes);
+    for (const propKey in changes) {
       if (propKey === 'singleCheck') {
-        console.log(changes[propKey].currentValue);
+        // console.log(changes[propKey].currentValue);
+        const singleCheckProp = changes['singleCheck'];
+        if (singleCheckProp.currentValue === true) {
+          this.cleanNodes(this.nzTreeComponent.getCheckedNodeList());
+        }
       }
-    }*/
+    }
   }
 }
