@@ -102,6 +102,7 @@ export class PerformanceComponent implements OnInit, OnDestroy {
     this.complete_sub = this.performanceService.complete.subscribe(c => {
       this.resultAnalysis();
     });
+    this.consumeTest();
   }
 
   ngOnDestroy() {
@@ -123,6 +124,7 @@ export class PerformanceComponent implements OnInit, OnDestroy {
         timing: i,
         perplexity: i
       });
+      console.log(i);
     });
     this.performanceService.consume();
   }

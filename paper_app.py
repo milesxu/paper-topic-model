@@ -7,14 +7,15 @@ from flask_cors import CORS
 from flask import Flask, jsonify, Response, stream_with_context, request, flash
 import examples.topic_models.sparse_lntm_mcem_cpu as lntm_cpu
 import examples.topic_models.sparse_lntm_mcem_gpu as lntm_gpu
-from threading import Thread, Event
+from threading import Thread, Event, Lock
 app = Flask(__name__)
+socketio = SocketIO(app, async_mode='eventlet')
+# app.debug = True
+
 CORS(app)
-socketio = SocketIO(app, async_mode="threading")
-# socketio = SocketIO(app, async_mode="eventlet")
-app.debug = True
 
 thread = Thread()
+thread_lock = Lock()
 gpu_thread = Thread()
 cpu_thread = Thread()
 
@@ -26,7 +27,7 @@ class ConsumeThread(Thread):
         super(ConsumeThread, self).__init__()
 
     def consume(self):
-        for i in range(5):
+        for i in range(25):
             # while not self.e.wait(self.delay):
             socketio.emit('consumed', i)
             print('generated!')
@@ -34,6 +35,13 @@ class ConsumeThread(Thread):
 
     def run(self):
         self.consume()
+
+
+def background_consume():
+    for i in range(25):
+        socketio.emit('consumed', i)
+        print(i)
+        socketio.sleep(2)
 
 
 class GPUThread(Thread):
@@ -145,9 +153,11 @@ def consuming_test():
     #     socketio.emit('consumed', str(i))
     #     time.sleep(2)
     global thread
-    if not thread.isAlive():
-        thread = ConsumeThread()
-    thread.start()
+    # if not thread.isAlive():
+    # thread = ConsumeThread()
+    # thread.start()
+    with thread_lock:
+        thread = socketio.start_background_task(background_consume)
 
 
 @socketio.on('gpu test')
