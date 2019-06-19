@@ -29,7 +29,7 @@ export class CategoryTreeComponent implements OnInit, AfterViewInit, OnChanges {
     private stateService: StateService
   ) {}
   @Input() singleCheck: boolean;
-  @ViewChild('nzTreeComponent') nzTreeComponent: NzTreeComponent;
+  @ViewChild('nzTreeComponent', { static: true }) nzTreeComponent: NzTreeComponent;
   defaultCheckedKeys = ['2001'];
   defaultSelectedKeys = ['2001'];
   defaultExpandedKeys = ['100', '200'];

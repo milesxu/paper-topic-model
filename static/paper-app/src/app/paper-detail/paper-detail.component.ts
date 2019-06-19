@@ -17,7 +17,7 @@ declare var MathJax: any;
 })
 export class PaperDetailComponent implements OnInit, AfterViewInit {
   @Input() paper: Paper;
-  @ViewChild('equantions') equations: ElementRef;
+  @ViewChild('equantions', { static: false }) equations: ElementRef;
   constructor() {}
 
   ngAfterViewInit(): void {
