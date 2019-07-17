@@ -104,4 +104,8 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
         return d.text;
       });
   }
+
+  iseven(i: number) {
+    return i % 2 === 0;
+  }
 }
