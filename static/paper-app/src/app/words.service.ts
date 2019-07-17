@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, forkJoin } from 'rxjs';
+import { skip } from 'rxjs/operators';
 import { ConferenceService } from './conference.service';
+
 export class Word {
   name: string;
   weight: number;
@@ -12,7 +14,9 @@ export class Word {
 })
 export class WordsService {
   private wordSource = new BehaviorSubject<Word[]>([]);
-  selectedWords: Observable<Word[]> = this.wordSource.asObservable().skip(1);
+  selectedWords: Observable<Word[]> = this.wordSource
+    .asObservable()
+    .pipe(skip(1));
   private confWords: { conference: string; word: Word[] }[] = [];
   constructor(
     private http: HttpClient,
@@ -22,17 +26,17 @@ export class WordsService {
   }
 
   getWords() {
-    forkJoin({
-      nips2018: this.http.get<Word[]>('assets/nips2018_word_cloud.json'),
-      iclr2019: this.http.get<Word[]>('assets/iclr2019_word_cloud.json'),
-      icml2018: this.http.get<Word[]>('assets/icml2018_word_cloud.json'),
-      cvpr2018: this.http.get<Word[]>('assets/cvpr2018_word_cloud.json')
-    }).subscribe(result => {
+    forkJoin([
+      this.http.get<Word[]>('assets/nips2018_word_cloud.json'),
+      this.http.get<Word[]>('assets/iclr2019_word_cloud.json'),
+      this.http.get<Word[]>('assets/icml2018_word_cloud.json'),
+      this.http.get<Word[]>('assets/cvpr2018_word_cloud.json')
+    ]).subscribe(result => {
       this.confWords = [
-        { conference: 'NeurIPS2018', word: result.nips2018 },
-        { conference: 'ICLR2019', word: result.iclr2019 },
-        { conference: 'ICML2018', word: result.icml2018 },
-        { conference: 'CVPR2018', word: result.cvpr2018 }
+        { conference: 'NeurIPS2018', word: result[0] },
+        { conference: 'ICLR2019', word: result[1] },
+        { conference: 'ICML2018', word: result[2] },
+        { conference: 'CVPR2018', word: result[3] }
       ];
       this.wordSource.next(this.computeWord('NeurIPS2018'));
       this.updateWords();

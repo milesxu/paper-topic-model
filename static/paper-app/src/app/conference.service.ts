@@ -9,7 +9,6 @@ export class ConferenceService {
     'NeurIPS2018'
   ]);
   readonly conferences$ = this.conferenceSource.asObservable();
-
   constructor() {}
 
   get conferences() {

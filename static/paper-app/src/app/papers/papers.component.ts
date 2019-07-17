@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Paper, PaperService } from '../paper.service';
@@ -28,6 +28,7 @@ export class PapersComponent implements OnInit {
     this.paperService.papers$.subscribe((paperList: Paper[]) => {
       this.papers = paperList;
       this.length = this.papers.length;
+      console.log(this.length);
       this.papersInPage = this.papers.slice(0, this.pageSize);
       // console.log(this.papers.length);
     });
@@ -49,7 +50,8 @@ export class PapersComponent implements OnInit {
 
   pageEvent(event: PageEvent): void {
     // console.log(event.pageIndex, event.length, event.pageSize);
-    let startIndex: number, endIndex: number;
+    let startIndex: number;
+    let endIndex: number;
     startIndex = event.pageIndex * event.pageSize;
     endIndex = Math.min(startIndex + event.pageSize, event.length);
     if (endIndex - startIndex < event.pageSize) {

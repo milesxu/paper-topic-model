@@ -1,13 +1,19 @@
-h3 {
-  font-weight: normal;
+a {
+  color: #62a4ff;
+  text-decoration: none;
 }
 
+.title {
+  font-size: 1rem;
+  font-weight: medium;
+}
 
 .infos {
-  color: rgba(0, 0, 0, 0.45);
+  color: #a3a3a3;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  font-size: 0.75rem;
 }
 
 .infos span {
@@ -19,10 +25,11 @@ h3 {
 .abstract {
   /* autoprefixer: ignore next */
   display: -webkit-box;
-  color: rgba(0, 0, 0, 0.75);
+  color: #707070;
   overflow: hidden;
-  height: 3.6rem;
-  line-height: 1.2rem;
+  height: 2.4rem;
+  line-height: 0.8rem;
+  font-size: 0.75rem;
   /* autoprefixer: ignore next */
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;

@@ -27,6 +27,7 @@ export class PaperService {
   ) {
     http.get<Paper[]>('assets/papers.json').subscribe(papers => {
       this.allPapers = papers;
+      console.log(this.allPapers.length);
       this.allPapers.sort((a, b) => {
         if (a.title < b.title) {
           return -1;

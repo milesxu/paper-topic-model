@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import * as Highcharts from 'highcharts';
 import { MatTableDataSource } from '@angular/material';
 import { PerformanceService, PerformanceResult } from '../performance.service';
+import { StateService } from '../state.service';
 import { Subscription } from 'rxjs';
 
 export interface ResultCompare {
@@ -22,6 +22,7 @@ export interface TimeCompare {
   styleUrls: ['./performance.component.css']
 })
 export class PerformanceComponent implements OnInit, OnDestroy {
+  listArray = Array(6).fill(0);
   selectedSubject = 'lntm_train';
   selectedDataset = 'nips2018';
   epochNum = 6;
@@ -30,7 +31,6 @@ export class PerformanceComponent implements OnInit, OnDestroy {
   column_string: string[] = ['epoch', 'cpu', 'gpu', 'rate'];
   tableData: ResultCompare[] = [];
   dataSource = new MatTableDataSource(this.tableData);
-  Highcharts = Highcharts;
   updateFlag = false;
   chartOptions = {
     chart: {
@@ -62,8 +62,12 @@ export class PerformanceComponent implements OnInit, OnDestroy {
   cpu_sub: Subscription;
   gpu_sub: Subscription;
   complete_sub: Subscription;
-
-  constructor(private performanceService: PerformanceService) {}
+  constructor(
+    private performanceService: PerformanceService,
+    private stateService: StateService
+  ) {
+    stateService.openSideUpdate(false);
+  }
 
   getResultCPU(epoch: number): void {
     this.performanceService.cpu_test(this.selectedDataset, this.epochNum);
@@ -76,9 +80,9 @@ export class PerformanceComponent implements OnInit, OnDestroy {
   pushTable(epoch, cpu, gpu): void {
     const r = cpu / gpu;
     this.tableData.push({
-      epoch: epoch,
-      cpu: cpu,
-      gpu: gpu,
+      epoch,
+      cpu,
+      gpu,
       rate: r
     });
     this.dataSource = new MatTableDataSource(this.tableData);
@@ -91,25 +95,9 @@ export class PerformanceComponent implements OnInit, OnDestroy {
     this.chartOptions.series[1].data.push(gpu);
     this.updateFlag = true;
   }
+  ngOnInit() {}
 
-  ngOnInit() {
-    this.cpu_sub = this.performanceService.cpu.subscribe(perf => {
-      this.cpu_result.push(perf);
-    });
-    this.gpu_sub = this.performanceService.gpu.subscribe(perf => {
-      this.gpu_result.push(perf);
-    });
-    this.complete_sub = this.performanceService.complete.subscribe(c => {
-      this.resultAnalysis();
-    });
-    this.consumeTest();
-  }
-
-  ngOnDestroy() {
-    this.cpu_sub.unsubscribe();
-    this.gpu_sub.unsubscribe();
-    this.complete_sub.unsubscribe();
-  }
+  ngOnDestroy() {}
 
   runSim() {
     this.getResultCPU(this.epochNum);
@@ -117,7 +105,7 @@ export class PerformanceComponent implements OnInit, OnDestroy {
   }
 
   consumeTest() {
-    this.performanceService.consumed.subscribe(i => {
+    /*this.performanceService.consumed.subscribe(i => {
       // console.log(i);
       this.gpu_result.push({
         count: i,
@@ -126,7 +114,7 @@ export class PerformanceComponent implements OnInit, OnDestroy {
       });
       console.log(i);
     });
-    this.performanceService.consume();
+    this.performanceService.consume();*/
   }
 
   resultAnalysis() {
@@ -143,5 +131,9 @@ export class PerformanceComponent implements OnInit, OnDestroy {
     this.pushChart(cpu_time, gpu_time);
     this.cpu_result = [];
     this.gpu_result = [];
+  }
+
+  isEven(i: number) {
+    return i % 2 === 0;
   }
 }

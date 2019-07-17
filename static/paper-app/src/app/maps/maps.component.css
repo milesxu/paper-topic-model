@@ -1,0 +1,13 @@
+svg {
+  width: 100%;
+  height: 1200px;
+  outline: 1px solid white;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+path {
+  stroke-width: 1px;
+  stroke: #1e88e5;
+  fill: #b2dfdb;
+}

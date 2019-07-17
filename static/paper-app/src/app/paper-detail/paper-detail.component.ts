@@ -6,7 +6,6 @@ import {
   ViewChild,
   AfterViewInit
 } from '@angular/core';
-// import { Paper } from '../paper';
 import { Paper, PaperService } from '../paper.service';
 declare var MathJax: any;
 
@@ -29,8 +28,5 @@ export class PaperDetailComponent implements OnInit, AfterViewInit {
     MathJax.Hub.Queue(['Typeset', MathJax.Hub, element]);
   }
 
-  ngOnInit(): void {
-    // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    // Add 'implements OnInit' to the class.
-  }
+  ngOnInit() {}
 }

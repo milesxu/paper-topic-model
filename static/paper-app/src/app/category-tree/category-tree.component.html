@@ -1,7 +1,26 @@
-<nz-tree #nzTreeComponent [nzData]="nodes" nzCheckable
-         [nzCheckedKeys]="defaultCheckedKeys"
-         [nzExpandedKeys]="defaultExpandedKeys"
-         [nzSelectedKeys]="defaultSelectedKeys" (nzClick)="nzClick($event)"
-         (nzCheckBoxChange)="nzCheck($event)"
-         (nzExpandChange)="nzCheck($event)">
-</nz-tree>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree-node
+    *matTreeNodeDef="let node"
+    matTreeNodeToggle
+    matTreeNodePadding
+  >
+    <button mat-icon-button disabled></button>
+    <mat-checkbox class="checklist-leaf-node">{{ node.item }}</mat-checkbox>
+  </mat-tree-node>
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding
+    ><button
+      mat-icon-button
+      matTreeNodeToggle
+      [attr.aria-label]="'toggle ' + node.name"
+    >
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+      </mat-icon></button
+    ><mat-checkbox
+      [checked]="descendantsAllSelected(node)"
+      [indeterminate]="descendantsPartiallySelected(node)"
+      (change)="CategoryItemSelectionToggle(node)"
+      >{{ node.item }}</mat-checkbox
+    >
+  </mat-tree-node>
+</mat-tree>

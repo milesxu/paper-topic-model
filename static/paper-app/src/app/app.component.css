@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 3rem;
+  top: 4.2rem;
   width: 100%;
-  min-height: calc(100% - 64px);
-  height: calc(100vh-48px);
+  /* min-height: calc(100% - 64px); */
+  /* height: calc(100%-64px); */
 }
 
 .toolbar {
@@ -18,29 +18,48 @@
   z-index: 2;
   /* Ensure that your app's content doesn't overlap the toolbar */
   min-height: 3rem;
-  max-height: 3rem;
+  background: #436e49;
+  color: #ffffff;
+}
+
+.toolbar-row .title {
+  margin-left: 5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  font-style: italic;
+  line-height: 1.2rem;
+  text-align: left;
+}
+
+.toolbar-row .title .logo {
+  width: 10%;
+  height: auto;
+}
+
+.toolbar-row {
+  display: flex;
+  justify-content: space-between;
 }
 
 
 mat-drawer-container {
   /* height: calc(100% - 64px); */
-  min-height: calc(100% - 64px);
-  height: 100%;
-  height: -o-calc(100% - 65px);
+  /* min-height: calc(100% - 128px); */
+  /* height: cals(100%-428px); */
+  /* height: -o-calc(100% - 65px); */
   /* opera */
-  height: -webkit-calc(100% - 65px);
+  /* height: -webkit-calc(100% - 65px); */
   /* google, safari */
-  height: -moz-calc(100% - 65px);
+  /* height: -moz-calc(100% - 65px); */
   /* firefox */
   overflow: hidden;
 }
 
 mat-drawer {
-  width: 16rem;
-}
-
-.title {
-  margin-right: 5rem;
+  /* width: 16rem; */
+  width: 18vw;
+  background: #f4f4f4;
 }
 
 #main_search {
@@ -49,5 +68,20 @@ mat-drawer {
 }
 
 .main-content {
-  min-height: 95vh;
+  min-height: 93vh;
+  background: #ffffff;
+}
+
+.toolbar-row .menu {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.custom-menu {
+  background: #2c4830;
+  color: white;
+}
+
+div.mat-menu-content {
+  background: #2c4830 !important;
 }

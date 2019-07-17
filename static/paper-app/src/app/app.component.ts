@@ -1,15 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { StateService } from './state.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   openSide = true;
   singleCheck = false;
-  constructor(private router: Router) {}
+  osSubscription: Subscription;
+  constructor(private router: Router, private stateService: StateService) {
+    this.osSubscription = stateService.openSide$.subscribe(side => {
+      this.openSide = side;
+    });
+  }
 
   gotoUrl(url: string): void {
     if (url.endsWith('performance')) {
@@ -23,5 +30,9 @@ export class AppComponent {
       this.singleCheck = false;
     }
     this.router.navigateByUrl(url);
+  }
+
+  ngOnDestroy() {
+    this.osSubscription.unsubscribe();
   }
 }
