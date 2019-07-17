@@ -35,3 +35,45 @@
 .list {
   margin: 0px 150px;
 }
+
+.grid {
+  margin: 0px 150px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.grid .cell {
+  width: 400px;
+  height: 128px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  position: relative;
+}
+
+.grid .cell .keyword {
+  height: 128px;
+  line-height: 128px;
+  text-align: center;
+  /* padding: 30px 0; */
+  font-size: 2rem;
+  font-weight: bold;
+  color: #7F8E81;
+}
+
+.grid .cell .weight {
+  position: absolute;
+  width: 380px;
+  height: 24px;
+  line-height: 24px;
+  bottom: 0;
+  left: 0;
+  text-align: right;
+  background: #EADB9F;
+  color: white;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  padding-right: 20px;
+  /* margin-right: 20px; */
+}

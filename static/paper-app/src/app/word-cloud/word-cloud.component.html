@@ -10,10 +10,15 @@
     <img src="assets/lists.png">
   </div>
 </div>
+<div class="grid">
+  <div *ngFor="let item of wordData" class="cell mat-elevation-z6">
+    <div class="keyword">{{item.name}}</div>
+    <div class="weight mat-elevation-z2">Weight: {{item.weight}}</div>
+  </div>
+</div>
 <div class="list">
   <mat-list>
-    <mat-list-item *ngFor="let item of wordData; let i=index"
-                   [ngClass]="{'green-back':iseven(i)}">{{item.name}}
+    <mat-list-item *ngFor="let item of wordData; let i=index" [ngClass]="{'green-back':iseven(i)}">{{item.name}}
     </mat-list-item>
   </mat-list>
 </div><svg id="words"></svg>
