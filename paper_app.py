@@ -9,8 +9,8 @@ import examples.topic_models.sparse_lntm_mcem_cpu as lntm_cpu
 import examples.topic_models.sparse_lntm_mcem_gpu as lntm_gpu
 from threading import Thread, Event, Lock
 app = Flask(__name__)
-socketio = SocketIO(app, async_mode='eventlet')
-# app.debug = True
+socketio = SocketIO(app, async_mode='threading')
+app.debug = True
 
 CORS(app)
 

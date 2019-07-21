@@ -47,7 +47,7 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
   }
 
   ngOnInit() {
-    this.layout = cloud().size([1500, 800]);
+    // this.layout = cloud().size([1500, 800]);
     this.getWords();
     // this.wordData = this.wordService.word;
     // this.chartOptions.series[0].data = this.word_data;
@@ -58,7 +58,7 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
   ngAfterContentInit() {}
 
   drawWordCloud() {
-    this.layout
+    this.layout = cloud()
       .size([this.svgWidth, this.svgHeight])
       .words(
         // this.wordData.slice(0, 500).map(d => {
@@ -85,8 +85,8 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
       .on('end', (t, s) => {
         this.layoutWords = t;
         console.log(this.layoutWords);
-      })
-      .start();
+      });
+    this.layout.start();
   }
 
   getWords(): void {
