@@ -2,28 +2,16 @@
   <h2 class="title">Word-cloud of Topic words</h2>
   <div class="view-switch">
     <span>View in</span>
-    <button
-      mat-icon-button
-      aria-label="wordcloud"
-      [ngClass]="{ activated: getDisplayType('wordcloud') }"
-      (click)="changeDisplayType('wordcloud')"
-    >
+    <button mat-icon-button aria-label="wordcloud" [ngClass]="{ activated: getDisplayType('wordcloud') }"
+      (click)="changeDisplayType('wordcloud')">
       <mat-icon>view_quilt</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      aria-label="grid"
-      [ngClass]="{ activated: getDisplayType('grid') }"
-      (click)="changeDisplayType('grid')"
-    >
+    <button mat-icon-button aria-label="grid" [ngClass]="{ activated: getDisplayType('grid') }"
+      (click)="changeDisplayType('grid')">
       <mat-icon>view_module</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      aria-label="list"
-      [ngClass]="{ activated: getDisplayType('list') }"
-      (click)="changeDisplayType('list')"
-    >
+    <button mat-icon-button aria-label="list" [ngClass]="{ activated: getDisplayType('list') }"
+      (click)="changeDisplayType('list')">
       <mat-icon>view_list</mat-icon>
     </button>
     <!--<span>
@@ -79,22 +67,24 @@
 </div>
 <div class="list" *ngIf="getDisplayType('list')">
   <mat-list>
-    <mat-list-item
-      *ngFor="let item of wordData; let i = index"
-      [ngClass]="{ 'green-back': iseven(i) }"
-      >{{ item.name }}
+    <mat-list-item>
+      <span class="list-title align-half">Topic Words</span>
+      <span class="list-title align-half">Occurrences</span>
+    </mat-list-item>
+    <mat-list-item *ngFor="let item of wordData; let i = index" [ngClass]="{ 'green-back': iseven(i) }">
+      <span class="align-half">
+        {{ item.name }}
+      </span>
+      <span class="align-half">{{item.weight}}</span>
     </mat-list-item>
   </mat-list>
 </div>
 <div id="words" *ngIf="getDisplayType('wordcloud')">
   <svg [attr.width.px]="svgWidth" [attr.height.px]="svgHeight">
     <g [attr.transform]="gTransform()">
-      <text
-        *ngFor="let item of layoutWords"
-        text-anchor="middle"
+      <text *ngFor="let item of layoutWords" text-anchor="middle"
         [attr.transform]="'translate(' + item.x + ',' + item.y + ')'"
-        [ngStyle]="{ 'font-size': item.size, 'font-family': 'Impact' }"
-      >
+        [ngStyle]="{ 'font-size': item.size, 'font-family': 'Impact' }">
         {{ item.text }}
       </text>
     </g>

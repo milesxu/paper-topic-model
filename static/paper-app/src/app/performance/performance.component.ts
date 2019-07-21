@@ -1,5 +1,12 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  AfterContentInit
+} from '@angular/core';
+// import { MatTableDataSource } from '@angular/material';
+import * as d3 from 'd3';
 import { PerformanceService, PerformanceResult } from '../performance.service';
 import { StateService } from '../state.service';
 import { Subscription } from 'rxjs';
@@ -21,13 +28,16 @@ export interface TimeCompare {
   templateUrl: './performance.component.html',
   styleUrls: ['./performance.component.css']
 })
-export class PerformanceComponent implements OnInit, OnDestroy {
+export class PerformanceComponent
+  implements OnInit, OnDestroy, AfterContentInit {
   listArray = Array(6).fill(0);
   selectedSubject = 'lntm_train';
   selectedDataset = 'nips2018';
   epochNum = 6;
   cpuResult: PerformanceResult[] = [];
   gpuResult: PerformanceResult[] = [];
+  svg: any;
+  margin = { top: 10, right: 0, left: 30, bottom: 30 };
   // column_string: string[] = ['epoch', 'cpu', 'gpu', 'rate'];
   // tableData: ResultCompare[] = [];
   // dataSource = new MatTableDataSource(this.tableData);
@@ -107,6 +117,10 @@ export class PerformanceComponent implements OnInit, OnDestroy {
     this.completeSub = this.performanceService.complete.subscribe(c => {
       this.resultAnalysis();
     });
+  }
+
+  ngAfterContentInit() {
+    this.svg = d3.select('#bar-chart');
   }
 
   ngOnDestroy() {

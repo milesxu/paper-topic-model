@@ -85,3 +85,13 @@
   padding-right: 20px;
   /* margin-right: 20px; */
 }
+
+.list-title {
+  font-weight: 500;
+  color: #436e49;
+}
+
+.align-half {
+  width: 50%;
+  text-align: center;
+}
