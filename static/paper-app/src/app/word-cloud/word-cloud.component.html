@@ -2,23 +2,101 @@
   <h2 class="title">Word-cloud of Topic words</h2>
   <div class="view-switch">
     <span>View in</span>
-    <!--<span><i class="material-icons">crop_free</i></span>
-    <span><i class="material-icons">view_module</i></span>
-    <span><i class="material-icons">view_list</i></span>-->
-    <img src="assets/word-cloud.png">
-    <img src="assets/cards.png">
-    <img src="assets/lists.png">
+    <button
+      mat-icon-button
+      aria-label="wordcloud"
+      [ngClass]="{ activated: getDisplayType('wordcloud') }"
+      (click)="changeDisplayType('wordcloud')"
+    >
+      <mat-icon>view_quilt</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="grid"
+      [ngClass]="{ activated: getDisplayType('grid') }"
+      (click)="changeDisplayType('grid')"
+    >
+      <mat-icon>view_module</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="list"
+      [ngClass]="{ activated: getDisplayType('list') }"
+      (click)="changeDisplayType('list')"
+    >
+      <mat-icon>view_list</mat-icon>
+    </button>
+    <!--<span>
+      <i
+        class="material-icons"
+        [ngClass]="{ activated: getDisplayType('wordcloud') }"
+      >
+        view_quilt
+      </i>
+    </span>
+    <span
+      ><i
+        class="material-icons"
+        [ngClass]="{ activated: getDisplayType('grid') }"
+        click="changeDisplayType('grid')"
+      >
+        view_module</i
+      ></span
+    >
+    <span
+      ><i
+        class="material-icons"
+        [ngClass]="{ activated: getDisplayType('list') }"
+        >view_list</i
+      ></span
+    >-->
+    <!--<mat-icon
+      svgIcon="wordcloud"
+      aria-hidden="false"
+      aria-label="worlcloud SVG icon"
+      color="blue"
+    ></mat-icon>
+    <mat-icon
+      svgIcon="grid"
+      aria-hidden="false"
+      aria-label="grid SVG icon"
+    ></mat-icon>
+    <mat-icon
+      svgIcon="list"
+      aria-hidden="false"
+      aria-label="list SVG icon"
+    ></mat-icon>-->
+    <!--<img src="assets/word-cloud.png" />
+    <img src="assets/cards.png" />
+    <img src="assets/lists.png" />-->
   </div>
 </div>
-<div class="grid">
+<div class="grid" *ngIf="getDisplayType('grid')">
   <div *ngFor="let item of wordData" class="cell mat-elevation-z6">
-    <div class="keyword">{{item.name}}</div>
-    <div class="weight mat-elevation-z2">Weight: {{item.weight}}</div>
+    <div class="keyword">{{ item.name }}</div>
+    <div class="weight mat-elevation-z2">Weight: {{ item.weight }}</div>
   </div>
 </div>
-<div class="list">
+<div class="list" *ngIf="getDisplayType('list')">
   <mat-list>
-    <mat-list-item *ngFor="let item of wordData; let i=index" [ngClass]="{'green-back':iseven(i)}">{{item.name}}
+    <mat-list-item
+      *ngFor="let item of wordData; let i = index"
+      [ngClass]="{ 'green-back': iseven(i) }"
+      >{{ item.name }}
     </mat-list-item>
   </mat-list>
-</div><svg id="words"></svg>
+</div>
+<div id="words" *ngIf="getDisplayType('wordcloud')">
+  <svg [attr.width.px]="svgWidth" [attr.height.px]="svgHeight">
+    <g [attr.transform]="gTransform()">
+      <text
+        *ngFor="let item of layoutWords"
+        text-anchor="middle"
+        [attr.transform]="'translate(' + item.x + ',' + item.y + ')'"
+        [ngStyle]="{ 'font-size': item.size, 'font-family': 'Impact' }"
+      >
+        {{ item.text }}
+      </text>
+    </g>
+  </svg>
+</div>

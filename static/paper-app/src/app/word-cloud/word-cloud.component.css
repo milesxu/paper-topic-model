@@ -5,7 +5,7 @@
   border-bottom: 2px solid;
   overflow: auto;
   border-color: #d1d1d1;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
 }
 
 .header::after {
@@ -16,10 +16,18 @@
 
 .header .view-switch {
   float: right;
-  color: #a3a3a3;
   display: flex;
-  width: 10%;
+  width: 14%;
   justify-content: space-between;
+  color: #a3a3a3;
+}
+
+.header .view-switch span {
+  line-height: 40px;
+}
+
+.activated {
+  color: red;
 }
 
 .align-icon {
@@ -59,7 +67,7 @@
   /* padding: 30px 0; */
   font-size: 2rem;
   font-weight: bold;
-  color: #7F8E81;
+  color: #7f8e81;
 }
 
 .grid .cell .weight {
@@ -70,7 +78,7 @@
   bottom: 0;
   left: 0;
   text-align: right;
-  background: #EADB9F;
+  background: #eadb9f;
   color: white;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
