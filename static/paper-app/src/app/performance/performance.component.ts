@@ -19,8 +19,10 @@ export interface ResultCompare {
 }
 
 export interface TimeCompare {
+  [key: string]: number;
   cpu: number;
   gpu: number;
+  // ratio: number;
 }
 
 @Component({
@@ -30,48 +32,6 @@ export interface TimeCompare {
 })
 export class PerformanceComponent
   implements OnInit, OnDestroy, AfterContentInit {
-  listArray = Array(6).fill(0);
-  selectedSubject = 'lntm_train';
-  selectedDataset = 'nips2018';
-  epochNum = 6;
-  cpuResult: PerformanceResult[] = [];
-  gpuResult: PerformanceResult[] = [];
-  svg: any;
-  margin = { top: 10, right: 0, left: 30, bottom: 30 };
-  // column_string: string[] = ['epoch', 'cpu', 'gpu', 'rate'];
-  // tableData: ResultCompare[] = [];
-  // dataSource = new MatTableDataSource(this.tableData);
-  updateFlag = false;
-  /*chartOptions = {
-    chart: {
-      type: 'bar',
-      spacingLeft: 10,
-      marginLeft: 10
-    },
-    series: [
-      {
-        name: 'Normal',
-        data: []
-      },
-      {
-        name: 'CUDA Accelerated',
-        data: []
-      }
-    ],
-    title: 'Time consuming in Bar Charts',
-    xAxis: {
-      categories: []
-    },
-    yAxis: {
-      title: {
-        text: 'Time Elaspsed (second)',
-        align: 'high'
-      }
-    }
-  };*/
-  cpuSub: Subscription;
-  gpuSub: Subscription;
-  completeSub: Subscription;
   constructor(
     private performanceService: PerformanceService,
     private stateService: StateService
@@ -79,6 +39,47 @@ export class PerformanceComponent
     stateService.openSideUpdate(false);
     performanceService.connected.subscribe(text => console.log(text));
   }
+  listArray = Array(6).fill(0);
+  selectedSubject = 'lntm_train';
+  selectedDataset = 'nips2018';
+  epochNum = 5;
+  cpuResult: PerformanceResult[] = [];
+  gpuResult: PerformanceResult[] = [];
+  resultCompare: TimeCompare[] = [];
+  svg: any;
+  svgWidth = 1000;
+  svgHeight = 320;
+  margin = { top: 20, right: 30, left: 60, bottom: 10 };
+  turns = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  totalTime = 5;
+  curRatio = -1;
+  allColors = [
+    '#465e79',
+    '#f9ce64',
+    '#465e79',
+    '#a0d8c5',
+    '#974b5a',
+    '#eea372',
+    '#F65a5d',
+    '#f9ce64',
+    '#974b5a',
+    '#8aa5c6',
+    '#974b5a',
+    '#a0d8c5',
+    '#465e79',
+    '#eea372',
+    '#465e79',
+    '#f65a5d'
+  ];
+  barChartColors = ['#465e79', '#a0d8c5'];
+  stackName = ['cpu', 'gpu'];
+  // column_string: string[] = ['epoch', 'cpu', 'gpu', 'rate'];
+  // tableData: ResultCompare[] = [];
+  // dataSource = new MatTableDataSource(this.tableData);
+  // updateFlag = false;
+  cpuSub: Subscription;
+  gpuSub: Subscription;
+  completeSub: Subscription;
 
   getResultCPU(epoch: number): void {
     this.performanceService.cpu_test(this.selectedDataset, this.epochNum);
@@ -86,25 +87,6 @@ export class PerformanceComponent
 
   getResultGPU(epoch: number): void {
     // this.performanceService.gpu_test();
-  }
-
-  pushTable(epoch, cpu, gpu): void {
-    const r = cpu / gpu;
-    /*this.tableData.push({
-      epoch,
-      cpu,
-      gpu,
-      rate: r
-    });*/
-    // this.dataSource = new MatTableDataSource(this.tableData);
-  }
-
-  pushChart(cpu, gpu): void {
-    // const len = this.chartOptions.xAxis.categories.length + 1;
-    // this.chartOptions.xAxis.categories.push(len);
-    // this.chartOptions.series[0].data.push(cpu);
-    // this.chartOptions.series[1].data.push(gpu);
-    // this.updateFlag = true;
   }
 
   ngOnInit() {
@@ -121,6 +103,101 @@ export class PerformanceComponent
 
   ngAfterContentInit() {
     this.svg = d3.select('#bar-chart');
+    this.drawBarChart();
+  }
+
+  drawBarChart(): void {
+    d3.selectAll('#bar-chart > *').remove();
+
+    const y = d3
+      .scaleBand()
+      .domain(this.turns)
+      .range([this.margin.top, this.svgHeight - this.margin.bottom])
+      .padding(0.1);
+    const yAxis = g =>
+      g
+        .attr('transform', `translate(${this.margin.left},0)`)
+        .call(d3.axisLeft(y).tickSizeOuter(0));
+    this.svg.append('g').call(yAxis);
+
+    const x = d3
+      .scaleLinear()
+      .domain([0, this.totalTime])
+      .range([this.margin.left, this.svgWidth - this.margin.right]);
+
+    const xAxis = g =>
+      g
+        .attr('transform', `translate(0,${this.margin.top})`)
+        .call(d3.axisTop(x).ticks(this.svgWidth / 80));
+    // .call(g => g.select('.domain').remove());
+
+    this.svg.append('g').call(xAxis);
+
+    this.svg
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', this.margin.left / 4)
+      .attr('x', 0 - this.svgHeight / 2)
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .text('History Records');
+
+    if (this.resultCompare) {
+      const z = d3
+        .scaleOrdinal()
+        .range(this.barChartColors)
+        .domain(this.stackName);
+
+      const series = d3.stack().keys(this.stackName)(this.resultCompare);
+      console.log(series);
+      console.log(series[0][0][0]);
+
+      this.svg
+        .append('g')
+        .selectAll('g')
+        .data(series)
+        .join('g')
+        .attr('fill', d => z(d.key))
+        .selectAll('rect')
+        .data(d => d)
+        .join('rect')
+        .attr('y', (d, i) => y(i + 1))
+        .attr('x', d => x(d[0]))
+        .attr('width', d => x(d[1]) - x(d[0]))
+        .attr('height', y.bandwidth());
+
+      /*this.svg
+        .append('g')
+        .selectAll('g')
+        .data(series)
+        .enter()
+        .selectAll('text')
+        // .join('g')
+        .attr('fill', 'white')
+        .attr('text-anchor', 'middle')
+        .style('font', '12px sans-serif')
+        // .data(series)
+        // .data(d => d, e => e.key)
+        .join('text')
+        .attr('x', d => x(d[0]) + 25)
+        .attr('y', (d, i) => y(i + 1) + y.bandwidth() / 2)
+        .attr('dy', '0.35em')
+        // .text(d => d[1] - d[0]);
+        .text(d => d.key);
+
+      this.svg
+        .append('g')
+        .attr('fill', 'white')
+        .attr('text-anchor', 'end')
+        .style('font', '12px sans-serif')
+        .selectAll('text')
+        .data(series)
+        .join('text')
+        .attr('x', d => x(d) + 25)
+        .attr('y', d => y(d.index + 1) + y.bandwidth() / 2)
+        .attr('dy', '0.35em')
+        .text(d => d.key);*/
+    }
   }
 
   ngOnDestroy() {
@@ -148,21 +225,40 @@ export class PerformanceComponent
   }
 
   resultAnalysis() {
-    console.log(this.cpuResult);
-    console.log(this.gpuResult);
-    const epoch = this.epochNum;
+    // console.log(this.cpuResult);
+    // console.log(this.gpuResult);
+    // const epoch = this.epochNum;
     let cpuTime = this.cpuResult.reduce((t, cr) => {
       return t + cr.timing;
     }, 0);
-    cpuTime /= epoch;
+    cpuTime /= this.cpuResult.length;
     let gpuTime = this.gpuResult.reduce((t, gr) => {
       return t + gr.timing;
     }, 0);
-    gpuTime /= epoch;
-    // this.pushTable(epoch, cpuTime, gpuTime);
-    // this.pushChart(cpuTime, gpuTime);
-    // this.cpu_result = [];
-    // this.gpu_result = [];
+    gpuTime /= this.gpuResult.length;
+    this.compareUpdate(cpuTime, gpuTime);
+    this.drawBarChart();
+    this.cpuResult = [];
+    this.gpuResult = [];
+  }
+
+  compareUpdate(cpuTime: number, gpuTime: number) {
+    if (this.resultCompare.length === 10) {
+      this.resultCompare.shift();
+    }
+    this.resultCompare.push({
+      cpu: cpuTime,
+      gpu: gpuTime
+    });
+    const ratio = cpuTime / gpuTime;
+    if (this.curRatio < ratio) {
+      this.curRatio = ratio;
+    }
+  }
+
+  get maxRatio() {
+    // return Math.max(...this.resultCompare.map(r => r.ratio));
+    return this.curRatio;
   }
 
   isEven(i: number) {

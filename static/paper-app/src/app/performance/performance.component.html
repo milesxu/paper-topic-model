@@ -26,7 +26,7 @@
       <div class="row">
         <mat-form-field>
           <mat-label>Epoch Number</mat-label>
-          <input matInput type="number" min="5" max="20" [(ngModel)]="epochNum">
+          <input matInput type="number" min="5" max="20" [(ngModel)]="epochNum" />
         </mat-form-field>
       </div>
       <div class="row">
@@ -47,19 +47,22 @@
       <mat-grid-tile colspan="2" rowspan="6">
         <mat-list style="width: 100%">
           <mat-list-item *ngFor="let item of listArray; let i = index"
-            [ngClass]="{'green-back':isEven(i), 'list-item':true}">
-            <span *ngIf="cpuResult.length > i" class="cpu-result">Epoch {{cpuResult[i].count}}<br>Time elasped:
-              {{cpuResult[i].timing.toFixed(16)}} Perplexity: {{cpuResult[i].perplexity.toFixed(16)}}</span>
-            <span *ngIf="gpuResult.length > i" class="gpu-result">Epoch {{gpuResult[i].count}}<br>Time elasped:
-              {{gpuResult[i].timing.toFixed(16)}} Perplexity: {{gpuResult[i].perplexity.toFixed(16)}}</span>
+            [ngClass]="{ 'green-back': isEven(i), 'list-item': true }">
+            <span *ngIf="cpuResult.length > i" class="cpu-result">Epoch {{ cpuResult[i].count }}<br />Time elasped:
+              {{ cpuResult[i].timing.toFixed(16) }} Perplexity:
+              {{ cpuResult[i].perplexity.toFixed(16) }}</span>
+            <span *ngIf="gpuResult.length > i" class="gpu-result">Epoch {{ gpuResult[i].count }}<br />Time elasped:
+              {{ gpuResult[i].timing.toFixed(16) }} Perplexity:
+              {{ gpuResult[i].perplexity.toFixed(16) }}</span>
           </mat-list-item>
         </mat-list>
       </mat-grid-tile>
       <mat-grid-tile colspan="2" rowspan="10">
         <div class="perf-bar-chart mat-elevation-z6">
-          <p class='bar-chart-title'>Average Performance</p>
-          <svg id="bar-chart" viewBox="0 0 1000 320" style="border:1px solid #707070;"></svg>
-          <p class="bar-chart-title">Maximum Accelerate Ratio:</p>
+          <p class="bar-chart-title">Average Performance</p>
+          <svg id="bar-chart" viewBox="0 0 1000 320"></svg>
+          <span class="bar-chart-title">Maximum Accelerate Ratio:</span>
+          <span class="bar-chart-title" *ngIf="maxRatio > 0">{{maxRatio}}</span>
         </div>
       </mat-grid-tile>
     </mat-grid-list>
