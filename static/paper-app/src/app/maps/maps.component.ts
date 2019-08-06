@@ -13,20 +13,17 @@ export class MapsComponent implements OnInit, AfterContentInit {
   ngOnInit() {}
 
   ngAfterContentInit() {
-    const width = document.documentElement.clientWidth * 0.85;
-    const height = document.documentElement.clientWidth * 0.7;
+    const width = 1570;
+    const height = 900;
     const projection = d3
-      .geoMercator()
-      .scale(height / (2 * Math.PI))
+      .geoEquirectangular()
+      // .center([0, -30])
+      .scale(width / (2 * Math.PI))
       .translate([width / 2, height / 2]);
     const svg = d3.select('#maps');
-    // .append('svg');
-    // .attr('width', '100%')
-    // .attr('height', height * 4);
     const path = d3.geoPath().projection(projection);
     const g = svg.append('g');
     g.attr('class', 'map');
-    console.log(svg);
     d3.json('assets/countries.topo.json').then((us: any) => {
       g.append('g')
         .attr('id', 'countries')
@@ -38,7 +35,13 @@ export class MapsComponent implements OnInit, AfterContentInit {
           return d.id;
         })
         .attr('d', path)
-        .on('click', this.clicked);
+        .on('click', this.clicked)
+        .on('mouseover', (d, i) => {
+          d3.select(d3.event.currentTarget).style('fill', '#2a5831');
+        })
+        .on('mouseout', (d, i) => {
+          d3.select(d3.event.currentTarget).style('fill', '#e4e6d2');
+        });
       /*svg
         .selectAll('path')
         .data(tpjs.feature(world, world.objects.countries).features)
@@ -48,9 +51,14 @@ export class MapsComponent implements OnInit, AfterContentInit {
       svg
         .selectAll('path')
         .attr('stroke', 'gray')
-        .attr('fill', '#E6E9D4');
+        .attr('fill', '#e4e6d2');
     });
   }
 
   clicked(event: any) {}
+
+  /*hovered() {
+    const cur = this;
+    d3.select(cur).style('fill', '#2a5831');
+  }*/
 }

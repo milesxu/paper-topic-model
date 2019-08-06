@@ -73,10 +73,6 @@ export class PerformanceComponent
   ];
   barChartColors = ['#465e79', '#a0d8c5'];
   stackName = ['cpu', 'gpu'];
-  // column_string: string[] = ['epoch', 'cpu', 'gpu', 'rate'];
-  // tableData: ResultCompare[] = [];
-  // dataSource = new MatTableDataSource(this.tableData);
-  // updateFlag = false;
   cpuSub: Subscription;
   gpuSub: Subscription;
   completeSub: Subscription;
@@ -150,7 +146,6 @@ export class PerformanceComponent
 
       const series = d3.stack().keys(this.stackName)(this.resultCompare);
       console.log(series);
-      console.log(series[0][0][0]);
 
       this.svg
         .append('g')
@@ -166,37 +161,41 @@ export class PerformanceComponent
         .attr('width', d => x(d[1]) - x(d[0]))
         .attr('height', y.bandwidth());
 
-      /*this.svg
+      this.svg
         .append('g')
         .selectAll('g')
-        .data(series)
-        .enter()
-        .selectAll('text')
-        // .join('g')
+        .data(series[0])
+        .join('g')
         .attr('fill', 'white')
         .attr('text-anchor', 'middle')
         .style('font', '12px sans-serif')
-        // .data(series)
-        // .data(d => d, e => e.key)
-        .join('text')
-        .attr('x', d => x(d[0]) + 25)
+        .append('text')
+        .data(series[0])
+        // .selectAll('text')
+        // .join('text')
+        .attr('x', d => x(d[0]) + 50)
         .attr('y', (d, i) => y(i + 1) + y.bandwidth() / 2)
         .attr('dy', '0.35em')
         // .text(d => d[1] - d[0]);
-        .text(d => d.key);
+        .text(d => `cpu time: ${(d[1] - d[0]).toFixed(2)}`);
 
       this.svg
         .append('g')
+        .selectAll('g')
+        .data(series[1])
+        .join('g')
         .attr('fill', 'white')
-        .attr('text-anchor', 'end')
+        .attr('text-anchor', 'middle')
         .style('font', '12px sans-serif')
-        .selectAll('text')
-        .data(series)
-        .join('text')
-        .attr('x', d => x(d) + 25)
-        .attr('y', d => y(d.index + 1) + y.bandwidth() / 2)
+        .append('text')
+        .data(series[1])
+        // .selectAll('text')
+        // .join('text')
+        .attr('x', d => x(d[0]) + 50)
+        .attr('y', (d, i) => y(i + 1) + y.bandwidth() / 2)
         .attr('dy', '0.35em')
-        .text(d => d.key);*/
+        // .text(d => d[1] - d[0]);
+        .text(d => `gpu time: ${(d[1] - d[0]).toFixed(2)}`);
     }
   }
 
