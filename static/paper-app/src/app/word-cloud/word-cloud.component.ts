@@ -120,15 +120,15 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
       .data(words)
       .enter()
       .append('text')
-      .style('font-size', d => {
+      .style('font-size', (d: any) => {
         return d.size + 'px';
       })
       .style('font-family', 'Impact')
       .attr('text-anchor', 'middle')
-      .attr('transform', d => {
+      .attr('transform', (d: any) => {
         return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')';
       })
-      .text(d => {
+      .text((d: any) => {
         return d.text;
       });
   }

@@ -27,14 +27,14 @@ export class MapsComponent implements OnInit, AfterContentInit {
     const g = svg.append('g');
     g.attr('class', 'map');
     console.log(svg);
-    d3.json('assets/countries.topo.json').then(us => {
+    d3.json('assets/countries.topo.json').then((us: any) => {
       g.append('g')
         .attr('id', 'countries')
         .selectAll('path')
         .data(tpjs.feature(us, us.objects.countries).features)
         .enter()
         .append('path')
-        .attr('id', d => {
+        .attr('id', (d: any) => {
           return d.id;
         })
         .attr('d', path)
