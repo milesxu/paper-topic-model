@@ -27,6 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
 // import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 // import { API_URL } from './env';
 
@@ -62,9 +63,11 @@ import { MatListModule } from '@angular/material/list';
     MatSelectModule,
     MatInputModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
     // SocketIoModule.forRoot(config)
   ],
+  entryComponents: [RankDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,1 +1,6 @@
-<p>rank-dialog works!</p>
+<h1 mat-dialog-title>Top paper contribution organizations of {{data.country}}
+</h1>
+<svg id='rank-chart' viewbox="0 0 640 320"></svg>
+<div mat-dialog-content>
+  <h3 *ngIf="!data.ranks.length">There are no papers of this country.</h3>
+</div>
