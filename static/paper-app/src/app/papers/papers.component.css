@@ -40,3 +40,45 @@ mat-paginator {
 .input-form {
   width: 5rem;
 }
+
+.paper-head {
+  padding: 30px;
+  max-width: 75rem;
+  margin: auto;
+  border-bottom: 2px solid #d1d1d1;
+  overflow: hidden;
+}
+
+
+.paper-head .form-border {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid #b3b3b3;
+  width: 50%;
+  border-radius: 2px;
+}
+
+.paper-head input[type=text] {
+  padding: 0px;
+  border: none;
+  font-size: 16px;
+  height: 32px;
+  flex-grow: 1;
+}
+
+
+.paper-head button {
+  padding: 0px 10px 0px 10px;
+  background: #b3b3b3;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  align-items: flex-start;
+  height: 32px;
+}
+
+.paper-head .search-icon {
+  padding-top: 5px;
+  color: white;
+}
