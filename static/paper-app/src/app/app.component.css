@@ -77,11 +77,14 @@ mat-drawer {
   font-weight: bold;
 }
 
-.custom-menu {
-  background: #2c4830;
+.custom-menu-item {
   color: white;
 }
 
-div.mat-menu-content {
-  background: #2c4830 !important;
+::ng-deep .custom-menu {
+  background: #2c4830;
+}
+
+.statistic:hover {
+  background: #2c4830;
 }

@@ -2,16 +2,14 @@
   <mat-toolbar class="toolbar mat-elevation-z2">
     <mat-toolbar-row class="toolbar-row">
       <span class="title"><img src="assets/logo.jpg" class="logo"></span>
-      <span class=" menu">
+      <span class="menu">
         <button mat-button (click)="gotoUrl('/')">Home</button>
-        <button mat-button [matMenuTriggerFor]="menu">Statistic Results<i
-             class="material-icons md-24">arrow_drop_down</i></button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="gotoUrl('/maps')"
-                  class="custom-menu">Region
+        <button mat-button [matMenuTriggerFor]="menu" class="statistic">Statistic Results<i
+            class="material-icons md-24">arrow_drop_down</i></button>
+        <mat-menu #menu="matMenu" class="custom-menu" [overlapTrigger]="false">
+          <button mat-menu-item (click)="gotoUrl('/maps')" class="custom-menu-item">Region
             Visualization</button>
-          <button mat-menu-item (click)="gotoUrl('/word-cloud')"
-                  class="custom-menu">Topic
+          <button mat-menu-item (click)="gotoUrl('/word-cloud')" class="custom-menu-item">Topic
             Clusters</button>
         </mat-menu>
         <button mat-button (click)="gotoUrl('/performance')">Performance
