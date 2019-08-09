@@ -5,6 +5,10 @@
       <button type="submit">
         <i class="material-icons md-24 search-icon">search</i></button></div>
   </form>
+  <mat-paginator [length]="length" [pageSize]="pageSize"
+                 [pageSizeOptions]="pageSizeOptions"
+                 [showFirstLastButtons]="true" (page)="pageEvent($event)">
+  </mat-paginator>
 </div>
 <div class="papers">
   <ul>
@@ -20,4 +24,9 @@
       [showFirstLastButtons]="true" (page)="pageEvent($event)">
     </mat-paginator>
   </div>-->
+</div>
+<div class="paper-foot">
+  <mat-paginator [length]="length" [pageSize]="pageSize" [hidePageSize]="true"
+                 [showFirstLastButtons]="true" (page)="pageEvent($event)">
+  </mat-paginator>
 </div>

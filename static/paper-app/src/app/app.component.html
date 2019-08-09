@@ -4,11 +4,14 @@
       <span class="title"><img src="assets/logo.jpg" class="logo"></span>
       <span class=" menu">
         <button mat-button (click)="gotoUrl('/')">Home</button>
-        <button mat-button [matMenuTriggerFor]="menu">Statistic Results</button>
+        <button mat-button [matMenuTriggerFor]="menu">Statistic Results<i
+             class="material-icons md-24">arrow_drop_down</i></button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="gotoUrl('/maps')" class="custom-menu">Region
+          <button mat-menu-item (click)="gotoUrl('/maps')"
+                  class="custom-menu">Region
             Visualization</button>
-          <button mat-menu-item (click)="gotoUrl('/word-cloud')" class="custom-menu">Topic
+          <button mat-menu-item (click)="gotoUrl('/word-cloud')"
+                  class="custom-menu">Topic
             Clusters</button>
         </mat-menu>
         <button mat-button (click)="gotoUrl('/performance')">Performance
