@@ -185,4 +185,4 @@ def cpu_test(json_str):
 
 if __name__ == "__main__":
     # app.run(debug=True, port=8080)
-    socketio.run(app, port=8080)
+    socketio.run(app, host='0.0.0.0', port=8080)
