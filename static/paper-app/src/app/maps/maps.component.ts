@@ -24,6 +24,24 @@ import { RankDialogComponent } from '../rank-dialog/rank-dialog.component';
 export class MapsComponent implements OnInit, AfterContentInit {
   @ViewChild('tooltip', { static: false }) tooltip: ElementRef;
   organizationRank: OrganizationRank = { country: '', ranks: [] };
+  colors = [
+    '#e5e5e1',
+    '#e5ead6',
+    '#e6efbf',
+    '#e4edb0',
+    '#dbefa5',
+    '#d3eda2',
+    '#b8e5a8',
+    '#8ad68a',
+    '#76ce76',
+    '#72c172',
+    '#64af64',
+    '#58a05a',
+    '#4d9151',
+    '#417f46',
+    '#326638',
+    '#2a5831'
+  ];
   constructor(
     private renderer: Renderer2,
     private distributeService: DistributeService,

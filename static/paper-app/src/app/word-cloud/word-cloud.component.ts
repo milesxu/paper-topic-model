@@ -25,6 +25,16 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
   displayType: DisplayType = DisplayType.wordcloud;
   svgWidth = 1500;
   svgHeight = 800;
+  colors = [
+    '#a7adad',
+    '#465e79',
+    '#8aa5c6',
+    '#a0d8c5',
+    '#f9ce64',
+    '#eea372',
+    '#f65a5d',
+    '#974b5a'
+  ];
   constructor(
     private wordService: WordsService,
     private router: Router,

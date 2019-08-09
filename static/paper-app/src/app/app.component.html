@@ -4,8 +4,8 @@
       <span class="title"><img src="assets/logo.jpg" class="logo"></span>
       <span class="menu">
         <button mat-button (click)="gotoUrl('/')">Home</button>
-        <button mat-button [matMenuTriggerFor]="menu" class="statistic">Statistic Results<i
-            class="material-icons md-24">arrow_drop_down</i></button>
+        <button mat-button [matMenuTriggerFor]="menu" class="statistic">Statistic Results
+          <i class="material-icons md-24">arrow_drop_down</i></button>
         <mat-menu #menu="matMenu" class="custom-menu" [overlapTrigger]="false">
           <button mat-menu-item (click)="gotoUrl('/maps')" class="custom-menu-item">Region
             Visualization</button>
