@@ -28,6 +28,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
+// import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
+import { NzTreeModule } from 'ng-zorro-antd/tree';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { CategoryTreeNzComponent } from './category-tree-nz/category-tree-nz.component';
+
+registerLocaleData(en);
 // import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 // import { API_URL } from './env';
 
@@ -42,7 +49,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     RankDialogComponent,
     WordCloudComponent,
     PaperDetailComponent,
-    PapersComponent
+    PapersComponent,
+    CategoryTreeNzComponent
   ],
   imports: [
     BrowserModule,
@@ -64,11 +72,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     MatDividerModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    // NgZorroAntdModule
     // SocketIoModule.forRoot(config)
+    NzTreeModule
   ],
   entryComponents: [RankDialogComponent],
-  providers: [],
+  // providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -38,12 +38,16 @@ mat-sidenav {
 .perf-main .header {
   display: flex;
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: space-between;
   border-bottom: 2px solid #DCDCDC;
   margin: 20px 50px;
   padding-bottom: 5px;
   color: #436e49;
   font-weight: 500;
+}
+
+.perf-main .header .title {
+  padding: 0 120px;
 }
 
 
@@ -91,11 +95,13 @@ mat-list {
 .cpu-result {
   /* align-self: flex-start; */
   margin-left: 30px;
+  font-size: .8rem;
 }
 
 .gpu-result {
   margin-left: auto;
   margin-right: 30px;
+  font-size: .8rem;
 }
 
 .bar-chart-title {
