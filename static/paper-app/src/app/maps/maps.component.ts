@@ -60,10 +60,13 @@ export class MapsComponent implements OnInit, AfterContentInit {
       .translate([width / 2, height / 2]);
     const svg = d3.select('#maps');
     const path = d3.geoPath().projection(projection);
-    const g = svg.append('g');
-    g.attr('class', 'map');
+
+    // create map
+    const map = svg.append('g');
+    map.attr('class', 'map');
     d3.json('assets/countries.topo.json').then((us: any) => {
-      g.append('g')
+      map
+        .append('g')
         .attr('id', 'countries')
         .selectAll('path')
         .data(tpjs.feature(us, us.objects.countries).features)
@@ -87,17 +90,25 @@ export class MapsComponent implements OnInit, AfterContentInit {
           d3.select(d3.event.currentTarget).style('fill', '#e4e6d2');
           this.hideTooltip(d, i);
         });
-      /*svg
-        .selectAll('path')
-        .data(tpjs.feature(world, world.objects.countries).features)
-        .enter()
-        .append('path')
-        .attr('d', path);*/
+
       svg
         .selectAll('path')
         .attr('stroke', 'gray')
         .attr('fill', '#e4e6d2');
     });
+
+    // create legend
+    const legend = svg.append('g').attr('class', 'legend');
+
+    legend
+      .selectAll('rect')
+      .data(this.colors)
+      .join('rect')
+      .attr('x', (d, i) => 25 + i * 75)
+      .attr('y', 750)
+      .attr('width', 75)
+      .attr('height', 30)
+      .attr('fill', (d, i) => d);
   }
 
   openDialog() {

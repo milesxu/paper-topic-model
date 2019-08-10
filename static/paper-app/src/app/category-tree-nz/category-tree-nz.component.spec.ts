@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategortyTreeNzComponent } from './category-tree-nz.component';
+import { CategoryTreeNzComponent } from './category-tree-nz.component';
 
-describe('CategortyTreeNzComponent', () => {
-  let component: CategortyTreeNzComponent;
-  let fixture: ComponentFixture<CategortyTreeNzComponent>;
+describe('CategoryTreeNzComponent', () => {
+  let component: CategoryTreeNzComponent;
+  let fixture: ComponentFixture<CategoryTreeNzComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CategortyTreeNzComponent]
+      declarations: [CategoryTreeNzComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CategortyTreeNzComponent);
+    fixture = TestBed.createComponent(CategoryTreeNzComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
