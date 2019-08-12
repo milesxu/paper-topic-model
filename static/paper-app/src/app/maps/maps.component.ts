@@ -4,7 +4,8 @@ import {
   AfterContentInit,
   Renderer2,
   ViewChild,
-  ElementRef
+  ElementRef,
+  OnDestroy
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import * as d3 from 'd3';
@@ -15,15 +16,19 @@ import {
   OrganizationRank
 } from '../distribute.service';
 import { RankDialogComponent } from '../rank-dialog/rank-dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
   styleUrls: ['./maps.component.css']
 })
-export class MapsComponent implements OnInit, AfterContentInit {
+export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
   @ViewChild('tooltip', { static: false }) tooltip: ElementRef;
+  private distSub: Subscription;
+  distribute: Distribute[];
   organizationRank: OrganizationRank = { country: '', ranks: [] };
+  colorRank: Map<string, number> = new Map();
   colors = [
     '#e5e5e1',
     '#e5ead6',
@@ -48,7 +53,40 @@ export class MapsComponent implements OnInit, AfterContentInit {
     public dialog: MatDialog
   ) {}
 
-  ngOnInit() {}
+  getDistribute(): void {
+    this.distSub = this.distributeService.distribute$.subscribe(
+      (dists: Distribute[]) => {
+        this.distribute = dists;
+        // console.log(this.distribute);
+      },
+      err => {
+        console.log(err);
+      },
+      () => {}
+    );
+  }
+
+  fillBucket() {
+    const maxPaperNum = Math.max(...this.distribute.map(d => d.value));
+    let quantile: number;
+    if (maxPaperNum <= 16) {
+      quantile = 1;
+    } else {
+      quantile = maxPaperNum / 16;
+    }
+    this.distribute.forEach(d =>
+      this.colorRank.set(d.id, Math.floor(quantile * d.value))
+    );
+  }
+
+  ngOnInit() {
+    this.distribute = this.distributeService.distribute;
+    this.getDistribute();
+  }
+
+  ngOnDestroy() {
+    this.distSub.unsubscribe();
+  }
 
   ngAfterContentInit() {
     const width = 1570;
@@ -70,9 +108,11 @@ export class MapsComponent implements OnInit, AfterContentInit {
         .attr('id', 'countries')
         .selectAll('path')
         .data(tpjs.feature(us, us.objects.countries).features)
-        .enter()
-        .append('path')
+        // .enter()
+        // .append('path')
+        .join('path')
         .attr('id', (d: any) => {
+          console.log(d);
           return d.id;
         })
         .attr('d', path)
@@ -121,8 +161,6 @@ export class MapsComponent implements OnInit, AfterContentInit {
 
   showTooltip(d: any, i) {
     // console.log(d3.event.pageX, d3.event.pageY);
-    // const e = d3.event as MouseEvent;
-    // console.log(e.p)
     this.renderer.setStyle(
       this.tooltip.nativeElement,
       'top',
@@ -134,7 +172,6 @@ export class MapsComponent implements OnInit, AfterContentInit {
       `${d3.event.pageX - 300}px`
     );
     this.renderer.setStyle(this.tooltip.nativeElement, 'display', 'block');
-    // this.renderer.setStyle(this.tooltip.nativeElement, 'position', 'absolute');
     this.renderer.setProperty(
       this.tooltip.nativeElement,
       'innerHTML',
