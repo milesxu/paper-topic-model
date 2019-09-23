@@ -144,11 +144,20 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
       .selectAll('rect')
       .data(this.colors)
       .join('rect')
-      .attr('x', (d, i) => 25 + i * 75)
+      .attr('x', (d, i) => 50 + i * 25)
       .attr('y', 750)
-      .attr('width', 75)
-      .attr('height', 30)
+      .attr('width', 24)
+      .attr('height', 24)
       .attr('fill', (d, i) => d);
+
+    const legendText = svg.append('g');
+    legendText
+      .selectAll('text')
+      .data(['less', 'more'])
+      .join('text')
+      .attr('x', (d, i) => 23 + i * 427)
+      .attr('y', 765)
+      .text(d => d);
   }
 
   openDialog() {
