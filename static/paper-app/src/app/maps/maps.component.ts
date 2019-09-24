@@ -7,6 +7,7 @@ import {
   ElementRef,
   OnDestroy
 } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import * as d3 from 'd3';
 import * as tpjs from 'topojson';
@@ -18,6 +19,10 @@ import {
 import { RankDialogComponent } from '../rank-dialog/rank-dialog.component';
 import { Subscription } from 'rxjs';
 
+export interface CountryCode {
+  [code: string]: string;
+}
+
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
@@ -27,6 +32,8 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
   @ViewChild('tooltip', { static: false }) tooltip: ElementRef;
   private distSub: Subscription;
   distribute: Distribute[];
+  // countryCode: Map<string, string> = new Map<string, string>();
+  countryCode: CountryCode = {};
   organizationRank: OrganizationRank = { country: '', ranks: [] };
   colorRank: Map<string, number> = new Map();
   colors = [
@@ -50,6 +57,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
   constructor(
     private renderer: Renderer2,
     private distributeService: DistributeService,
+    private http: HttpClient,
     public dialog: MatDialog
   ) {}
 
@@ -64,6 +72,17 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
       },
       () => {}
     );
+  }
+
+  getCountrycode(): void {
+    this.http.get<any[]>('assets/iso-alpha3.json').subscribe(result => {
+      // result.forEach(r => (this.countryCode[r.alpha3] = r.name));
+      result.forEach(r => {
+        // this.countryCode.set(r.alpha3, r.name);
+        // console.log(this.countryCode.get(r.alpha3));
+        this.countryCode[r.alpha3] = r.name;
+      });
+    });
   }
 
   fillBucket() {
@@ -82,6 +101,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
   ngOnInit() {
     this.distribute = this.distributeService.distribute;
     this.getDistribute();
+    this.getCountrycode();
   }
 
   ngOnDestroy() {
@@ -89,6 +109,9 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   ngAfterContentInit() {
+    /*console.log(this.countryCode);
+    const arr = Array.from(this.countryCode.keys());
+    console.log(arr.length);*/
     const width = 1570;
     const height = 900;
     const projection = d3
@@ -122,6 +145,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
         .on('mouseover', (d: any, i) => {
           d3.select(d3.event.currentTarget).style('fill', '#2a5831');
           this.showTooltip(d, i);
+          console.log();
         })
         .on('mousemove', (d: any, i) => {
           this.showTooltip(d, i);
@@ -184,7 +208,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
     this.renderer.setProperty(
       this.tooltip.nativeElement,
       'innerHTML',
-      d.properties.name
+      this.countryCode[d.id]
     );
   }
 
