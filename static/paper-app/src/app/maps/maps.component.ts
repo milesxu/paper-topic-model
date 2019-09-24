@@ -17,9 +17,13 @@ import {
   OrganizationRank
 } from '../distribute.service';
 import { RankDialogComponent } from '../rank-dialog/rank-dialog.component';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 
 export interface CountryCode {
+  [code: string]: string;
+}
+
+export interface CodeConvert {
   [code: string]: string;
 }
 
@@ -34,6 +38,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
   distribute: Distribute[];
   // countryCode: Map<string, string> = new Map<string, string>();
   countryCode: CountryCode = {};
+  codeConvert: CodeConvert = {};
   organizationRank: OrganizationRank = { country: '', ranks: [] };
   colorRank: Map<string, number> = new Map();
   colors = [
@@ -65,7 +70,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
     this.distSub = this.distributeService.distribute$.subscribe(
       (dists: Distribute[]) => {
         this.distribute = dists;
-        // console.log(this.distribute);
+        console.log(this.distribute[0]);
       },
       err => {
         console.log(err);
@@ -75,15 +80,18 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   getCountrycode(): void {
-    this.http.get<any[]>('assets/iso-alpha3.json').subscribe(result => {
+    this.http.get<any[]>('assets/country-code.json').subscribe(result => {
       // result.forEach(r => (this.countryCode[r.alpha3] = r.name));
       result.forEach(r => {
         // this.countryCode.set(r.alpha3, r.name);
         // console.log(this.countryCode.get(r.alpha3));
-        this.countryCode[r.alpha3] = r.name;
+        this.countryCode[r.c3] = r.name;
+        this.codeConvert[r.c3] = r.c2;
       });
     });
   }
+
+  getFillingColor(d: any, i: number) {}
 
   fillBucket() {
     const maxPaperNum = Math.max(...this.distribute.map(d => d.value));
@@ -135,7 +143,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
         // .append('path')
         .join('path')
         .attr('id', (d: any) => {
-          console.log(d);
+          // console.log(d);
           return d.id;
         })
         .attr('d', path)
