@@ -12,10 +12,23 @@ export class RankDialogComponent implements OnInit, AfterContentInit {
   totalPapers = 500;
   svg: any;
   svgWidth = 640;
-  svgHeight = 450;
+  svgHeight = 370;
   margin = { top: 20, right: 30, left: 60, bottom: 10 };
   turns = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
   constructor(@Inject(MAT_DIALOG_DATA) public data: OrganizationRank) {}
+
+  getPaperLimit(paper: number[]) {
+    const maxPaperNum = Math.max(...paper);
+    // console.log(maxPaperNum);
+    const tens = Math.floor(maxPaperNum / 10);
+    const rem = maxPaperNum % 10;
+    if (rem === 0) {
+      this.totalPapers = maxPaperNum;
+    } else {
+      this.totalPapers = (tens + 1) * 10;
+    }
+    // console.log(this.totalPapers);
+  }
 
   ngOnInit() {
     const cat = [];
@@ -24,6 +37,8 @@ export class RankDialogComponent implements OnInit, AfterContentInit {
       cat.push(r.organization);
       paper.push(r.papers);
     });
+    this.getPaperLimit(paper);
+    // console.log(this.data);
   }
 
   ngAfterContentInit() {
@@ -66,5 +81,26 @@ export class RankDialogComponent implements OnInit, AfterContentInit {
       .attr('dy', '1em')
       .style('text-anchor', 'middle')
       .text('Top Contributors');
+
+    this.svg
+      .append('g')
+      .selectAll('rect')
+      .data(this.data.ranks)
+      .join('rect')
+      .attr('y', (d, i) => y(i + 1))
+      .attr('x', d => x(0))
+      .attr('width', d => x(d.papers) - x(0))
+      .attr('height', y.bandwidth())
+      .attr('fill', '#a0d8c5');
+
+    this.svg
+      .append('g')
+      .selectAll('text')
+      .data(this.data.ranks)
+      .join('text')
+      .attr('y', (d, i) => y(i + 1) + y.bandwidth() / 2)
+      .attr('x', d => x(0) + 10)
+      .style('alignment-baseline', 'middle')
+      .text(d => d.organization + '  ' + d.papers);
   }
 }

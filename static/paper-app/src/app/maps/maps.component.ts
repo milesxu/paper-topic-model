@@ -17,7 +17,7 @@ import {
   OrganizationRank
 } from '../distribute.service';
 import { RankDialogComponent } from '../rank-dialog/rank-dialog.component';
-import { Subscription, forkJoin } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 export interface CountryCode {
   [code: string]: string;
@@ -37,7 +37,9 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
   private distSub: Subscription;
   distribute: Distribute[];
   // countryCode: Map<string, string> = new Map<string, string>();
+  // c2 and country name
   countryCode: CountryCode = {};
+  // c2 and c3
   codeConvert: CodeConvert = {};
   organizationRank: OrganizationRank = { country: '', ranks: [] };
   colorRank: Map<string, number> = new Map();
@@ -59,6 +61,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
     '#326638',
     '#2a5831'
   ];
+  svg: any;
   constructor(
     private renderer: Renderer2,
     private distributeService: DistributeService,
@@ -70,13 +73,45 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
     this.distSub = this.distributeService.distribute$.subscribe(
       (dists: Distribute[]) => {
         this.distribute = dists;
-        console.log(this.distribute[0]);
+        // console.log(this.distribute[0]);
+        this.initColorRank();
+        this.fillMaps();
       },
       err => {
         console.log(err);
       },
       () => {}
     );
+  }
+
+  initColorRank() {
+    this.distribute.sort((a, b) => {
+      return a.value - b.value;
+    });
+    let idx = 0;
+    while (this.distribute[idx].value === 0) {
+      this.colorRank.set(this.distribute[idx].id, 0);
+      ++idx;
+    }
+    const hasPaper = this.distribute.length - idx;
+    const colorNum = this.colors.length - 1;
+    const quotient = Math.floor(hasPaper / colorNum);
+    const remainder = hasPaper % colorNum;
+    for (let i = idx; i < this.distribute.length; ++i) {
+      let dist = i - idx - 1;
+      if (dist <= quotient + remainder) {
+        this.colorRank.set(this.distribute[i].id, 1);
+      } else {
+        dist -= quotient + remainder;
+        const bucket = Math.floor(dist / quotient);
+        const rm = dist % quotient;
+        if (rm === 0) {
+          this.colorRank.set(this.distribute[i].id, bucket + 2);
+        } else {
+          this.colorRank.set(this.distribute[i].id, bucket + 3);
+        }
+      }
+    }
   }
 
   getCountrycode(): void {
@@ -127,11 +162,11 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
       // .center([0, -30])
       .scale(width / (2 * Math.PI))
       .translate([width / 2, height / 2]);
-    const svg = d3.select('#maps');
+    this.svg = d3.select('#maps');
     const path = d3.geoPath().projection(projection);
 
     // create map
-    const map = svg.append('g');
+    const map = this.svg.append('g');
     map.attr('class', 'map');
     d3.json('assets/countries.topo.json').then((us: any) => {
       map
@@ -143,34 +178,34 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
         // .append('path')
         .join('path')
         .attr('id', (d: any) => {
-          // console.log(d);
+          // console.log(d.id);
+          if (!this.countryCode[d.id]) {
+            console.log(d.id);
+          }
           return d.id;
         })
         .attr('d', path)
-        .on('click', (d, i) => {
-          this.openDialog();
+        .on('click', (d: any, i) => {
+          this.openDialog(d);
         })
         .on('mouseover', (d: any, i) => {
           d3.select(d3.event.currentTarget).style('fill', '#2a5831');
           this.showTooltip(d, i);
-          console.log();
+          // console.log();
         })
         .on('mousemove', (d: any, i) => {
           this.showTooltip(d, i);
         })
         .on('mouseout', (d, i) => {
-          d3.select(d3.event.currentTarget).style('fill', '#e4e6d2');
+          const c = this.getFillColor(d);
+          d3.select(d3.event.currentTarget).style('fill', c);
           this.hideTooltip(d, i);
         });
-
-      svg
-        .selectAll('path')
-        .attr('stroke', 'gray')
-        .attr('fill', '#e4e6d2');
+      this.fillMaps();
     });
 
     // create legend
-    const legend = svg.append('g').attr('class', 'legend');
+    const legend = this.svg.append('g').attr('class', 'legend');
 
     legend
       .selectAll('rect')
@@ -182,7 +217,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
       .attr('height', 24)
       .attr('fill', (d, i) => d);
 
-    const legendText = svg.append('g');
+    const legendText = this.svg.append('g');
     legendText
       .selectAll('text')
       .data(['less', 'more'])
@@ -192,11 +227,23 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
       .text(d => d);
   }
 
-  openDialog() {
+  fillMaps() {
+    this.svg
+      .selectAll('path')
+      .attr('stroke', 'gray')
+      .attr('fill', (d: any): string => {
+        // console.log(this.colorRank);
+        return this.getFillColor(d);
+      });
+    // .attr('fill', '#e4e6d2');
+  }
+
+  openDialog(d: any) {
+    const c2 = this.codeConvert[d.id];
     this.dialog.open(RankDialogComponent, {
       height: '480px',
       width: '720px',
-      data: this.organizationRank
+      data: this.distributeService.getOrganizationRank(c2)
     });
   }
 
@@ -218,11 +265,21 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
       'innerHTML',
       this.countryCode[d.id]
     );
+    // if (!this.countryCode[d.id]) { console.log(d.id); }
   }
 
   hideTooltip(d: any, i) {
     this.renderer.setStyle(this.tooltip.nativeElement, 'display', 'none');
     this.renderer.setProperty(this.tooltip.nativeElement, 'innerHTML', '');
+  }
+
+  getFillColor(d: any) {
+    const c2 = this.codeConvert[d.id];
+    const val = this.colorRank.get(c2);
+    if (!val) {
+      return this.colors[0];
+    }
+    return this.colors[val];
   }
 
   /*hovered() {
