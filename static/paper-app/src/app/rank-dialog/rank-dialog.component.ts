@@ -42,12 +42,19 @@ export class RankDialogComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit() {
-    this.svg = d3.select('#rank-chart');
-    this.drawBarChart();
+    if (this.data.ranks.length) {
+      this.svg = d3
+        .select('#rank-chart')
+        .append('svg')
+        .attr('viewbox', '0 0 640 320')
+        .attr('width', '100%')
+        .attr('height', '100%');
+      this.drawBarChart();
+    }
   }
 
   drawBarChart() {
-    d3.selectAll('#rank-chart > *').remove();
+    // d3.selectAll('#rank-chart > *').remove();
 
     const y = d3
       .scaleBand()

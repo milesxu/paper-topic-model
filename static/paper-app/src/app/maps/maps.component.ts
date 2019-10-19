@@ -249,23 +249,41 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
 
   showTooltip(d: any, i) {
     // console.log(d3.event.pageX, d3.event.pageY);
+    // console.log(d3.event.pageX);
+    let xStart = 0;
+    if (d3.event.pageX > 1600) {
+      xStart = d3.event.pageX - 550;
+    } else {
+      xStart = d3.event.pageX - 330;
+    }
     this.renderer.setStyle(
       this.tooltip.nativeElement,
       'top',
-      `${d3.event.pageY}px`
+      `${d3.event.pageY - 50}px`
     );
-    this.renderer.setStyle(
-      this.tooltip.nativeElement,
-      'left',
-      `${d3.event.pageX - 300}px`
-    );
+    this.renderer.setStyle(this.tooltip.nativeElement, 'left', `${xStart}px`);
     this.renderer.setStyle(this.tooltip.nativeElement, 'display', 'block');
     this.renderer.setProperty(
       this.tooltip.nativeElement,
       'innerHTML',
-      this.countryCode[d.id]
+      `<b>${this.countryCode[d.id]}</b><br>
+      <table style="margin-top: 2.5px;width:100%;">
+      <tr><td>Total Papers</td>
+      <td style="text-align: right"><b>${this.getPaperNumber(d.id)}</b></td>
+      </tr><tr>
+      <td colspan="2">Click to see more details...</td></tr></table>
+      `
     );
     // if (!this.countryCode[d.id]) { console.log(d.id); }
+  }
+
+  getPaperNumber(id: string) {
+    const c3 = this.codeConvert[id];
+    const dist = this.distribute.find(d => d.id === c3);
+    if (!dist) {
+      return 0;
+    }
+    return dist.value;
   }
 
   hideTooltip(d: any, i) {
