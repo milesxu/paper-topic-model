@@ -66,7 +66,9 @@ export class DistributeService {
       }
       return -1;
     });
+    // console.log(this.paperCountry);
     this.paperConference = papers.map(paper => paper.conference);
+    // console.log(this.paperConference);
     this.paperOrg = papers.map(paper => paper.organization);
     // this.distributeSource.next(this.computeDistribute(['NeurIPS2018']));
     this.conferenceService.conferences$.subscribe(conf => {
@@ -76,6 +78,7 @@ export class DistributeService {
   }
 
   computeDistribute(conferences: string[]): Distribute[] {
+    // console.log(conferences);
     const values = new Array(this.zeroDistribute.length).fill(0);
     // console.log(dist.reduce((a, b) => a + b.value, 0));
     this.paperConference.forEach((conf, id) => {

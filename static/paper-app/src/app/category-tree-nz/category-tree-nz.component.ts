@@ -54,7 +54,13 @@ export class CategoryTreeNzComponent
               disableCheckbox: true,
             },
           ]*/
-        }
+        },
+        {
+          title: 'ICML 2019',
+          key: '1002',
+          isLeaf: true
+        },
+        { title: 'CVPR 2019', key: '1003', isLeaf: true }
       ]
     },
     {
@@ -102,6 +108,7 @@ export class CategoryTreeNzComponent
       // }
     });
     // console.log(this.nzTreeComponent.getCheckedNodeList());
+    // console.log(temp);
     this.conferenceService.changeConference(temp);
   }
 

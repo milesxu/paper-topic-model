@@ -8,6 +8,7 @@ import requests
 import argparse
 from bs4 import BeautifulSoup
 
+# now, Hong Kong has merged into China's item.
 org_names = {
     'US': ['University of Southern California',
            'University of California', 'Johns Hopkins University',
@@ -142,15 +143,15 @@ org_names = {
            'Nanjing Institute of Advanced Artificial Intelligence',
            'Shenzhen University', 'Southeast University', 'Anhui University',
            'JD AI Research', 'CAS', 'Sensetime', 'Malong Technologies',
-           'UCAS', 'Hikvision Research Institute', 'JD.COM'],
-    'TW': ['HTC Research', 'National Tsing Hua University',
-           'National Taiwan University', 'National Chiao Tung University',
-           'National Tsing Hua Uiversity'],
-    'HK': ['The Chinese University of Hong Kong', 'The University of Hong Kong',
+           'UCAS', 'Hikvision Research Institute', 'JD.COM',
+           'The Chinese University of Hong Kong', 'The University of Hong Kong',
            'The Hong Kong University of Science and Technology',
            'The Hong Kong Polytechnic University',
            'Hong Kong University of Science and Technology',
            'University of Hong Kong', 'Hong Kong Baptist University', 'HKUST'],
+    'TW': ['HTC Research', 'National Tsing Hua University',
+           'National Taiwan University', 'National Chiao Tung University',
+           'National Tsing Hua Uiversity'],
     'AT': ['University of Innsbruck', 'University of Vienna',
            'Graz University of Technology', 'TU Wien',
            'Institute of Science and Technology Austria',
@@ -508,8 +509,26 @@ def generate_org_json():
     with open('orgs.json', 'w+') as ofile:
         json.dump(org_list, ofile)
 
+
 def generate_papers_json():
-    conf_json = ['cvpr2018.json', 'cvpr2019.json', 'iclr2019.json', 'icml2018.json', 'icml2019.json']
+    '''
+    Currently, if you want to add more conference to this demo, please construct conference json files as items in the list below, and then run this function to get the newest papers.json.
+    Don't forget to copy the generated papers.json to assets diretory, to overwrite the ole one!
+    '''
+    conf_json = ['cvpr2018.json', 'cvpr2019.json', 'iclr2019.json',
+                 'icml2018.json', 'icml2019.json', 'neurips2018.json']
+    base_path = './static/paper-app/src/assets'
+    papers = []
+    for conf in conf_json:
+        txt_path = os.path.join(base_path, conf)
+        c = []
+        with open(txt_path, 'r') as f:
+            c = json.load(f)
+        for p in c:
+            papers.append(p)
+    print(len(papers))
+    with open('papers.json', 'w+') as f:
+        json.dump(papers, f)
 
 
 if __name__ == "__main__":
