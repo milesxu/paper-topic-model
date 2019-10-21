@@ -508,6 +508,9 @@ def generate_org_json():
     with open('orgs.json', 'w+') as ofile:
         json.dump(org_list, ofile)
 
+def generate_papers_json():
+    conf_json = ['cvpr2018.json', 'cvpr2019.json', 'iclr2019.json', 'icml2018.json', 'icml2019.json']
+
 
 if __name__ == "__main__":
     # parser = argparse.ArgumentParser()
