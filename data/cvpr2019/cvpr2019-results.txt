@@ -1,0 +1,161 @@
+
+Epoch 1 (15.5s): Perplexity = 1796.17, acc = 0.504, eta mean = 0.00, logstd = 0.10
+Epoch 2 (13.9s): Perplexity = 1107.68, acc = 0.617, eta mean = 0.03, logstd = 0.36
+Epoch 3 (14.1s): Perplexity = 999.14, acc = 0.601, eta mean = -0.08, logstd = 0.52
+Epoch 4 (14.1s): Perplexity = 938.62, acc = 0.600, eta mean = -0.11, logstd = 0.64
+Epoch 5 (14.2s): Perplexity = 884.69, acc = 0.599, eta mean = -0.12, logstd = 0.73
+Epoch 6 (14.2s): Perplexity = 873.99, acc = 0.601, eta mean = -0.12, logstd = 0.80
+Epoch 7 (14.3s): Perplexity = 857.26, acc = 0.596, eta mean = -0.13, logstd = 0.85
+Epoch 8 (14.2s): Perplexity = 839.61, acc = 0.596, eta mean = -0.12, logstd = 0.90
+Epoch 9 (14.3s): Perplexity = 838.83, acc = 0.600, eta mean = -0.12, logstd = 0.93
+Epoch 10 (14.3s): Perplexity = 826.76, acc = 0.596, eta mean = -0.12, logstd = 0.97
+Epoch 11 (14.3s): Perplexity = 828.68, acc = 0.599, eta mean = -0.12, logstd = 1.00
+Epoch 12 (14.3s): Perplexity = 826.02, acc = 0.599, eta mean = -0.12, logstd = 1.02
+Epoch 13 (14.4s): Perplexity = 810.85, acc = 0.596, eta mean = -0.13, logstd = 1.04
+Epoch 14 (14.5s): Perplexity = 817.90, acc = 0.598, eta mean = -0.12, logstd = 1.06
+Epoch 15 (14.5s): Perplexity = 821.94, acc = 0.597, eta mean = -0.11, logstd = 1.08
+Epoch 16 (14.4s): Perplexity = 806.79, acc = 0.598, eta mean = -0.12, logstd = 1.09
+Epoch 17 (14.4s): Perplexity = 806.09, acc = 0.599, eta mean = -0.13, logstd = 1.10
+Epoch 18 (14.5s): Perplexity = 809.74, acc = 0.598, eta mean = -0.12, logstd = 1.11
+Epoch 19 (14.4s): Perplexity = 806.00, acc = 0.595, eta mean = -0.12, logstd = 1.13
+Epoch 20 (14.5s): Perplexity = 806.96, acc = 0.597, eta mean = -0.12, logstd = 1.14
+Epoch 21 (14.4s): Perplexity = 794.90, acc = 0.599, eta mean = -0.11, logstd = 1.15
+Epoch 22 (14.5s): Perplexity = 794.04, acc = 0.599, eta mean = -0.11, logstd = 1.16
+Epoch 23 (14.4s): Perplexity = 791.73, acc = 0.599, eta mean = -0.11, logstd = 1.17
+Epoch 24 (14.4s): Perplexity = 801.41, acc = 0.598, eta mean = -0.11, logstd = 1.17
+Epoch 25 (14.4s): Perplexity = 798.48, acc = 0.599, eta mean = -0.11, logstd = 1.18
+Epoch 26 (14.5s): Perplexity = 789.82, acc = 0.597, eta mean = -0.12, logstd = 1.18
+Epoch 27 (14.5s): Perplexity = 792.95, acc = 0.598, eta mean = -0.12, logstd = 1.19
+Epoch 28 (14.4s): Perplexity = 785.30, acc = 0.601, eta mean = -0.10, logstd = 1.19
+Epoch 29 (14.5s): Perplexity = 788.05, acc = 0.597, eta mean = -0.09, logstd = 1.20
+Epoch 30 (14.5s): Perplexity = 797.29, acc = 0.599, eta mean = -0.09, logstd = 1.20
+Epoch 31 (14.4s): Perplexity = 790.20, acc = 0.595, eta mean = -0.09, logstd = 1.21
+Epoch 32 (14.5s): Perplexity = 793.86, acc = 0.600, eta mean = -0.07, logstd = 1.21
+Epoch 33 (14.5s): Perplexity = 781.70, acc = 0.598, eta mean = -0.08, logstd = 1.22
+Epoch 34 (14.3s): Perplexity = 797.05, acc = 0.599, eta mean = -0.08, logstd = 1.22
+Epoch 35 (14.5s): Perplexity = 786.58, acc = 0.597, eta mean = -0.07, logstd = 1.22
+Epoch 36 (14.5s): Perplexity = 783.25, acc = 0.599, eta mean = -0.07, logstd = 1.23
+Epoch 37 (14.4s): Perplexity = 790.42, acc = 0.598, eta mean = -0.07, logstd = 1.23
+Epoch 38 (14.5s): Perplexity = 792.97, acc = 0.600, eta mean = -0.08, logstd = 1.23
+Epoch 39 (14.4s): Perplexity = 788.48, acc = 0.597, eta mean = -0.08, logstd = 1.24
+Epoch 40 (14.5s): Perplexity = 783.47, acc = 0.600, eta mean = -0.08, logstd = 1.25
+Epoch 41 (14.4s): Perplexity = 791.09, acc = 0.599, eta mean = -0.08, logstd = 1.25
+Epoch 42 (14.5s): Perplexity = 786.76, acc = 0.601, eta mean = -0.07, logstd = 1.26
+Epoch 43 (14.5s): Perplexity = 789.10, acc = 0.597, eta mean = -0.07, logstd = 1.26
+Epoch 44 (14.6s): Perplexity = 782.33, acc = 0.596, eta mean = -0.07, logstd = 1.27
+Epoch 45 (14.5s): Perplexity = 785.49, acc = 0.599, eta mean = -0.07, logstd = 1.27
+Epoch 46 (14.5s): Perplexity = 780.31, acc = 0.600, eta mean = -0.08, logstd = 1.27
+Epoch 47 (14.5s): Perplexity = 778.04, acc = 0.598, eta mean = -0.09, logstd = 1.28
+Epoch 48 (14.5s): Perplexity = 792.77, acc = 0.599, eta mean = -0.09, logstd = 1.28
+Epoch 49 (14.5s): Perplexity = 782.35, acc = 0.599, eta mean = -0.09, logstd = 1.28
+Epoch 50 (14.6s): Perplexity = 778.64, acc = 0.600, eta mean = -0.09, logstd = 1.28
+Epoch 51 (14.5s): Perplexity = 775.51, acc = 0.597, eta mean = -0.09, logstd = 1.28
+Epoch 52 (14.5s): Perplexity = 783.86, acc = 0.600, eta mean = -0.08, logstd = 1.28
+Epoch 53 (14.5s): Perplexity = 778.52, acc = 0.598, eta mean = -0.09, logstd = 1.28
+Epoch 54 (14.7s): Perplexity = 773.30, acc = 0.596, eta mean = -0.08, logstd = 1.28
+Epoch 55 (14.5s): Perplexity = 772.01, acc = 0.601, eta mean = -0.06, logstd = 1.28
+Epoch 56 (14.5s): Perplexity = 772.02, acc = 0.599, eta mean = -0.08, logstd = 1.29
+Epoch 57 (14.5s): Perplexity = 761.96, acc = 0.598, eta mean = -0.07, logstd = 1.29
+Epoch 58 (14.5s): Perplexity = 774.93, acc = 0.598, eta mean = -0.08, logstd = 1.29
+Epoch 59 (14.5s): Perplexity = 769.37, acc = 0.599, eta mean = -0.08, logstd = 1.29
+Epoch 60 (14.6s): Perplexity = 777.47, acc = 0.597, eta mean = -0.09, logstd = 1.30
+Topic 0, eta mean = 0.80 stdev = 4.60: segmentation semantic instance mask pixel masks level object cityscapes cvpr 
+Topic 1, eta mean = -0.40 stdev = 3.48: retrieval sketch modal modality modalities cross visual sketches semantic query 
+Topic 2, eta mean = 0.94 stdev = 4.42: instance segmentation branch semantic mask cnn multi global cvpr branches 
+Topic 3, eta mean = -1.07 stdev = 3.56: teacher knowledge student distillation semantic parsing transfer wise graph consistency 
+Topic 4, eta mean = 0.20 stdev = 3.30: energy active term hierarchical update mode hierarchy level initial baseline 
+Topic 5, eta mean = -0.10 stdev = 4.12: depth rgb scene monocular single map stereo dense completion cvpr 
+Topic 6, eta mean = -0.90 stdev = 4.70: detection object cnn coco detector stage faster detectors anchor fpn 
+Topic 7, eta mean = -0.26 stdev = 3.52: descriptors matching retrieval descriptor query sift cvpr scale compatibility visual 
+Topic 8, eta mean = -0.90 stdev = 3.84: shot meta classes classification base novel support learner tasks query 
+Topic 9, eta mean = -0.96 stdev = 4.52: adaptation target source domains unsupervised adversarial alignment level labeled discrepancy 
+Topic 10, eta mean = -0.45 stdev = 3.66: pose keypoints keypoint occlusion occluded detection heatmap localization heatmaps detector 
+Topic 11, eta mean = 1.92 stdev = 3.98: convolution block conv scale convolutional residual pooling spatial blocks resolution 
+Topic 12, eta mean = -0.01 stdev = 3.11: reference interpolation synthesis synthesized conditional synthesize adversarial generate single approaches 
+Topic 13, eta mean = -0.70 stdev = 3.29: quantization hashing binary codes bits retrieval map bit wang precision 
+Topic 14, eta mean = -0.92 stdev = 2.41: event events cameras intensity camera vision dynamic detection sensor speed 
+Topic 15, eta mean = -0.56 stdev = 2.86: text recognition word scene sentence texts natural oriented words description 
+Topic 16, eta mean = -0.20 stdev = 4.51: detection bounding proposals box proposal boxes object region iou cnn 
+Topic 17, eta mean = -0.05 stdev = 3.94: prior uncertainty dropout bayesian variance posterior variational likelihood stochastic term 
+Topic 18, eta mean = -2.12 stdev = 4.79: adversarial attack attacks latexit perturbations defense robustness box perturbation null 
+Topic 19, eta mean = -0.87 stdev = 4.23: agent trajectory policy navigation agents action environment trajectories visual reinforcement 
+Topic 20, eta mean = -1.03 stdev = 3.11: captioning captions caption lstm word sentence generated language evaluation descriptions 
+Topic 21, eta mean = 0.18 stdev = 3.17: fusion dense iterative global icp rgb comparison multi table fused 
+Topic 22, eta mean = -0.22 stdev = 3.73: plane convolution crf spherical semantic scene wall indoor segmentation layout 
+Topic 23, eta mean = 0.12 stdev = 3.43: registration regularization transformation ray transformations field volume curvature affine medical 
+Topic 24, eta mean = 0.52 stdev = 3.02: component removal components separation remove residual removing background adversarial decomposition 
+Topic 25, eta mean = 0.43 stdev = 3.44: net privacy table recursive resnet vision structure train computer zhang 
+Topic 26, eta mean = 0.54 stdev = 3.50: matching correspondence cycle consistency correspondences alignment supervised consistent max template 
+Topic 27, eta mean = -0.50 stdev = 4.79: convolutional convolution compression channel efficient resnet temporal cnn channels architecture 
+Topic 28, eta mean = 0.40 stdev = 4.04: resnet weights activation binary activations cifar imagenet quantization neurons bit 
+Topic 29, eta mean = -0.86 stdev = 4.88: translation adversarial generated gan generative generator style latent synthesis real 
+Topic 30, eta mean = 1.08 stdev = 3.14: confidence multiple single predictions mixture truth ground approaches hypotheses estimate 
+Topic 31, eta mean = 0.43 stdev = 3.92: visual audio human annotation speech annotators quality sound evaluation annotated 
+Topic 32, eta mean = -0.02 stdev = 4.68: adversarial gan latent generative discriminator mnist generator gans vae wasserstein 
+Topic 33, eta mean = 0.35 stdev = 3.61: color reconstruction quality compression colorization colors processing camera pixels reconstructed 
+Topic 34, eta mean = 1.35 stdev = 3.27: tasks fine multi tuning specific grained shared single pre classification 
+Topic 35, eta mean = -0.48 stdev = 3.30: recognition verification margin cos representations intra identities center cosine discriminative 
+Topic 36, eta mean = -0.34 stdev = 3.70: imaging denoising spectral camera sensor resolution raw truth ground noisy 
+Topic 37, eta mean = 0.91 stdev = 3.29: classification categories classifier category classifiers baseline recognition classes table object 
+Topic 38, eta mean = 0.56 stdev = 3.20: real synthetic world pairs augmentation adversarial generate realistic train discriminator 
+Topic 39, eta mean = -0.14 stdev = 4.50: style resolution super content psnr transfer ssim single quality residual 
+Topic 40, eta mean = 0.29 stdev = 3.01: selection sub selected scores select computer vision score summarization subset 
+Topic 41, eta mean = 0.55 stdev = 3.70: label labels classes noisy bias clean incremental entropy classification imagenet 
+Topic 42, eta mean = 0.07 stdev = 4.24: video frame frames temporal videos gaze motion eye sequences youtube 
+Topic 43, eta mean = 2.07 stdev = 3.77: scale shown respectively adaptive parameter china table guidance effectiveness corresponding 
+Topic 44, eta mean = -1.50 stdev = 3.95: blur deblurring motion kernel reflection blurred blind single sharp blurry 
+Topic 45, eta mean = -0.31 stdev = 3.82: proc conf vis int trans comp object pattern comput mach 
+Topic 46, eta mean = -0.68 stdev = 4.51: architecture architectures imagenet cell policy validation efficient pre teacher knowledge 
+Topic 47, eta mean = -1.72 stdev = 5.94: shape mesh hand single pose reconstruction camera view body truth 
+Topic 48, eta mean = -0.70 stdev = 4.23: flow motion optical scene warping frame camera unsupervised frames rigid 
+Topic 49, eta mean = 0.53 stdev = 4.19: attention module modules mechanism distortion spatial vision wise recognition map 
+Topic 50, eta mean = 0.12 stdev = 2.94: phase filtering edge changes filter frequency box pixel window meaningful 
+Topic 51, eta mean = -1.38 stdev = 4.76: action temporal video recognition videos actions frames frame activity human 
+Topic 52, eta mean = -0.46 stdev = 3.54: graph relation relationship relationships reasoning relations module spatial fashion detection 
+Topic 53, eta mean = 0.40 stdev = 3.30: correlation cross similarity correlations recognition analysis focus measure convolutional comparison 
+Topic 54, eta mean = -0.64 stdev = 2.95: stream rgb flow recognition video action motion streams temporal clips 
+Topic 55, eta mean = 2.42 stdev = 4.16: analysis following convex form constraints structure applications dimensional term equation 
+Topic 56, eta mean = -0.34 stdev = 3.18: attribute attributes semantic facial labels intensity color sub annotations expression 
+Topic 57, eta mean = -0.49 stdev = 3.47: cloud pointnet clouds rotation segmentation classification structure object sets hierarchical 
+Topic 58, eta mean = -1.14 stdev = 3.44: tracking target object visual tracker siamese correlation filter precision success 
+Topic 59, eta mean = 3.49 stdev = 3.66: vision computer pattern recognition proceedings european processing advances transactions intelligence 
+Topic 60, eta mean = -0.85 stdev = 4.23: classes unseen zero semantic shot seen visual cub label generalized 
+Topic 61, eta mean = -0.53 stdev = 4.05: gan adversarial inpainting discriminator generator generative generated mask fake completion 
+Topic 62, eta mean = 0.75 stdev = 3.19: target transfer source effects similar transferred elements transferring effect framework 
+Topic 63, eta mean = 0.31 stdev = 3.05: appearance background foreground geometric geometry structure spatial variations scene color 
+Topic 64, eta mean = 0.48 stdev = 3.49: supervised unsupervised supervision weakly labels object self localization train annotations 
+Topic 65, eta mean = 0.68 stdev = 3.94: metric triplet hard negative pair similarity pairs positive retrieval classes 
+Topic 66, eta mean = -2.18 stdev = 2.68: latexit sha1_base64 object objects layout latent code users nips inception 
+Topic 67, eta mean = -0.85 stdev = 3.63: person identification rank reid gallery wang query map zheng identity 
+Topic 68, eta mean = -0.95 stdev = 4.09: camera pose localization correspondences slam cameras relative ransac rotation scene 
+Topic 69, eta mean = 0.06 stdev = 3.19: context person people contextual social global scene persons importance detection 
+Topic 70, eta mean = 1.20 stdev = 3.54: decoder encoder abs corr auto architecture latent encoding train decoders 
+Topic 71, eta mean = -1.51 stdev = 4.44: question visual attention answer answering questions vqa word answers language 
+Topic 72, eta mean = 0.95 stdev = 3.49: detection patch patches similarity anomaly auc types analysis score positive 
+Topic 73, eta mean = -0.61 stdev = 3.61: density crowd counting map maps scale ground scenes count multi 
+Topic 74, eta mean = -0.06 stdev = 3.54: pose human joint poses body hand joints cvpr skeleton person 
+Topic 75, eta mean = 0.85 stdev = 3.26: regions region sec visual focus ours original human obtain classification 
+Topic 76, eta mean = 0.60 stdev = 3.18: stage generation generated generate stages semantic generative generating single generates 
+Topic 77, eta mean = -0.42 stdev = 3.57: light illumination lighting scene pixel single reflectance sky surface source 
+Topic 78, eta mean = -0.39 stdev = 3.29: texture pixel projection textures deformable convolutional convolution spatial maps video 
+Topic 79, eta mean = -0.54 stdev = 3.32: filters pruning filter pruned vehicle regularization convolutional norm prune importance 
+Topic 80, eta mean = -0.25 stdev = 3.33: line segment contour boundary road segments boundaries ground skeleton orientation 
+Topic 81, eta mean = 1.40 stdev = 3.46: object objects scene scenes categories context category cvpr layout visual 
+Topic 82, eta mean = -0.01 stdev = 2.79: grid visual vertices vertex scan vision computer cnn mesh recognition 
+Topic 83, eta mean = -0.25 stdev = 2.84: tree decision cnn child leaf structure routing parent object attacks 
+Topic 84, eta mean = -1.59 stdev = 4.12: question vqa visual questions answer reasoning answering answers social language 
+Topic 85, eta mean = 2.06 stdev = 3.08: map maps multi channel corresponding convolutional shown architecture pixel respectively 
+Topic 86, eta mean = -0.87 stdev = 3.79: object detection box lidar bounding kitti boxes driving ground car 
+Topic 87, eta mean = -0.64 stdev = 3.63: saliency salient detection object level objects maps edge wang convolutional 
+Topic 88, eta mean = 0.08 stdev = 3.53: clustering clusters cluster self supervised unlabeled representations subspace labels unsupervised 
+Topic 89, eta mean = -0.54 stdev = 4.31: shape shapes mesh reconstruction surface cloud representations resolution voxel graphics 
+Topic 90, eta mean = -1.54 stdev = 4.03: stereo disparity matching kitti depth left volume lidar monocular flow 
+Topic 91, eta mean = 0.60 stdev = 3.24: cnn normal surface ground truth cnns scale normals wise convolutional 
+Topic 92, eta mean = 0.43 stdev = 3.79: normalization auxiliary global pooling cnn covariance resnet convolutional classification table 
+Topic 93, eta mean = -0.50 stdev = 3.28: head explanation cam transformer explanations visual specific classification target grad 
+Topic 94, eta mean = -0.22 stdev = 3.66: facial age expression identity landmarks landmark recognition shape alignment head 
+Topic 95, eta mean = -1.36 stdev = 4.63: visual language object sentence grounding attention semantic level word referring 
+Topic 96, eta mean = 0.54 stdev = 3.34: view views reconstruction multi single camera projection scene consistency novel 
+Topic 97, eta mean = -0.04 stdev = 3.30: lstm future rnn recurrent hidden path social motion term predict 
+Topic 98, eta mean = -0.70 stdev = 4.09: graph gcn edge graphs convolutional edges weights structure label neighbors 
+Topic 99, eta mean = 0.05 stdev = 3.31: sparse rank low tensor sparsity norm completion illumination min recovery 
