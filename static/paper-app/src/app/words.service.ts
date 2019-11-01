@@ -30,13 +30,17 @@ export class WordsService {
       this.http.get<Word[]>('assets/nips2018_word_cloud.json'),
       this.http.get<Word[]>('assets/iclr2019_word_cloud.json'),
       this.http.get<Word[]>('assets/icml2018_word_cloud.json'),
-      this.http.get<Word[]>('assets/cvpr2018_word_cloud.json')
+      this.http.get<Word[]>('assets/cvpr2018_word_cloud.json'),
+      this.http.get<Word[]>('assets/cvpr2019_word_cloud.json'),
+      this.http.get<Word[]>('assets/icml2019_word_cloud.json')
     ]).subscribe(result => {
       this.confWords = [
         { conference: 'NeurIPS2018', word: result[0] },
         { conference: 'ICLR2019', word: result[1] },
         { conference: 'ICML2018', word: result[2] },
-        { conference: 'CVPR2018', word: result[3] }
+        { conference: 'CVPR2018', word: result[3] },
+        { conference: 'CVPR2019', word: result[4] },
+        { conference: 'ICML2019', word: result[5] }
       ];
       this.wordSource.next(this.computeWord('NeurIPS2018'));
       this.updateWords();
