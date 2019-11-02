@@ -23,6 +23,7 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
   wordData: Word[];
   layoutWords: any[];
   displayType: DisplayType = DisplayType.wordcloud;
+  // svg: any;
   svgWidth = 1500;
   svgHeight = 800;
   colors = [
@@ -58,6 +59,7 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
 
   ngOnInit() {
     // this.layout = cloud().size([1500, 800]);
+
     this.getWords();
     // this.wordData = this.wordService.word;
     // this.chartOptions.series[0].data = this.word_data;
@@ -69,18 +71,19 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
 
   drawWordCloud() {
     this.layout = cloud()
+      // cloud()
       .size([this.svgWidth, this.svgHeight])
       .words(
         // this.wordData.slice(0, 500).map(d => {
-        this.wordData.map(d => {
+        this.wordData.map((d, i) => {
           return {
             text: d.name,
-            size: 9 + Math.random() * d.weight * 10,
+            size: 12 + d.weight * 4,
             test: 'haha'
           };
         })
       )
-      // .padding(5)
+      .padding(2)
       .rotate(0)
       // .rotate(() => {
       // return ~~(Math.random() * 2) * 90;
@@ -91,11 +94,12 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
         return d.size;
       })
       // .spiral([0, 0])
-      // .on('end', this.draw)
-      .on('end', (t, s) => {
-        this.layoutWords = t;
-        console.log(this.layoutWords);
-      });
+      .on('end', this.draw);
+    // .on('end', (t, s) => {
+    //   this.layoutWords = t;
+    //   console.log(this.layoutWords);
+    // })
+    // .start();
     this.layout.start();
   }
 
@@ -113,27 +117,28 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
   }
 
   draw = words => {
+    // console.log('draw function called');
+    // this.svg
+    d3.select('#words')
+      .select('svg')
+      .remove();
     d3.select('#words')
       .append('svg')
-      .attr('width', this.layout.size()[0])
-      .attr('height', this.layout.size()[1])
+      .attr('width', this.svgWidth)
+      .attr('height', this.svgHeight)
       .append('g')
       .attr(
         'transform',
-        'translate(' +
-          this.layout.size()[0] / 2 +
-          ',' +
-          this.layout.size()[1] / 2 +
-          ')'
+        'translate(' + this.svgWidth / 2 + ',' + this.svgHeight / 2 + ')'
       )
       .selectAll('text')
       .data(words)
-      .enter()
-      .append('text')
+      .join('text')
       .style('font-size', (d: any) => {
         return d.size + 'px';
       })
       .style('font-family', 'Impact')
+      .style('fill', (d, i) => this.colors[i % this.colors.length])
       .attr('text-anchor', 'middle')
       .attr('transform', (d: any) => {
         return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')';
@@ -154,6 +159,12 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
 
   changeDisplayType(typeStr: string) {
     this.displayType = DisplayType[typeStr];
+    // if (typeStr === 'wordcloud') {
+    //   console.log(d3.select('#words'));
+    //   console.log('try to draw wordcloud');
+    //   this.drawWordCloud();
+    //   this.layout.start();
+    // }
   }
 
   gTransform() {
