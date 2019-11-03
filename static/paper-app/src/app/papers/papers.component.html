@@ -1,13 +1,24 @@
 <div class="paper-head">
-  <form>
+  <form (submit)="submitTopic()">
     <div class="form-border">
-      <input type="text" placeholder="Search with topic words...">
+      <input
+        type="text"
+        placeholder="Search with topic words..."
+        [(ngModel)]="topic"
+        name="topic"
+      />
       <button type="submit">
-        <i class="material-icons md-24 search-icon">search</i></button></div>
+        <i class="material-icons md-24 search-icon">search</i>
+      </button>
+    </div>
   </form>
-  <mat-paginator [length]="length" [pageSize]="pageSize"
-                 [pageSizeOptions]="pageSizeOptions"
-                 [showFirstLastButtons]="true" (page)="pageEvent($event)">
+  <mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    [showFirstLastButtons]="true"
+    (page)="pageEvent($event)"
+  >
   </mat-paginator>
 </div>
 <div class="papers">
@@ -26,7 +37,12 @@
   </div>-->
 </div>
 <div class="paper-foot">
-  <mat-paginator [length]="length" [pageSize]="pageSize" [hidePageSize]="true"
-                 [showFirstLastButtons]="true" (page)="pageEvent($event)">
+  <mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    [hidePageSize]="true"
+    [showFirstLastButtons]="true"
+    (page)="pageEvent($event)"
+  >
   </mat-paginator>
 </div>

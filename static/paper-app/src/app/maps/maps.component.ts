@@ -70,12 +70,14 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
   ) {}
 
   getDistribute(): void {
+    // console.log('getDistribute is called');
     this.distSub = this.distributeService.distribute$.subscribe(
       (dists: Distribute[]) => {
         this.distribute = dists;
         // console.log(this.distribute[0]);
         this.initColorRank();
         this.fillMaps();
+        console.log('filled maps in getDistribute ' + this.distribute.length);
       },
       err => {
         console.log(err);
@@ -145,6 +147,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
     this.distribute = this.distributeService.distribute;
     this.getDistribute();
     this.getCountrycode();
+    // console.log('maps init called');
   }
 
   ngOnDestroy() {
@@ -180,7 +183,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
         .attr('id', (d: any) => {
           // console.log(d.id);
           if (!this.countryCode[d.id]) {
-            console.log(d.id);
+            // console.log(d.id);
           }
           return d.id;
         })
@@ -202,6 +205,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
           this.hideTooltip(d, i);
         });
       this.fillMaps();
+      console.log('Filled maps after init');
     });
 
     // create legend

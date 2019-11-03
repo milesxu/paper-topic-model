@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Paper, PaperService } from '../paper.service';
@@ -18,9 +19,11 @@ export class PapersComponent implements OnInit {
   current = 1;
   selectedConferences = [];
   sub: any;
+  topic = '';
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private paperService: PaperService
   ) {}
 
@@ -28,7 +31,7 @@ export class PapersComponent implements OnInit {
     this.paperService.papers$.subscribe((paperList: Paper[]) => {
       this.papers = paperList;
       this.length = this.papers.length;
-      console.log(this.length);
+      // console.log(this.length);
       this.papersInPage = this.papers.slice(0, this.pageSize);
       // console.log(this.papers.length);
     });
@@ -58,5 +61,12 @@ export class PapersComponent implements OnInit {
       startIndex = endIndex - event.pageSize;
     }
     this.papersInPage = this.papers.slice(startIndex, endIndex);
+  }
+
+  submitTopic() {
+    // console.log('calling submitTopic');
+    if (this.topic) {
+      this.router.navigate(['papers', { topic: this.topic }]);
+    }
   }
 }
