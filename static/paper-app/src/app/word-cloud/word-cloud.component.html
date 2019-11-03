@@ -72,7 +72,12 @@
   </div>
 </div>
 <div class="grid" *ngIf="getDisplayType('grid')">
-  <div *ngFor="let item of wordData" class="cell mat-elevation-z6">
+  <div
+    *ngFor="let item of wordData"
+    class="cell mat-elevation-z6"
+    style="cursor:pointer;"
+    (click)="gotoPapers(item.name)"
+  >
     <div class="keyword">{{ item.name }}</div>
     <div class="weight mat-elevation-z2">Weight: {{ item.weight }}</div>
   </div>
@@ -87,7 +92,11 @@
       *ngFor="let item of wordData; let i = index"
       [ngClass]="{ 'green-back': iseven(i) }"
     >
-      <span class="align-half">
+      <span
+        class="align-half"
+        (click)="gotoPapers(item.name)"
+        style="cursor:pointer;"
+      >
         {{ item.name }}
       </span>
       <span class="align-half">{{ item.weight }}</span>
