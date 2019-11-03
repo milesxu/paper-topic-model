@@ -122,6 +122,9 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
       // this.chartOptions.series[0].data = this.word_data;
       // this.updateFlag = true;
       // console.log(this.layout);
+      this.wordData.sort((a, b) => {
+        return b.weight - a.weight;
+      });
       this.drawWordCloud();
     });
   }
