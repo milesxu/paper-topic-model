@@ -161,6 +161,9 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
       })
       .on('mouseout', (d: any) => {
         this.hideTooltip();
+      })
+      .on('click', (d: any) => {
+        this.gotoPapers(d.text);
       });
   }
 
@@ -206,12 +209,16 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
     this.renderer.setProperty(
       this.tooltip.nativeElement,
       'innerHTML',
-      `${d.text}: ${d.occurrence}`
+      `weight of ${d.text}: ${d.occurrence}`
     );
   }
 
   hideTooltip() {
     this.renderer.setStyle(this.tooltip.nativeElement, 'display', 'none');
     this.renderer.setProperty(this.tooltip.nativeElement, 'innerHTML', '');
+  }
+
+  gotoPapers(topic: string) {
+    this.router.navigate(['papers', { topic }]);
   }
 }
