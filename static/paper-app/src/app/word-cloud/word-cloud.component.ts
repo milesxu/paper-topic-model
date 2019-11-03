@@ -1,4 +1,11 @@
-import { Component, OnInit, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterContentInit,
+  Renderer2,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -19,6 +26,7 @@ enum DisplayType {
   styleUrls: ['./word-cloud.component.css']
 })
 export class WordCloudComponent implements OnInit, AfterContentInit {
+  @ViewChild('tooltip', { static: false }) tooltip: ElementRef;
   layout: any;
   wordData: Word[];
   layoutWords: any[];
@@ -37,6 +45,7 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
     '#974b5a'
   ];
   constructor(
+    private renderer: Renderer2,
     private wordService: WordsService,
     private router: Router,
     private stateService: StateService,
@@ -79,7 +88,8 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
           return {
             text: d.name,
             size: 12 + d.weight * 4,
-            test: 'haha'
+            occurrence: d.weight
+            // test: 'haha'
           };
         })
       )
@@ -145,6 +155,12 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
       })
       .text((d: any) => {
         return d.text;
+      })
+      .on('mouseover', (d: any) => {
+        this.showTooltip(d);
+      })
+      .on('mouseout', (d: any) => {
+        this.hideTooltip();
       });
   }
 
@@ -171,5 +187,31 @@ export class WordCloudComponent implements OnInit, AfterContentInit {
     const w = this.svgWidth / 2;
     const h = this.svgHeight / 2;
     return `translate(${w},${h})`;
+  }
+
+  showTooltip(d: any) {
+    let xStart = 0;
+    if (d3.event.pageX > 1600) {
+      xStart = d3.event.pageX - 550;
+    } else {
+      xStart = d3.event.pageX - 330;
+    }
+    this.renderer.setStyle(
+      this.tooltip.nativeElement,
+      'top',
+      `${d3.event.pageY - 100}px`
+    );
+    this.renderer.setStyle(this.tooltip.nativeElement, 'left', `${xStart}px`);
+    this.renderer.setStyle(this.tooltip.nativeElement, 'display', 'block');
+    this.renderer.setProperty(
+      this.tooltip.nativeElement,
+      'innerHTML',
+      `${d.text}: ${d.occurrence}`
+    );
+  }
+
+  hideTooltip() {
+    this.renderer.setStyle(this.tooltip.nativeElement, 'display', 'none');
+    this.renderer.setProperty(this.tooltip.nativeElement, 'innerHTML', '');
   }
 }
