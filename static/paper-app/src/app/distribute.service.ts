@@ -24,7 +24,8 @@ export class OrganizationRank {
 export class DistributeService {
   private distributeSource = new BehaviorSubject<Distribute[]>([]);
   private zeroDistribute: Distribute[] = [];
-  distribute$ = this.distributeSource.asObservable().pipe(skip(1));
+  // distribute$ = this.distributeSource.asObservable().pipe(skip(1));
+  distribute$ = this.distributeSource.asObservable();
   private organizations: Organization[] = [];
   private paperCountry: number[] = [];
   private paperConference: string[] = [];
@@ -72,7 +73,7 @@ export class DistributeService {
     this.paperOrg = papers.map(paper => paper.organization);
     // this.distributeSource.next(this.computeDistribute(['NeurIPS2018']));
     this.conferenceService.conferences$.subscribe(conf => {
-      // console.log(conf);
+      // console.log(`${conf} is returned.`);
       this.distributeSource.next(this.computeDistribute(conf));
     });
   }

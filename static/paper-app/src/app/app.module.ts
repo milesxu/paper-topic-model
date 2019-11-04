@@ -12,7 +12,10 @@ import { MapsComponent } from './maps/maps.component';
 import { PerformanceComponent } from './performance/performance.component';
 import { RankDialogComponent } from './rank-dialog/rank-dialog.component';
 import { WordCloudComponent } from './word-cloud/word-cloud.component';
-import { PaperDetailComponent } from './paper-detail/paper-detail.component';
+import {
+  PaperDetailComponent,
+  HighlightSearch
+} from './paper-detail/paper-detail.component';
 import { PapersComponent } from './papers/papers.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
@@ -49,6 +52,7 @@ registerLocaleData(en);
     RankDialogComponent,
     WordCloudComponent,
     PaperDetailComponent,
+    HighlightSearch,
     PapersComponent,
     CategoryTreeNzComponent
   ],

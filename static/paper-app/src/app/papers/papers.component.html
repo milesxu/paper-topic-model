@@ -24,7 +24,7 @@
 <div class="papers">
   <ul>
     <li *ngFor="let paper of papersInPage">
-      <app-paper-detail [paper]="paper"></app-paper-detail>
+      <app-paper-detail [paper]="paper" [topic]="topic"></app-paper-detail>
     </li>
   </ul>
   <!--<div class="container">

@@ -14,9 +14,8 @@ export class Word {
 })
 export class WordsService {
   private wordSource = new BehaviorSubject<Word[]>([]);
-  selectedWords: Observable<Word[]> = this.wordSource
-    .asObservable()
-    .pipe(skip(1));
+  selectedWords: Observable<Word[]> = this.wordSource.asObservable();
+  // .pipe(skip(1));
   private confWords: { conference: string; word: Word[] }[] = [];
   constructor(
     private http: HttpClient,

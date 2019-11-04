@@ -75,9 +75,11 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
       (dists: Distribute[]) => {
         this.distribute = dists;
         // console.log(this.distribute[0]);
-        this.initColorRank();
-        this.fillMaps();
-        console.log('filled maps in getDistribute ' + this.distribute.length);
+        if (this.distribute.length) {
+          this.initColorRank();
+          this.fillMaps();
+        }
+        // console.log('filled maps in getDistribute ' + this.distribute.length);
       },
       err => {
         console.log(err);
@@ -144,6 +146,8 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.svg = d3.select('#maps');
+    // console.log(this.svg);
     this.distribute = this.distributeService.distribute;
     this.getDistribute();
     this.getCountrycode();
@@ -165,7 +169,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
       // .center([0, -30])
       .scale(width / (2 * Math.PI))
       .translate([width / 2, height / 2]);
-    this.svg = d3.select('#maps');
+    // this.svg = d3.select('#maps');
     const path = d3.geoPath().projection(projection);
 
     // create map
@@ -205,7 +209,7 @@ export class MapsComponent implements OnInit, AfterContentInit, OnDestroy {
           this.hideTooltip(d, i);
         });
       this.fillMaps();
-      console.log('Filled maps after init');
+      // console.log('Filled maps after init');
     });
 
     // create legend

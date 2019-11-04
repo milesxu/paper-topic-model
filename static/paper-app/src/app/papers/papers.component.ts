@@ -40,14 +40,14 @@ export class PapersComponent implements OnInit {
   ngOnInit() {
     this.getPapers();
     this.route.paramMap.subscribe(p => {
-      const topic = p.has('topic') ? p.get('topic') : '';
+      this.topic = p.has('topic') ? p.get('topic') : '';
       // console.log(topic);
       /*if (topic) {
         this.paperService.getPaperByTopic([topic]);
         // this.length = this.papers.length;
         // this.papersInPage = this.papers.slice(0, this.pageSize);
       }*/
-      this.paperService.changeTopic([topic]);
+      this.paperService.changeTopic([this.topic]);
     });
   }
 
