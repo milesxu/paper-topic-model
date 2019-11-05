@@ -9,7 +9,6 @@ The static site contains all the information of collected conferences. If you do
 ```bash
 git clone https://github.com/milesxu/paper-topic-model
 cd paper-topic-model
-git checkout single-gpu
 cd static/paper-app
 npm install
 ng serve
